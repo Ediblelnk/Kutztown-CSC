@@ -1,0 +1,39 @@
+# Author:	Peter Schaefer
+# Filename:	Makefile-dynamic
+# Course:	CSC 328 Network and Secure Programming
+# Professor:	Schwesinger
+# Assignment:	Libraries & Makefiles (#1)
+# Due Date:	9/5/23 (Fall 23)
+# Description:	This makefile runs bash commands to create a dynamic library of socket utilities.
+
+sockutils.so.1: connectsock.o connectUDP.o passiveTCP.o connectTCP.o errexit.o passivesock.o passiveUDP.o
+	gcc -fPIC -shared -o sockutils.so.1 connectsock.o connectUDP.o passiveTCP.o connectTCP.o errexit.o passivesock.o passiveUDP.o
+
+connectsock.o: connectsock.c
+	gcc -fPIC -c connectsock.c
+
+connectUDP.o: connectUDP.c
+	gcc -fPIC -c connectUDP.c
+
+passiveTCP.o: passiveTCP.c
+	gcc -fPIC -c passiveTCP.c
+
+connectTCP.o: connectTCP.c
+	gcc -fPIC -c connectTCP.c
+
+errexit.o: errexit.c
+	gcc -fPIC -c errexit.c
+
+passivesock.o: passivesock.c
+	gcc -fPIC -c passivesock.c
+
+passiveUDP.o: passiveUDP.c
+	gcc -fPIC -c passiveUDP.c
+
+.PHONY: clean
+clean:
+	rm *.o
+
+.PHONY: realclean
+realclean:
+	rm *.o sockutils.so.1

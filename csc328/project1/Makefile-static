@@ -1,0 +1,39 @@
+# Author:       Peter Schaefer
+# Filename:     Makefile-static
+# Course:       CSC 328 Network and Secure Programming
+# Professor:    Schwesinger
+# Assignment:   Libraries & Makefiles (#1)
+# Due Date:     9/5/23 (Fall 23)
+# Description:  This makefile runs bash commands to create a static library of socket utilities.
+
+sockutils.a: connectsock.o connectUDP.o passiveTCP.o connectTCP.o errexit.o passivesock.o passiveUDP.o
+	ar rs sockutils.a *.o
+
+connectsock.o: connectsock.c
+	gcc -c connectsock.c
+
+connectUDP.o: connectUDP.c
+	gcc -c connectUDP.c
+
+passiveTCP.o: passiveTCP.c
+	gcc -c passiveTCP.c
+
+connectTCP.o: connectTCP.c
+	gcc -c connectTCP.c
+
+errexit.o: errexit.c
+	gcc -c errexit.c
+
+passivesock.o: passivesock.c
+	gcc -c passivesock.c
+
+passiveUDP.o: passiveUDP.c
+	gcc -c passiveUDP.c
+
+.PHONY: clean
+clean:
+	rm *.o
+
+.PHONY: realclean
+realclean:
+	rm *.o sockutils.a
