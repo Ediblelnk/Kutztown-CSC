@@ -1,0 +1,34 @@
+/**
+@mainpage Documentation for parsing a file of words and printing in different methods with an Array, Circular Linked List, and STL List.
+\n
+Data Files:
+> app.cpp
+
+> CLinkedList.h
+
+> WordCList.cpp
+
+> WordCList.h
+
+> WordData.cpp
+
+> WordData.h
+
+> WordDataList.cpp
+
+> WordDataList.h
+
+> WordList.h
+
+> WordSTLSeq.cpp
+
+> WordSTLSeq.h
+\n
+---
+\n
+app.cpp has two modes: Menu and Batch mode. 
+
+In Menu mode, a target file is prompted for and then a menu is printed, with a prompt for which menu item should be executed. Each execution of a menu item creates a new WordList instance, parses the file and times the process, then prints the WordList, which is also timed.
+
+In Batch mode, a target file is inputted when initially executing the app.exe. This file is then used in every WordList subclass with every option, all of which are timed.
+*/

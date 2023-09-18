@@ -1,0 +1,17 @@
+/**
+@mainpage Programming Project 4: Update a Binary Tree Class
+\n
+Data Files:
+> Treetest.cpp - Driver program for BinarySearchTree ADT
+
+> BinarySearchTree.h - Declarations for a BinarySearchTree ADT
+
+> BinarySearchTree.cpp - Definitions for a BinarySearchTree ADT
+
+\n
+---
+\n
+TreeTest.cpp works as such:
+
+The user is prompted with a menu, from which he or she can add or remove a value, print or tree print the binary tree, or quit the program. If equal values are added to the tree, then there will be one node or these values, with a counter which keeps track of how many of those values are stored in the tree. The user may remove one of those values at a time, or all if he or she so desires. The print option prints all the values in the list in partial strict order, from least to greatest, while the tree print option will attempt to recreate the structure of the binary tree in order to better understand the mechanisms behind the storing of values in a binary tree.
+*/

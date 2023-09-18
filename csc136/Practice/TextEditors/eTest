@@ -1,0 +1,8 @@
+Emacs:
+
+C-x refers to Ctrl+x; M-x refers to Alt+x; S-x refers to Shift+x
+
+Files:
+  C-x C-s	-save a file
+  C-x s		-save all files
+

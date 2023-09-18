@@ -1,0 +1,12 @@
+/**
+@mainpage Documentation to Appear on Site Home Page
+\n
+The following Documentation describes the implementation of the object class CLinkedList.h using a driver class
+testLL.cpp.
+\n
+---
+\n
+The driver class provides an interactive way to insert and remove elements, and to forward and backward print
+the list. The driver class also supports the use of *.src files to automate the interactive nature of the 
+program.
+*/

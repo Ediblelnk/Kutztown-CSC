@@ -1,0 +1,45 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
+#include <iostream>
+using namespace std;
+
+class Matrix {
+ public:
+  //constructors
+  Matrix(int=1, int=1);
+  Matrix(const Matrix &);
+  
+  //deconstructors
+  ~Matrix();
+
+  //methods
+  int getRows() const;
+  int getColumns() const;
+  int getMax() const;
+  int *getRow(int) const;
+  int *getColumn(int) const;
+  
+  //overloads
+  const Matrix &operator=(const Matrix &);
+  Matrix operator+(const Matrix &);
+  Matrix operator*(const Matrix &);
+  bool operator==(const Matrix &) const;
+  bool operator!=(const Matrix &) const;
+  int &operator()(int, int);
+  const int &operator()(int, int) const;
+
+ private:
+  int rows;
+  int columns;
+  int *ptr;
+
+  //private methods
+  int *elementMult(int*, int*, int);
+  int elementSum(int*, int);
+};
+
+ostream &operator<<(ostream &, const Matrix &);
+istream &operator>>(istream &, Matrix &);
+
+#endif

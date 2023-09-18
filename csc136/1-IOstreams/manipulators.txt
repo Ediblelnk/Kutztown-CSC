@@ -1,0 +1,35 @@
+setw
+-set the width of the next output value
+-after output the value resets to zero
+-zero width defaults to the object width (no padding)
+
+boolalpha
+noboolalpha
+-switches between textual and numeric representation of booleans
+
+showpoint
+noshowpoint
+-controls whether decimal point is always included in floating-point representation
+
+skipws
+noskipws
+-controls whether leading whitespace is skipped on input
+
+left
+right
+-sets the placement of fill characters (right or left justification)
+
+fixed
+scientific
+-changes formatting used for floating-point I/O
+
+endl
+-outputs '\n' and flushes the output stream
+
+setprecision
+-changes floating-point precision
+
+-------------------
+
+Manipulators require the inclusion of the <iomanip> library
+    #include <iomanip>
