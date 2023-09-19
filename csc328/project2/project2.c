@@ -97,9 +97,8 @@ int main(int argc, char** argv) {
   int num_forks = atoi(argv[1]);
   X = atoi(argv[2]);
   int num = atoi(argv[3]);
-  int nump_helper = atoi(argv[4]);
-  int* nump;
-  nump = &nump_helper;
+  int* nump = (int*) malloc(sizeof(int));
+  *nump = atoi(argv[4]);
 
   //ensure valid number of processes request
   if(num_forks < 1 || 10 < num_forks) fatal_error('p', num_forks);
@@ -110,9 +109,11 @@ int main(int argc, char** argv) {
   num_forks = atoi(argv[1]);
   X = atoi(argv[2]);
   num = atoi(argv[3]);
-  nump = &nump_helper;
+  *nump = atoi(argv[4]);
 
   concurrent_processes(fp, num_forks, &X, &num, nump);
 
+  free(nump);
+  fclose(fp);
   return 0;
 }
