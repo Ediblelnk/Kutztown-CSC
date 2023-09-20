@@ -151,6 +151,9 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="font" val="SansSerif bold 12"/>
     </comp>
     <comp lib="1" loc="(280,220)" name="NOT Gate"/>
+    <comp lib="6" loc="(431,161)" name="Text">
+      <a name="text" val="Final Logic"/>
+    </comp>
     <comp lib="0" loc="(110,220)" name="Bit Extender">
       <a name="in_width" val="3"/>
       <a name="out_width" val="4"/>
@@ -171,6 +174,9 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="NUM 1"/>
       <a name="labelloc" val="north"/>
       <a name="labelfont" val="SansSerif bold 12"/>
+    </comp>
+    <comp lib="6" loc="(268,31)" name="Text">
+      <a name="text" val="Decoder"/>
     </comp>
     <comp lib="3" loc="(170,190)" name="Adder">
       <a name="width" val="4"/>
@@ -209,6 +215,9 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <comp lib="6" loc="(79,83)" name="Text">
       <a name="text" val="Primes Circuit"/>
       <a name="font" val="SansSerif bold 12"/>
+    </comp>
+    <comp lib="6" loc="(260,246)" name="Text">
+      <a name="text" val="Divider"/>
     </comp>
     <comp lib="0" loc="(50,220)" name="Pin">
       <a name="width" val="3"/>
