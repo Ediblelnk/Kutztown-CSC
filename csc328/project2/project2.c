@@ -10,9 +10,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <sys/wait.h>
 
-int X; //global variable
+int X; // global variable
 
 /**
  * Description:	handles an error using a code and an accessory number
@@ -42,7 +41,7 @@ void fatal_error(char code, int num)
         printf("UNKNOWN ERROR:\n");
     }
 
-  exit(1);
+    exit(1);
 }
 
 /**
@@ -159,10 +158,10 @@ void concurrent_processes(FILE *fp, int num_fork, int *pX, int *pnum, int *nump)
 }
 
 /**
- * Description:	main program. Takes between 4-5 commnad-line arguments.
+ * Description:	main program. Takes between 4-5 command-line arguments.
  * 		Demonstrates how memory and variables work when a process is forked.
  * 		First, sequentially creates, executes, and terminates processes.
- * 		Then, concurrently create, executes, and termiantes processes.
+ * 		Then, concurrently create, executes, and terminates processes.
  * Parameters:	int	argc:		number of arguments provided, includes executable as first arg.
  * 		char**	argc:		list of character strings, contains command-line arguments.
  */
@@ -200,14 +199,12 @@ int main(int argc, char **argv)
     // run processes concurrently
     concurrent_processes(fp, num_forks, &X, &num, nump);
 
-    if (fprintf(fp, "\nALL SEQUENTIAL AND CONCURRENT PROCESSES HAVE BEEN CREATED, EXECUTED, AND DESTORYED.\n") < 0)
+    if (fprintf(fp, "\nALL SEQUENTIAL AND CONCURRENT PROCESSES HAVE BEEN CREATED, EXECUTED, AND DESTROYED.\n") < 0)
         fatal_error('x', 0);
 
     // frees allocated memory, closes filestream
     free(nump);
     fclose(fp);
 
-  free(nump);
-  fclose(fp);
-  return 0;
+    return 0;
 }
