@@ -10,8 +10,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/wait.h>
 
-int X; // global variable
+int X; //global variable
 
 /**
  * Description:	handles an error using a code and an accessory number
@@ -41,7 +42,7 @@ void fatal_error(char code, int num)
         printf("UNKNOWN ERROR:\n");
     }
 
-    exit(1);
+  exit(1);
 }
 
 /**
@@ -206,5 +207,7 @@ int main(int argc, char **argv)
     free(nump);
     fclose(fp);
 
-    return 0;
+  free(nump);
+  fclose(fp);
+  return 0;
 }
