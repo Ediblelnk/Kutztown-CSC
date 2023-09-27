@@ -1,4 +1,4 @@
-all: project2.o
+project2: project2.o
 	gcc -o project2 project2.o
 
 project2.o: project2.c
