@@ -1,0 +1,71 @@
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\lhead{Discrete Math II}
+\chead{Section 2.5}
+\rhead{Peter Schaefer}
+
+\begin{document}
+
+\section*{Section 2.5}
+
+\subsection*{2.5.1}
+\begin{enumerate}
+  \bitem{b} For every integer $n$, if $n^3$ is even, then $n$ is even.
+  \begin{proof}
+    Assume that $n$ is odd. That is $n = 2k+1$, for some integer $k$.
+    \begin{align*}
+      n^3 = (2k+1)^3 & = (4k^2+4k+1)(2k+1)                \\
+                     & = 8k^3 + 8k^2 + 2k + 4k^2 + 4k + 1 \\
+                     & = 8k^3 + 12k^2 + 4k + 1            \\
+                     & = 2(4k^3+6k^2+2k) + 1              \\
+                     & = 2j+1 \tfor j = 4k^3+6k^2+2k
+    \end{align*}
+    Therefore $n^3$ takes the form of an odd number.
+    Therefore, through contrapositive, for every integer $n$, if $n^3$ is even,
+    then $n$ is even.
+  \end{proof}
+  \bitem{c} For every integer $n$, if $5n+3$ is even, then $n$ is odd.
+  \begin{proof}
+    Assume that $n$ is even. That is $n = 2k$, for some integer $k$.
+    \begin{align*}
+      5n+3 = 5(2k) + 3 & = 10k + 3             \\
+                       & = 2(5k+1) + 1         \\
+                       & = 2j+1 \tfor j = 5k+1
+    \end{align*}
+    Therefore $5n+3$ takes the form of an odd number.
+    Therefore, through contrapositive, for every integer $n$, if $5n+3$ is even,
+    then $n$ is odd.
+  \end{proof}
+\end{enumerate}
+
+\subsection*{2.5.2}
+\begin{enumerate}
+  \bitem{a} If $x$ and $y$ are integers such that $3 \nmid xy$, then $3 \nmid x$.
+  \begin{proof}
+    Assume that $3 \nmid x$. That is, $x = 3k$, for some integer $k$.
+    Let $y$ be an integer.
+    \begin{align*}
+      x         & = 3k              \\
+      xy        & = 3ky             \\ \\
+      3 \mid xy & \equiv 3 \mid 3ky
+    \end{align*}
+    Since $3$ divides $3$. Therefore, through contrapositive,
+    if $x$ and $y$ are integer such that $3 \nmid xy$, then $3 \nmid x$
+  \end{proof}
+  \bitem{b} For any integers $x,y,\tand z$ if $x \mid y$ and $x \nmid z$, then $x \nmid (y+z)$.
+  \begin{proof}
+    Let $x \mid (y+z)$. That is, $y+z = kx$, for some integer $k$.
+    Additionally, let $x \mid y$. That is, $y = jx$, for some integer $j$.
+    \begin{align*}
+      y + z               & = jx + z             \\ \\
+      jx + z              & = kx                 \\
+      z                   & = kx - jx = x(k-j)   \\ \\
+      \therefore x \mid z & \equiv x \mid x(k-j)
+    \end{align*}
+    Since $x \mid x(k-j)$, therefore $x \mid z$. Therefore, through contrapositive,
+    for any integers $x,y, \tand z$ if $x \mid y$ and $x \nmid z$, then $x \nmid (y+z)$.
+  \end{proof}
+\end{enumerate}
+
+\end{document}

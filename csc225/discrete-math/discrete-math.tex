@@ -1,0 +1,32 @@
+\documentclass{article}
+\input{../templates/packages-article.tex}
+\input{../templates/macros.tex}
+
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\title{Discrete Math for Computer Science}
+\author{Peter Schaefer}
+\date{Freshman - Kutztown}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\include{logic.tex}
+\include{proofs.tex}
+\include{sets.tex}
+\include{functions.tex}
+\include{boolean-algebra.tex}
+\include{relations-and-digraphs.tex}
+\include{computation.tex}
+\include{induction-and-recursion.tex}
+\include{integer-properties.tex}
+\include{introduction-to-counting.tex}
+\include{advanced-counting.tex}
+\include{discrete-probability.tex}
+\include{graphs.tex}
+\include{trees.tex}
+
+\end{document}

@@ -1,0 +1,432 @@
+\section{Integer Properties}
+\subsection{The Division Algorithm}
+In \bld{integer division}, the input and output values must always be integers. For example, when 9 is divided by 4, the answer is 2 with a remainder of 1, instead of 2.25.
+
+\subsubsection*{Divides}
+Let $x \tand y$ be two integers. Then $x$ \itl{divides} $y$, $x \mid y$, if and only if $x \neq 0$ and there is an integer $k$ such that $y = kx$. If there is no such integer or if $x = 0$, then $x$ does not divide $y$, $x \nmid y$. If $x \mid y$, then $y$ is said to be a \itl{multiple} of $x$, and $x$ is a \itl{factor} or \itl{divisor} of $y$.
+
+\subsubsection*{Theorem: Divisibility and linear combinations}
+Let $x,y,\tand z$ be integers. If $x \mid y \tand x \mid z,~\tthen x \mid (sy+tz)$ for any integers $s \tand t$.
+\begin{proof}
+  Since $x \mid y$, then $y = kx$ for some integer $k$. Similarly, since $x \mid z$, then $z = jx$ for some integer $j$. A linear combination of $y \tand z$ can be expressed as:
+  \[
+    sy + tz = s(kx) + t(jx) = (sk + tj)x.
+  \]
+  For some integers $s \tand t$. Since $sy + tz$ is an integer multiple of $x$, then $x \mid (sy + tz)$.
+\end{proof}
+
+\subsubsection*{Quotients and remainders}
+If $x \nmid y$, then there is s non-zero remainder when $x$ is divided into $y$. The \bld{Division Algorithm}, states that the result of the division and the remainder are unique.
+
+\subsubsection*{Theorem: The Division Algorithm}
+Let $n$ be an integer and let $d$ be a positive integer. Then, there are unique integers $q \tand r$, with $0 \leq r \leq d-1$, such that $n = qd + r$.
+
+\subsubsection*{Integer division definitions}
+In the Division Algorithm, $q$ is called the \bld{quotient} and $r$ is called the \bld{remainder}. The operations \bld{$\tdiv$} and \bld{$\tmod$} produce the quotient and the remainder as a function of $n \tand d$.
+\begin{align*}
+  q & = n \tdiv d \\
+  r & = n \tmod d
+\end{align*}
+Here is some examples of computing $\tdiv \tand \tmod$:
+\begin{align*}
+  15 \tmod 6       & = 3 & -11 \tmod 4        & = 1  \\
+  15 - 2 \cdot 6   & = 3 & -11 - (-3) \cdot 4 & = 1  \\ \\
+  15 \tdiv 6       & = 2 & -11 \tdiv 4        & = -3 \\
+  \frac{15 - 3}{2} & = 2 & \frac{-11 - 1}{4}  & = -3
+\end{align*}
+
+\subsection{Modular arithmetic}
+Given a finite set of integers, we can define addition and multiplication on the elements in the set such that after every operation, we apply a modular function equal to the cardinality of the set.
+\begin{itemize}
+  \item \bld{addition mod $m$}
+        \subitem the operation defined by adding two numbers and applying $\tmod m$ to the result
+  \item \bld{multiplication mod $m$}
+        \subitem the operation defined by multiplying two numbers and applying $\tmod m$ to the result
+\end{itemize}
+The set $\{0,1,2,\ldots,m-1\}$ along with addition and multiplication mod $m$ defines a closed mathematical system with $m$ elements called a \bld{ring}. The ring $\{0,1,2,\ldots,m-1\}$ with addition and multiplication mod $m$ is denoted by $\bb{Z}_m$.
+
+\subsubsection*{Applications}
+A common way to organize data is to maintain an array called a \bld{hash table} which is slightly larger than the number of data items to be stored. A bld{hash function} is used to map each data item to a location in the array. Modulus is used to keep the results from a hash function in the range of the hash table.
+
+Computers use functions called bld{pseudo-random number generators} that produce numbers having many of the statistical properties of random numbers but are in fact deterministically generated. Modulus is used to keep these pseudo-random number generators in a certain range when used.
+
+\subsubsection*{Congruence mod $m$}
+Let $m \in \bb{Z} > 1$. Let $x \tand y$ be any two integers. Then bld{$x$ is congruent to $y \tmod m$} if $x \tmod m = y \tmod m$. The fact that $x$ is congruent to $y \tmod m$ is denoted
+\[
+  x \equiv y~(\tmod m).
+\]
+
+\subsubsection*{Theorem: Alternate characterization of congruence mod $m$}
+Let $m \in \bb{Z} > 1$. Let $x \tand y$ be any two integers. Then $x \equiv y~(\tmod m)$ if and only if $m \mid (x-y)$.
+\begin{proof}
+  First suppose that $x \equiv y~(\tmod m)$. By definition $x tmod m = y \tmod m$. We define the variable $r$ to be the value of $x \tmod m = y \tmod m$. Therefore, $x = r + km$ for some integer $k$ and $y = r + jm$ for some integer $j$. Then
+  \[
+    x-y = (r+km)-(r+jm) = (k-j)m.
+  \]
+  Since $(k-j)$ is an integer, $m\mid (x-y)$. \\
+  Now suppose that $m\mid (x-y)$. Then $(x-y) = tm$ for some integer $t$. Let $r$ be the value of $x \tmod m$. Then $x = r + km$ for some integer $k$. The integer $y$ can be expressed as
+  \[
+    y = x - (x-y) = (r+km)-tm = r + (k-t)m.
+  \]
+  Since $r$ is an integer in the range from $0$ to $m-1$, $r$ is the unique remainder when $y$ is divided by $m$. Therefore $r = y \tmod m = x \tmod m$, and by definition $x \equiv y~(\tmod m)$.
+\end{proof}
+
+\subsubsection*{Precedence of the mod operation}
+\begin{align*}
+  6 + 2 \tmod y = 6 + (2 \tmod 7)         & = 8 \\
+  6 \cdot 2 \tmod 7 = (6 \cdot 2) \tmod 7 & = 5 \\
+\end{align*}
+However, in general it is best to just use parentheses in order to clarify which operations should be performed first.
+
+\subsubsection*{Theorem: Computing arithmetic operations mod $m$}
+Let $m$ be an integer larger than 1. Let $x \tand y$ be any integers. Then
+\begin{align*}
+  [(x \tmod m) + (y \tmod m)] \tmod m & = [x + y] \tmod m \\
+  [(x \tmod m)(y \tmod m)] \tmod m    & = [x + y] \tmod m
+\end{align*}
+
+\subsection{Prime factorizations}
+A number $p$ is \bld{prime} if it is an integer greater than $1$ and its only factors are $1 \tand p$. A positive integer is \bld{composite} if it has a factor other than 1 or itself. Every integer greater than 1 is either prime of composite. Every positive integer greater than one can be expressed as a product of primes called its \bld{prime factorization}. Moreover, the prime factorization is unique up to ordering of the factors.
+
+\subsubsection*{Theorem: The Fundamental Theorem of Arithmetic}
+Every positive integer other than 1 can be expressed uniquely as a product of prime numbers where the primes factors are written in non-decreasing order.
+
+\begin{align*}
+  \text{Examples of prime factorizations} & ~\text{in non-decreasing order} \\
+  112                                     & = 2^4\cdot 7                    \\
+  612                                     & = 2^2 \cdot 3^3 \cdot 17        \\
+  243                                     & = 3^5                           \\
+  17                                      & = 17
+\end{align*}
+
+\subsubsection*{Greater common divisors and least common multiples}
+\begin{itemize}
+  \item The \bld{greatest common divisor (gcd)} of integers $x \tand y$ that are not both zero is the largest integer that is a factor of both $x \tand y$.
+  \item The \bld{least common multiples (lcm)} of non-zero integers $x \tand y$ is the smallest positive integer that is an integer multiple of both $x \tand y$.
+\end{itemize}
+Two numbers are \bld{relatively prime} if their greatest common divisor is 1.
+
+\subsubsection*{Theorem: GCD and LCM from prime factorizations}
+Let $x \tand y$ be two positive integers with prime factorizations expressed using a common set of primes as:
+\begin{align*}
+  x & = p_1^{\alpha_1} \cdot p_2^{\alpha_2} \cdots p_r^{\alpha_r} \\
+  y & = p_1^{\beta_1} \cdot p_2^{\beta_2} \cdots p_r^{\beta_r}
+\end{align*}
+The $p_i$'s are all distinct prime numbers. The exponents $\alpha_i$'s and $\beta_i$'s are non-negative integers. Then:
+\begin{itemize}
+  \item $x \mid y$ if and only if $\alpha_i \leq \beta_i$ for all $1 \leq i \leq r$
+  \item $\gcd(x,y) = p_1^{\min(\alpha_1,\beta_1)} \cdot p_2^{\min(\alpha_2,\beta_2)} \cdots p_r^{\min(\alpha_r,\beta_r)}$
+  \item $\lcm(x,y) = p_1^{\max(\alpha_1,\beta_1)} \cdot p_2^{\max(\alpha_2,\beta_2)} \cdots p_r^{\max(\alpha_r,\beta_r)}$
+\end{itemize}
+
+\subsection{Factoring and primality testing}
+A \bld{brute force algorithm} solves a problem by exhaustively searching all positive solutions without using an understanding of the mathematical structure in the problem to eliminate steps.
+
+\subsubsection*{Theorem: Small Factors}
+If $N$ is a composite number, then $N$ has a factor greater than 1 and at most $\sqrt{N}$
+
+\subsubsection*{Theorem: Infinite number of primes}
+There are an infinite number of primes.
+\begin{proof}
+  Suppose that there are a finite number of primes. Since there are only a finite number, they can be listed:
+  \[
+    p_1,p_2,\ldots,p_k
+  \]
+  Take the product of all the primes and add 1. Call the resulting number $N$:
+  \[
+    N = (p_1 \cdot p_2 \cdots p_k) + 1
+  \]
+  The number $N$ is larger than all of the primes numbers that were listed, so it must not be prime. Since $N$ is a composite number, it is the product of at least two primes by the Fundamental Theorem of Arithmetic. There $N$ is divisible by some prime $p_j$. Let
+  \[
+    \frac{N}{p_j} = \frac{(p_1 \cdot p_2 \cdots p_k)}{p_j} + \frac{1}{p_j}
+  \]
+  Note that $p_j$ is one of the prime factors in $(p_1 \cdot p_2 \cdots p_k)$, so $(p_1 \cdot p_2 \cdots p_k)/p_j$ is an integer. However, $1/p_j$ is not an integer. Since $N/p_j$ is the sum of two terms, one of which is an integer and the other of which is not an integer, then $N/p_j$ is not an integer. This contradicts the fact that $p_j$ evenly divides $N$.
+\end{proof}
+
+\subsubsection*{The Prime Number Theorem}
+Let $\pi(x)$ be the number of prime numbers in the range from 2 through $x$. Then
+\[
+  \lim_{x \rightarrow \infty} \frac{\pi(x)}{x/\ln x} = 1.
+\]
+Another way to interpret the Prime Number Theorem is that if a random number is selected from the range 2 to $x$, then the likelihood that the selected number is prime is roughly $1/\ln x$.
+
+\subsection{Greatest common factor divisor and Euclid's algorithm}
+There is an efficient way to compute the gcd of two numbers without finding their prime factorizations. The algorithm presented in this subsection is in wide use today and is attributed to the Greek mathematician Euclid who lived around 300 B.C. The basis of the algorithm is the following theorem:
+
+\subsubsection*{GCD Theorem}
+Let $x \tand y$ be two positive integers. Then $\gcd(x,y) = \gcd(y \tmod x, x)$.
+
+\subsubsection*{Euclid's Algorithm for finding the greatest common divisor}
+\begin{lstlisting}
+Input: Two positive integers, x and y.
+Output: gcd(x, y)
+
+If(y < x)
+  Swap x and y.
+r := y mod x
+
+While(r != 0)
+  y := x
+  x := r
+  r := y mod x
+End-While
+
+Return(x)
+\end{lstlisting}
+Sample execution of Euclid's algorithm for $\gcd(675,210)$:
+\begin{center}
+  \begin{tabular}{cccccc}
+    $675$ & $210$ & $675 \tmod 210$                                                  \\
+          & $210$ & $45$            & $210 \tmod 45$                                 \\
+          &       & $45$            & $30$           & $45 \tmod 30$                 \\
+          &       &                 & $30$           & $15$          & $30 \tmod 15$ \\
+          &       &                 &                & $\bld{15}$    & $0$           \\
+  \end{tabular}
+\end{center}
+The last non-zero number was $15$, so $\gcd(675,210) = 15$.
+
+\subsubsection*{Expressing $\gcd(x,y)$ as a linear combination of $x$ and $y$}
+Let $x \tand y$ be integers, then there are integers $s \tand t$ such that
+\[
+  \gcd(x,y) = sx + ty.
+\]
+The values for $s \tand t$ in the theorem above can be found by a series of substitutions using the equation from each iteration. The algorithm used to find the coefficient, $s \tand t$, such that $\gcd(x,y) = sx + ty$, is called the \bld{Extended Euclidean Algorithm}.
+
+\subsubsection*{The Extended Euclidean Algorithm}
+\[
+  \begin{array}{lllll}
+        &     & y           & x           & r                                \\
+    675 & 210 & 45          & 30          & 15                               \\
+        &     &             &             & r = y \tmod x                    \\
+        &     &             &             & r = y - (y \tdiv x) \cdot x      \\
+        &     &             &             & 15 = 45 - (45 \tdiv 30) \cdot 30 \\
+        &     &             &             & \mathbf{15 = 45 - 1 \cdot 30}    \\
+        &     &             & 30          & = 210 - (210 \tdiv 45) \cdot 45  \\
+        &     &             & \mathbf{30} & \mathbf{= 210 - 4 \cdot 45}      \\
+        &     & 45          & =           & 675 - (675 \tdiv 210) \cdot 210  \\
+        &     & \mathbf{45} & \mathbf{=}  & \mathbf{675 - 3 \cdot 210}
+  \end{array}
+\]
+We can use the bolded equations to solve for $15 = c \cdot 210 + d \cdot 675$.
+\begin{align*}
+  15 & = 45 - 30                           \\
+     & = 45 - (210 - 4 \cdot 45)           \\
+     & = 5 \cdot 45 - 210                  \\
+     & = 5 \cdot (675 - 3 \cdot 210) - 210 \\
+     & = 5 \cdot 675 - 16 \cdot 210
+\end{align*}
+Now we have the full answer and expansion for $\gcd(675,210)$.
+\[
+  \gcd(675,210) = 15 = 5 \cdot 675 - 16 \cdot 210.
+\]
+
+\subsubsection*{The Multiplicative Inverse mod $n$}
+A \bld{multiplicative inverse mod $n$}, or just \bld{inverse mod $n$}, of an integer $x$, is an integer $s \in \{1,2,\ldots,n-1\}$ such that $sx \tmod n = 1$.
+
+For example, 3 is an inverse of 7 $\tmod 10$ because $3 \cdot 7 \tmod 10 = 1$. The number 7 is an inverse of 5 $\tmod 17$ because $7 \cdot 5 \tmod 17 = 1$. It is possible for a number to be its own multiplicative inverse mod $n$. For example, $7$ is the inverse of $7 \tmod 8$ because $7 \cdot 7 \tmod 8 = 1$.
+
+Not every number has an inverse mod $n$. For example, 4 does not have an inverse mod $6$. The condition is that $x$ has an inverse $\tmod n$ if and only if $x \tand n$ are relatively prime.
+
+The Extended Euclidean Algorithm can be used to find the multiplicative inverse of $x \tmod n$ when is exists.
+\begin{itemize}
+  \item If $\gcd(x, n) \neq 1$, then $x$ does not have a multiplicative inverse $\tmod n$.
+  \item If $x \tand n$ are relatively prime, then the Extended Euclidean Algorithm finds integers $s \tand t$ such that $1 = sx + tn$.
+  \item $sx - 1 = -tn$. Therefore, $(sx \tmod n) = (1 \tmod n)$. If $A - B$ is a multiple of $n$ then $(A \tmod n) = (B \tmod n)$.
+  \item $(s \tmod n)$ is the unique multiplicative inverse of $x$ in $\{0, 1, \ldots, n-1\}$.
+\end{itemize}
+For example, suppose that Euclid's Algorithm returns
+\[
+  \gcd(31, 43) = 1 = 13 \cdot 34 - 18 \cdot 31
+\]
+The coefficient of 31 is -18. Therefore, the multiplicative inverse of $31 \tmod 43$ is $(-18 \tmod 43) = 25$.
+
+\subsection{Number representation}
+A digit in binary is called a \bld{bit}. In binary notation, each place value is a power of 2. Numbers represented in \bld{base} $b$ require $b$ distinct symbols and each place value is a power of $b$.
+
+\subsubsection*{Theorem: Number representation}
+For an integer $b>1$. Every positive integer $n$ can be expressed uniquely as
+\[
+  n = a_k \cdot b^k + a_{k-1} \cdot b^{k-1} + \cdots + a_1 \cdot b^1 + a_0 \cdot b^0,
+\]
+where $k$ is a non-negative integer, and each $a_i$ is an integer in the range from $0 \tto b-1$, and $a_k \neq 0$.
+The representation of $n~\text{base}~b$ is called the \bld{base $b$ expansion of $n$} and is denoted by $(a_ka_{k-1}\ldots a_1a_0)_b$.
+
+\subsubsection*{Hexadecimal Numbers}
+In \bld{hexadecimal} notation (or \bld{hex} for short), numbers are represented in base 16. Typically, the set of symbol, in order of value, is
+\[
+  \{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F\}.
+\]
+Additionally, here are the first 15 hexadecimal digits and correspond encodings in decimal and binary.
+\[
+  \begin{array}{lccccccccc}
+    \text{Hex}     & 0    & 1    & 2    & 3    & 4    & 5    & 6    & 7    \\
+    \text{Decimal} & 0    & 1    & 2    & 3    & 4    & 5    & 6    & 7    \\
+    \text{Binary}  & 0    & 1    & 10   & 11   & 100  & 101  & 110  & 111  \\ \\
+    \text{Hex}     & 8    & 9    & A    & B    & C    & D    & E    & F    \\
+    \text{Decimal} & 8    & 9    & 10   & 11   & 12   & 13   & 14   & 15   \\
+    \text{Binary}  & 1000 & 1001 & 1010 & 1011 & 1100 & 1101 & 1110 & 1111
+  \end{array}
+\]
+Since both hexadecimal and binary are powers of 2, there is an easy way to translate between the binary expansion and the hexadecimal expansion of a number. Groups of 4 binary digits can be directly translated into hexadecimal digits. Here is an example
+\[
+  \begin{array}{ccccc}
+    1 & 1101 & 0101 & 1110 & 1000 \\
+    1 & D    & 5    & E    & 8
+  \end{array} \qquad 1,1101,0101,1110,1000_2 = 1D5E8_{16}
+\]
+Hexadecimal notation is particularly useful in computer science because each hexadecimal digit can be used to represent a 4-bit binary number. A byte, which consists of 8 bits, can be represented by a 2-digit hexadecimal number. Two hexadecimal digits is easier for a human to recognize and remember than 8 bits.
+
+\subsubsection*{Converting decimal numbers to base $b$}
+\[
+  \left[\text{Base $b$ expansion of $(n \tdiv b)$}\right]\left[n \tmod b\right]
+\]
+Here is an example of $1161_{10}$ converted to base 7:
+\[
+  \begin{array}{ccccc}
+     &            &             & \ulcorner    & 1161         \\
+     &            &             & 1161 \tdiv 7 & 1161 \tmod 7 \\
+     &            & \ulcorner   & 165          & 6            \\
+     &            & 165 \tdiv 7 & 165 \tmod 7  & |            \\
+     & \ulcorner  & 23          & 4            & |            \\
+     & 23 \tdiv 7 & 23 \tmod 7  & |            & |            \\
+     & 3          & 2           & |            & |            \\
+     & 3          & 2           & 4            & 6            \\
+  \end{array}
+\]
+
+\subsubsection*{The number of digits required to represent a number}
+\[
+  n = (\underbrace{[b-1][b-1]\ldots[b-1]}_{k \text{digits}})_b = (1\underbrace{00\ldots 0}_{k 0's})_b -1 = b^k - 1
+\]
+The number of digits required to expressed the base $b$ expansion of a positive integer $n$ is $\left\lceil \log_b (n+1) \right\rceil$. For example, the number of digits required to express the base 2 expansion of 13 is:
+\[
+  \left\lceil\log_2 (13 + 1)\right\rceil = \left\lceil \log_2(14)\right\rceil = \left\lceil 3.8 \right\rceil = 4.
+\]
+
+\subsection{Fast exponentiation}
+Computing a power of $x$ by repeated multiplication by $x$
+\[
+  p:=x \xrightarrow{p:=p*x} p = x^2 \xrightarrow{p:=p*x} p = x^3 \xrightarrow{p:=p*x} p=x^4 \cdots
+\]
+Computing a power of $x$ by repeated squaring
+\[
+  p:=x \xrightarrow{p:=p*p} p=x^2 \xrightarrow{p:=p*p} p=x^4 \xrightarrow{p:=p*p} p=x^8 \cdots
+\]
+In order to compute $x^y$, examine the binary expansion of y:
+\[
+  y = a_k \cdot 2^k + a_{k-1} \cdot 2^{k-1} + \cdots + a_1 \cdot 2^1 + a_0 \cdot 2^0
+\]
+We can use this expanded form of $y$ to represent $x$ as a sum of perfect squares
+\[
+  x^y = x^{a_k \cdot 2^k + a_{k-1} \cdot 2^{k-1} + \cdots + a_1 \cdot 2^1 + a_0 \cdot 2^0} = x^{a_{k} \cdot 2^{k}} \cdot x^{a_{k-1} \cdot 2^{k-1}} \cdots x^{a_{1} \cdot 2^{1}} \cdot x^{a_{0} \cdot 2^{0}}
+\]
+Each coefficient $a_j$ is either $0 \tor 1$. If $a_j = 0$ for some $j$, then
+\[
+  x^{a_j \cdot 2^j} = x^0 = 1
+\]
+and the corresponding factor can be omitted from the product. Here is an example, computing $7^{11}$.
+\begin{align*}
+  7^{11} & = 7^{[(1 \cdot 2^3) + (0 \cdot 2^2) + (1 \cdot 2^1) + (1 \cdot 2^0)]}               \\
+         & = 7^{(1 \cdot 8)} \cdot 7^{(0 \cdot 4)} \cdot 7^{(1 \cdot 2)} \cdot 7^{(1 \cdot 7)} \\
+         & = 7^8 \cdot 1 \cdot 7^2 \cdot 7^1                                                   \\
+  7^11   & = 5,764,801 \cdot 49 \cdot 7                                                        \\
+         & = 1,977,326,743
+\end{align*}
+
+\subsubsection*{An iterative algorithm for fast exponentiation}
+\begin{lstlisting}
+Input: Positive integers x and y.
+Output: x^y
+
+p := 1  // p holds the partial result
+s := x  // s holds the current x^{2^j}
+r := y  // r is used to compute the binary expansion of y
+
+while(r > 0)
+  if(r mod 2 = 1)
+    p := p * s
+  s := s * s
+  r := r div 2
+End-While
+
+Return(p)
+\end{lstlisting}
+
+\subsubsection*{An iterative algorithm for fast modular exponentiation}
+\begin{lstlisting}
+Input: Positive integers x, y and n.
+Output: x^y mod n
+
+p := 1  // p holds the partial result
+s := x  // s holds the current x^{2^j}
+r := y  // r is used to compute the binary expansion of y
+
+while(r > 0)
+  if(r mod 2 = 1)
+    p := p * s mod n
+  s := s * s mod n
+  r := r div 2
+End-While
+
+Return(p)
+\end{lstlisting}
+
+\subsection{Introduction to cryptography}
+\bld{Cryptography} is the science of protecting and authenticating data and communication. Cryptography is ubiquitous in the electronic age in which sensitive information such as credit card numbers and passwords are sent over the internet on a daily basis.
+
+A cryptosystem is a system by which a \bld{sender} sends a message to a \bld{receiver}. The sender \bld{encrypts} the message so that if an eavesdropper learns the transmitted message, they will be unable to recover the original message. The unencrypted message is called \bld{plaintext} and the encrypted message is called the \bld{ciphertext}. The receiver must have a \bld{secret key} that allows him to \bld{decrypt} the ciphertext to obtain the original plaintext.
+
+\subsubsection*{Sending an Encrypted Text Message via a Secret Key}
+\begin{enumerate}
+  \item Alice wants to send the message "MEET AT DAWN" to Bob. Alice converts the text message to the number 130505202701292704012314.
+  \item Alice encrypts the numerical message with her copy of the secret key.
+  \item Alice sends encrypted message to Bob. Eve cannot read the encrypted message without the secret key.
+  \item Bob decrypts the encrypted message using the secret key to get 130505202701292704012314 which he then converts to "MEET AT DAWN".
+\end{enumerate}
+
+\subsubsection*{Encryption and Decryption Functions}
+Consider a simple cryptosystem in which the set of all possible plaintexts come from $\bb{Z}_N$ for some integer $N$. Alice and Bob share a secret number $k \in \bb{Z}_N$. The security of their encryption scheme rests on the assumption that no one besides them knows the number $k$. To encrypt a plaintext $m \in \bb{Z}_n$, Alice computes:
+\[
+  c = (m + k) \tmod N \qquad \qquad \text{(encryption)}
+\]
+Alice sends the ciphertext $c$ to Bob. When Bob receives the ciphertext $c$, he decrypts $c$ as follows:
+\[
+  m = (c - k) \tmod N \qquad \qquad \text{(decryption)}
+\]
+The simple encryption scheme presented here is an example of symmetric key cryptography. In a \bld{symmetric key cryptosystem}, Alice and Bob must meet in advance to decide on the value of a shared secret key.
+
+\subsubsection*{Simple encryption scheme requirements}
+\begin{itemize}
+  \item If $m \neq m' \tand m,~m' \in \bb{Z}_N \tthen (m+k) \tmod N \neq (m'+k) \tmod N$ (no two distinct plaintexts map to same ciphertext).
+  \item If $m \in \bb{Z}_N \tthen (((m+k) \tmod N)-k) \tmod N = m$ (decryption scheme is inverse of encryption scheme).
+\end{itemize}
+However, this encryption method is not terribly secure, and is not used in real world conditions because better methods exist.
+
+\subsection{The RSA cryptosystem}
+In \bld{public key cryptography}, Bob has an \bld{encryption key} that he provides \itl{publicly} so that anyone can use it to send him an encrypted message. Bob holds a matching \bld{decryption key} that he keeps \itl{privately} to decrypt messages. While anyone can use the public key to encrypt a message, the security of the scheme depends on the fact that it is difficult to decrypt the message without having the matching private decryption key.
+\begin{enumerate}
+  \item Alice encrypts her message to Bob using the public key.
+  \item Alice sends the encrypted message to Bob. Eve cannot read the encrypted message.
+  \item Bob decrypts the message using his private key.
+\end{enumerate}
+
+\subsubsection*{Preparation of public and private keys in RSA}
+\begin{enumerate}
+  \item Bob selects two large prime numbers, $p \tand q$.
+  \item Bob computes $N = pq \tand \phi = (p-1)(q-1)$.
+  \item Bob finds an integer $e$ such that $\gcd(e, \phi) = 1$.
+  \item Bob computes the multiplication inverse of $e \tmod \phi$: an integer $d$ such that $(ed \tmod \phi) = 1$.
+  \item Public (encryption) key: $N \tand e$.
+  \item Private (decryption) key: $d$.
+\end{enumerate}
+The RSA scheme requires that $m$, the message, is an integer in $\bb{Z}_N$ and is not a multiple of $p \tor q$. Since $p \tand q$ are primes with hundreds of digits, it is extremely unlikely that $m$ is a multiple of primes $p \tor q$. Alice encrypts her plaintext using $e \tand N$ to produce ciphertext $c$ as follows:
+\[
+  c = m^e \tmod N \qquad \qquad \text{(encryption)}
+\]
+Alice transmits $c$ to Bob. Bob decrypts the ciphertext using $d$ to recover $m$ from $c$:
+\[
+  m = c^d \tmod N \qquad \qquad \text{(decryption)}
+\]
+
+\subsubsection*{Number theoretic fact to establish correctness of RSA}
+Let $p \tand q$ be prime numbers and $pq = N$. Suppose that $m \in \bb{Z}_n \tand \gcd(m,N) = 1$. Then $m^{(p-1)(q-1)} \tmod N = 1$.

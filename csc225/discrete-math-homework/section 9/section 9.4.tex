@@ -1,0 +1,29 @@
+\documentclass{article}
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\newcommand{\assignment}{Section 9.4}
+
+\lhead{Discrete Math II}
+\chead{\assignment}
+\rhead{Peter Schaefer}
+
+\begin{document}
+\section*{\assignment}
+
+\question{9.4.1}{Estimating the number of primes}
+\begin{enumerate}
+  \qitem{a}{Use the Prime Number Theorem to give an approximation for the number of prime numbers in the range 2 through 1,000.}{$\approx 1,000 \cdot 1/\ln(1,000) \approx 148 $}
+  \qitem{b}{Use the Prime Number Theorem to give an approximation for the number of prime numbers in the range 2 through 100,000.}{$\approx 100,000 \cdot 1/\ln(100,000) \approx 1686$}
+  \qitem{c}{Use the Prime Number Theorem to give an approximation for the number of prime numbers in the range 2 through 10,000,000.}{$\approx 10,000,000 \cdot 1/\ln(10,000,000) \approx 620,421$}
+\end{enumerate}
+
+\question{9.4.2}{Counting the number of prime numbers in a given range. $\pi(x)$ is defined to be the number of prime numbers in the range 2 through x (inclusive).}
+\begin{enumerate}
+  \qitem{a}{$\pi(10)$}{$=10: \{2,3,5,7\}$}
+  \qitem{b}{$\pi(20)$}{$=8: \{2,3,5,7,11,13,17,19\}$}
+  \qitem{c}{$\pi(30)$}{$=10: \{2,3,5,7,11,13,17,19,23,29\}$}
+  \qitem{d}{$\pi(40)$}{$=12: \{2,3,5,7,11,13,17,19,23,29,31,37\}$}
+\end{enumerate}
+
+\end{document}

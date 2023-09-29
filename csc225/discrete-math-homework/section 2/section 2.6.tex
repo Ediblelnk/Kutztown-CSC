@@ -1,0 +1,74 @@
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\lhead{Discrete Math II}
+\chead{Section 2.6}
+\rhead{Peter Schaefer}
+
+\begin{document}
+
+\section*{Section 2.6}
+
+\subsection*{2.6.1}
+\begin{enumerate}
+  \bitem{a} Prove that $\frac{\sqrt{2}}{2}$ is irrational.
+  \begin{proof}
+    Assume that $\frac{\sqrt{2}}{2}$ is rational. That is, it takes the form $\frac{p}{q}$, for some $p,q \in \bb{Z}$, where $q \nmid p$. This also means that $\sqrt{2}$ must be rational, that is it takes the form $\frac{m}{n}$, for some $m,n \in \bb{Z}$, where $n \nmid m$.
+    \begin{align*}
+      \sqrt{2}   & = \frac{m}{n}     \\
+      \sqrt{2}^2 & = (\frac{m}{n})^2 \\
+      2          & = \frac{m^2}{n^2} \\
+      2n^2       & = m^2
+    \end{align*}
+    Since $2n^2 = m^2$, $m^2$ is an even number. Since the square of an even integer is also even, this means that $m$ is also even; it takes the form $2k$, for some $k \in \bb{Z}$. Therefore,
+    \begin{align*}
+      m^2  & = (2k)^2 = 4k^2 \\ \\
+      2n^2 & = 4k^2
+    \end{align*}
+    This implies that there is a common factor between $n$ and $m$, and $m \mid n$. This contradicts the assertion that $m \nmid n$. Therefore $\sqrt{2}$ cannot be rational, and must be irrational.
+  \end{proof}
+  \bitem{b} Prove that $2-\sqrt{2}$ is irrational.
+  \begin{proof}
+    Assume that $2 - \sqrt{2}$ is rational. That is, it takes the form $\frac{p}{q}$, for some $p,q \in \bb{Z}$. This assertion also implies that $2$ is rational and $\sqrt{2}$ is rational. This was contradicted in problem 2.6.1a. Therefore $2 - \sqrt{2}$ cannot be rational, and must be irrational.
+  \end{proof}
+\end{enumerate}
+
+\subsection*{2.6.2}
+\begin{enumerate}
+  \bitem{a} Prove that if $n$ is an integer such that $n^3$ is even, then $n$ is even.
+  \begin{proof}
+    Assume that $n^3$ is odd. That is, $n^3 = 2k+1$, for some $k \in \bb{Z}$. Consider $k = 4j^3+6j^2+2j$, for some $j \in \bb{Z}$
+    \begin{align*}
+      n^3 & = 2k+1 = 2(4j^3+6j^2+2j) + 1       \\
+          & = 8j^3 + 12j^2 + 4j + 1            \\
+          & = 8j^3 + 8j^2 + 2j + 4j^2 + 4j + 1 \\
+          & = (4j^2+4j+1)(2j+1)                \\
+          & = (2j+1)^3
+    \end{align*}
+    Therefore $n$ takes the form $2k+1$, an odd integer. This contradicts the conclusion that $n$ is even. Therefore, if $n$ is an integer such that $n^3$ is even, then $n$ is even.
+  \end{proof}
+\end{enumerate}
+
+\subsection*{2.6.6}
+\begin{enumerate}
+  \bitem{a} If a group of 9 kids have won a total of 100 trophies, then at least one of the 9 kids has won as least 12 trophies.
+  \begin{proof}
+    Assume that if a group of 9 kids have won a total of 100 trophies, then all of the 9 kids have won at fewer than 12 trophies. This means that the total number of trophies must be:
+    \begin{align*}
+      \text{trophies} & \leq 9 \cdot 11 \\
+                      & \leq 99
+    \end{align*}
+    This contradicts the assertion that 9 kids have won a total of 100 trophies. Therefore, if a group of 9 kids have won a total of 100 trophies, then at least one of the 9 kids has won as least 12 trophies
+  \end{proof}
+  \bitem{b} If a person buys at least 400 cups of coffee in a year, then there is at least one day in which the person has bought at least two cups of coffee.
+  \begin{proof}
+    Assume that if a persons buys at least 400 cups of coffee in a year, then there are no days in which the person has bought at least two cups of coffee. Therefore, the total number of coffees must be:
+    \begin{align*}
+      \text{cups of coffee} & \leq 1 \cdot 365 \\
+                            & \leq 365
+    \end{align*}
+    This contradicts with the assertion that a person buys at least 400 cups of coffee in a year. Therefore, if a person buys at least 400 cups of coffee in a year, then there is at least one day in which the person has bought at least two cups of coffee
+  \end{proof}
+\end{enumerate}
+
+\end{document}

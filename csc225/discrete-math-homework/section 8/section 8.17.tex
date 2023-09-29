@@ -1,0 +1,48 @@
+\documentclass{article}
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\newcommand{\assignment}{Section 8.17}
+
+\lhead{Discrete Math II}
+\chead{\assignment}
+\rhead{Peter Schaefer}
+
+\begin{document}
+\section*{\assignment}
+
+\question{8.17.2}{Applying the Master Theorem: Give the asymptotic growth of $T(n)$ using $\Theta$ notation.}
+\begin{enumerate}
+  \qitem{a}{$T(n) = 4T(n/3) + \Theta(n)$}{
+    ${\displaystyle \qquad \frac{4}{3^1} > 1,\quad\therefore~T(n) = \Theta(n^{\log_3 4})}$
+  }
+  \qitem{b}{$T(n) = 4T(n/4) + \Theta(\sqrt{n})$}{
+    ${\displaystyle \qquad \frac{4}{4^{0.5}} > 1,\quad\therefore~T(n) = \Theta(n^{\log_4 4}) = \Theta(n)}$
+  }
+  \qitem{c}{$T(n) = 4T(n/2) + \Theta(n^2)$}{
+    ${\displaystyle \qquad \frac{4}{2^{2}} = 1,\quad\therefore~T(n) = \Theta(n^2 \log n)}$
+  }
+  \qitem{d}{$T(n) = 4T(n/2) + \Theta(n^3)$}{
+    ${\displaystyle \qquad \frac{4}{2^{3}} < 1,\quad\therefore~T(n) = \Theta(n^3)}$
+  }
+  \qitem{e}{$T(n) = 2T(n/3) + \Theta(n)$}{
+    ${\displaystyle \qquad \frac{2}{3^{1}} < 1,\quad\therefore~T(n) = \Theta(n)}$
+  }
+  \qitem{f}{$T(n) = 2T(n/3) + \Theta(1)$}{
+    ${\displaystyle \qquad \frac{2}{3^{0}} > 1,\quad\therefore~T(n) = \Theta(n^{log_3 2})}$
+  }
+  \qitem{g}{$T(n) = 7T(n/4) + \Theta(n^2)$}{
+    ${\displaystyle \qquad \frac{7}{4^{2}} < 1,\quad\therefore~T(n) = \Theta(n^2)}$
+  }
+  \qitem{h}{$T(n) = 7T(n/4) + \Theta(n)$}{
+    ${\displaystyle \qquad \frac{7}{4^1} > 1,\quad\therefore~T(n) = \Theta(n^{\log_4 1}) = \Theta(1)}$
+  }
+  \qitem{i}{$T(n) = 2T(n/4) + \Theta(\sqrt{n})$}{
+    ${\displaystyle \qquad \frac{2}{4^{0.5}} = 1,\quad\therefore~T(n) = \Theta(\sqrt{n}\cdot \log n)}$
+  }
+  \qitem{j}{$T(n) = 3T(n/3) + \Theta(1)$}{
+    ${\displaystyle \qquad \frac{3}{3^{0}} > 1,\quad\therefore~T(n) = \Theta(n^{\log_3 3}) = \Theta(n)}$
+  }
+\end{enumerate}
+
+\end{document}

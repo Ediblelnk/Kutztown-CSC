@@ -1,0 +1,46 @@
+\documentclass{article}
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\newcommand{\assignment}{Section 9.3}
+
+\lhead{Discrete Math II}
+\chead{\assignment}
+\rhead{Peter Schaefer}
+
+\begin{document}
+\section*{\assignment}
+
+\question{9.3.1}{Give the prime factorization for each number.}
+\begin{enumerate}
+  \qitem{a}{32}{$=2^5$}
+  \qitem{b}{42}{$=2 \cdot 3 \cdot 7$}
+  \qitem{c}{84}{$=2^2 \cdot 3 \cdot 7$}
+  \qitem{d}{36}{$=2^2 \cdot 3^2$}
+  \qitem{e}{121}{$=11^2$}
+  \qitem{f}{198}{$=2 \cdot 3^2 \cdot 11$}
+\end{enumerate}
+
+\question{9.3.2}{Some numbers and their prime factorization are given below.
+  \begin{itemize}
+    \item $140 = 2^2 \cdot 5 \cdot 7$
+    \item $175 = 5^2 \cdot 7$
+    \item $532 = 2^2 \cdot 7 \cdot 19$
+    \item $648 = 2^3 \cdot 3^4$
+    \item $1078 = 2 \cdot 7^2 \cdot 11$
+    \item $1083 = 3 \cdot 19^2$
+    \item $15435 = 3^2 \cdot 5 \cdot 7^3$
+    \item $25480 = 2^2 \cdot 5 \cdot 7^2 \cdot 13$
+  \end{itemize}
+  Use these prime factorizations to compute the following quantities.
+}
+\begin{enumerate}
+  \qitem{a}{$\gcd(532,15435)$}{$=7$}
+  \qitem{b}{$\gcd(648,1083)$}{$=3$}
+  \qitem{c}{$\lcm(532,1083)$}{$=2^2\cdot 3\cdot 7\cdot 19^2 = 30324$}
+  \qitem{d}{$\lcm(1083,15435)$}{$=3^3 \cdot 5 \cdot 7^3 \cdot 19^2 = 16716105$}
+  \qitem{e}{$\lcm(648,15435)$}{$=2^2 \cdot 3^4 \cdot 5 \cdot 7^3 = 555660$}
+  \qitem{f}{$\gcd(1078,140)$}{$=2 \cdot 7 = 14$}
+\end{enumerate}
+
+\end{document}

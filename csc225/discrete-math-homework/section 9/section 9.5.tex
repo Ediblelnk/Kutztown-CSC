@@ -1,0 +1,39 @@
+\documentclass{article}
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\newcommand{\assignment}{Section 9.5}
+
+\lhead{Discrete Math II}
+\chead{\assignment}
+\rhead{Peter Schaefer}
+
+\begin{document}
+\section*{\assignment}
+
+\question{9.5.1}{For each of the following pairs of numbers, find the gcd of the two numbers, and express the gcd as a linear combination of the two numbers.}
+\begin{enumerate}
+  \qitem{a}{$56 \tand 42$}{
+    \begin{proof}[Work]
+      \[
+        \gcd(56,42) = 14 = 56 - 42
+      \]
+    \end{proof}
+  }
+  \qitem{b}{$81 \tand 60$}{
+    \begin{proof}[Work]
+      \begin{align*}
+          & 81\qquad60\qquad21\qquad18\qquad3                                     \\ \\
+        3 & = 21 - 18                                    & 21 & = 81 - 60         \\
+        3 & = (81 - 60) - (60 - 2  \cdot  21)            & 18 & = 60 - 2 \cdot 21 \\
+        3 & = (81 - 60) - (60 - 2  \cdot  (81 - 60))     & 3  & = 21 - 18         \\
+        3 & = (81 - 60) - (60 - 2 \cdot 81 + 2 \cdot 60)                          \\
+        3 & = (81 - 60) - (3 \cdot 60 - 2 \cdot 81)                               \\
+        3 & = 81 - 60 - 3 \cdot 60 + 2 \cdot 81                                   \\
+        3 & = 3 \cdot 81 -4 \cdot 60
+      \end{align*}
+    \end{proof}
+  }
+\end{enumerate}
+
+\end{document}

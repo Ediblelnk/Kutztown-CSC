@@ -1,0 +1,189 @@
+\section{Introduction to Counting}
+\subsection{Sum and Product Rules}
+
+The two most basic rules of counting are the sum and product rule. The \bld{product rule} provides a way to count sequences.
+
+\subsubsection*{Theorem: The Product Rule}
+Let $A_1,A_2,\ldots,A_n$ be finite sets. Then,
+\[
+  | A_1 \times A_2 \times \cdots \times A_n | = |A_1| \cdot |A_2| \cdots |A_n|
+\]
+
+\subsubsection*{Counting Strings}
+If $\Sigma$ is a set of characters (called an \bld{alphabet}) then $\Sigma^n$ is the set of all string of length $n$ whose characters come from the set $\Sigma$. The product rule can be applied directly to determine the number of strings of a given length over a finite alphabet:
+\[
+  |\Sigma^n| = |\underbrace{\Sigma \times \Sigma \times \cdots \Sigma}_{\text{$n$ times}}| = \underbrace{|\Sigma| \cdot |\Sigma| \cdots |\Sigma|}_{\text{$n$ times}} = |\Sigma|^n
+\]
+
+\subsubsection*{Theorem: The Sum Rule}
+Consider $n$ sets, $A_1, A_2, \ldots, A_n$. If the sets are pairwise disjoint, meaning that $A_i \cap A_j = \emptyset \tfor i \neq i$, then
+\[
+  |A_1 \cup A_2 \cup \cdots \cup A_n| = |A_1| + |A_2| + \cdots + |A_n|
+\]
+
+\subsection{The Bijection Rules}
+One way to approach difficult counting problems is to show that the cardinality of the set to be counted is equal to the cardinality of a set that is easy to count. The \bld{bijection rule} says that if there is a bijection from one set to another then the two sets have the same cardinality.
+
+A function $f$ from a set $S$ to a set $T$ is called a bijection if and only if $f$ has a well-defined \itl{inverse}, $f^{-1}$.
+
+\subsubsection*{The Bijection Rule}
+Let $S \tand T$ be two finite sets. If there is a bijection from $S \tto T$, then $|S|=|T|$
+
+\subsubsection*{The k-to-1 Rule}
+Let $X \tand Y$ be finite sets. The function $f: X \rightarrow Y$ is a \bld{k-to-1 correspondence} if for every $y \in Y$, there are exactly $k$ difference $x \in x$ such that $f(x) = y$.
+
+Suppose there is a k-to-1 correspondence from a finite set $A$ to a finite set $B$. Then
+\[
+  |B| = \frac{|A|}{k}.
+\]
+
+\subsection{The generalized product rule}
+The \bld{generalized product rule} says that in selecting an item from a set, if the number of choices at each step does not depend on previous choices made, then the number of items in the set is a product of the number of choices in each step.
+
+\subsubsection*{Generalized Product Rule}
+Consider a set $S$ of sequences of $k$ items. Suppose there are:
+\begin{itemize}
+  \item $n_1$ choices for the first item.
+  \item For every possible choice for the first item, there are $n_2$ choice for the second item.
+  \item For every possible choice for the first and second items, there are $n_3$ choices for the third item.
+  \item $\vdots$
+  \item For every possible choice for the first $k-1$ items, there are $n_k$ choices for the $k$-th item.
+\end{itemize}
+Then $|S| = n_1 \cdot n_2 \cdots n_k$.
+
+\subsection{Counting permutations}
+An \bld{r-permutation} is a sequence of $r$ items with \bld{no repetitions}, all taken from the same set. In a sequence, order matters, so $(a,b,c)$ is different from $(b,a,c)$.
+
+\subsubsection*{The number of $r$-permutations from a set with $n$ elements}
+Let $r \tand n$ be positive integers with $r \leq n$. The number of $r$-permutations from a set with $n$ elements is denoted by $P(n,r)$:
+\[
+  P(n,r) = \frac{n!}{(n-r)!} = n(n-1)\cdots(n-r+1)
+\]
+
+\subsection{Counting subsets}
+A subset of size $r$ is called an \bld{r-subset}. An $r$-subset is sometimes referred to as an \bld{r-combination}. In a subset, order does not matter, so $\{a,b,c\}$ is the same as $\{b,a,c\}$. The counting rules for sequences and subsets are commonly referred to as "\itl{permutations} and \itl{combinations}". The term "combination" is the context of counting is another word for "subset".
+
+\subsubsection*{Counting Subsets: 'n choose r' notation}
+The number of ways to select an $r$-subset from a set of size $n$ is:
+\[
+  \binom{n}{r} = \frac{n!}{r!(n-r)!}.
+\]
+$\binom{n}{r}$ is read as "$n$ choose $r$". The notation $C(n,r)$ is sometimes used for $\binom{n}{r}$.
+
+We can calculated an expression for $\binom{n}{n-r}$ by replacing $r$ with $n-r$ in the expression for $\binom{n}{r}$.
+\[
+  \binom{n}{n-r} = \frac{n!}{(n-r)!(n-(n-r))!} = \frac{n!}{(n-r!)r!} =
+  \binom{n}{r}
+\]
+This is an \bld{identity} for $r$-subsets.
+
+\subsection{Subset and permutation examples}
+
+\subsubsection*{Two different cat selection problems: Subset vs. Permutations}
+Consider two closely related counting problems:
+\begin{enumerate}
+  \item A family goes to the animal shelter to adopt 3 cats. The shelter has 20 different cats from which to select. How many ways are there for the family to their selection?
+  \item Three different families go to the animal shelter to adopt a cat. Each family will select one cat. How many ways are there for the families to make their selection? (Note that which family gets which cat matters).
+\end{enumerate}
+In the first problem, the number is ways to make the selection is $\binom{20}{3}$ because the order in which the cats are selected is not important. The outcome is a 3-subset.
+
+In the second problem, the specific cat selected by each family is important. Additionally, no cat can belong to two families. Thus, the answer is $P(20,3) = 20 \cdot 19 \cdot 18$. The outcome is a 3-permutation.
+
+\subsection{Counting by complement}
+\bld{Counting by complement} is a technique for counting the number of elements in a set $S$ that have a property by counting the total number of elements in $S$ and subtracting the number of elements in $S$ that do not have the property.
+\[
+  |P| = |S| - |\overline{P}|
+\]
+Suppose we want to count the number of people in a room with red hair. We know that there are 20 people in the room and exactly 12 of them do not have red hair. Then we can deduce that the number of people in the room with red hair is 20 - 12 = 8.
+
+\subsection{Permutations with repetitions}
+A \bld{permutation with repetition} is an ordering of a set of items in which some of the items may be identical to each other. To illustrate with a smaller example, there are $3! = 6$ permutations of the letters CAT, because the letters in CAT are all different. However, there are only 3 different ways to scramble the letters in DAD: ADD, DAD, DDA.
+
+\subsubsection*{Formula for Counting Permutations with Repetition}
+The number of distinct sequences with $n_1 1's, n_2's, \ldots, n_k k's$, where $n = n_1 + n_2 + \cdots + n_k$ is
+\[
+  \frac{n!}{n_1!n_2!\cdots n_k!}
+\]
+The formula for permutations with repetition is derived from repeated use of the formula for counting r-subsets:
+\begin{align*}
+    & \binom{n}{n_1} \binom{n-n_1}{n_2} \binom{n-n_1-n_2}{n_3} \cdots \binom{n-n_1-n_2-\cdots-n_{k-1}}{n_k}                                                                                                                                \\
+  = & \frac{n!}{n_1!{\color{red}(n-n_1)!}} \cdot \frac{{\color{red}(n-n_1)!}}{n_2!{\color{blue}(n-n_1-n_2)!}} \cdot \frac{\color{blue}(n-n_1-n_2)!}{n_3!{\color{green}(n-n_1-n_2-n_3)!}} \cdots \frac{(n-n_1-n_2-\cdots-n_{k-1})!}{n_k!0!} \\
+  = & \frac{n!}{n_1!n_2!\cdots n_k!}
+\end{align*}
+
+\subsection{Counting multisets}
+A set is a collection of distinct items. A \bld{multiset} is a collection that can have multiple instances of the same kind of item. When $\{1,2,2,3\}$ is viewed as a set, the repetitions don't matter and $\{1,2,2,3\} = \{1,2,3\}$. However, when $\{1,2,2,3\}$ is viewed as a multiset, then the fact there are two occurrences of 2 is important, and $\{1,2,2,3\} \neq \{1,2,3\}$. Two multisets are equal if they have the same number of each type of element. For multisets, the order of elements still does not matter.
+
+\subsubsection*{Rules for encoding a selection of $n$ objects from $m$ varieties}
+\begin{center}
+  \begin{tabular}{|c|c|}
+    \hline
+    Selections                                               & Code words                                     \\
+    \hline
+    $n=$ number of items to select                           & $n=$ number of 0's in code word                \\
+    $m=$ number of varieties                                 & $m-1=$ number of 1's in code word              \\
+    Number selected from the first variety                   & Number of 0's before the first 1               \\
+    Number selected from the $i$-th variety, for $1 < i < m$ & Number of 0's between the $i$-1st and $i$-th 1 \\
+    Number selected from the last variety                    & Number of 0's after the last 1                 \\
+    \hline
+  \end{tabular}
+\end{center}
+If the mapping of selections to code words is a bijection, then by the bijection rule, the number of distinct code words is equal to the number of distinct selections. If the number of objects to select is $n$, and the number of varieties of object is $m$, each code word has $n$ 0's and $m-1$ 1's, for a total of $n+m-1$ bits. The binary string of length $n+m-1$ with exactly $m-1$ 1's is
+\[
+  \binom{n+m-1}{m-1}
+\]
+
+\subsubsection*{Theorem: Counting Multisets}
+The number of ways to select $n$ objects from a set of $m$ varieties is
+\[
+  \binom{n+m-1}{m-1},
+\]
+if there is no limitation on the number of each variety available and objects of the same variety are indistinguishable.
+
+A set of identical items are called \bld{indistinguishable} because it is impossible to distinguish one of the item from another. A set of different or distinct items are called \bld{distinguishable} because it is possible to distinguish one of the items from the others.
+
+\subsection{Assignment problems: Balls in bins}
+\begin{center}
+  \begin{tabular}{c|c|c|c}
+                            & \bld{No restrictions}      & \bld{Max 1 ball per bin}   & \bld{Same \# of balls per bin}          \\
+                            & (any positive $m$ and $n$) & ($m$ must be at least $n$) & ($m$ must evenly divide $n$)            \\
+    \hline
+    \bld{Indistinguishable} & $\binom{n+m-1}{m-1}$       & $\binom{m}{n}$             & 1                                       \\
+    \bld{Distinguishable}   & $m^n$                      & $P(m,n)$                   & ${\displaystyle \frac{n!}{((n/m)!)^m}}$
+  \end{tabular}
+\end{center}
+
+\subsection{Inclusion-exclusion principle}
+The \bld{principle of inclusion-exclusion} is a technique for determining the cardinality of the union sets that uses the cardinality of each individual set as well as the cardinality of their intersections.
+
+\subsubsection*{The inclusion-exclusion principle with two sets}
+Let $A \tand B$ be two finite sets, then $|A \cup B| = |A| + |B| - |A \cap B|$
+
+\subsubsection*{The inclusion-exclusion principle with three sets}
+Let $A, B, \tand C$ be three finite sets, then
+\[
+  |A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |B \cap C| - |A \cap C| + |A \cap B \cap C|
+\]
+
+\subsubsection*{The inclusion-exclusion principle with an arbitrary number of sets}
+Let $A_1,A_2,\ldots,A_n$ be a set of $n$ finite sets.
+\begin{align*}
+  |A_1 \cup A_2 \cup \cdots \cup A_n| & = \sum_{j=1}^{n} |A_j|                                         \\
+                                      & - \sum_{1 \leq j \leq k \leq n} |A_j \cap A_k|                 \\
+                                      & + \sum_{1 \leq j \leq j \leq l \leq n} |A_j \cap A_k \cap A_l| \\
+                                      & ~~\vdots                                                       \\
+                                      & + (-1)^{n+1} |A_1 \cap A_2 \cap \cdots \cap A_n|
+\end{align*}
+
+\subsubsection*{The inclusion-exclusion principle and the sum rule}
+A collection of sets is \bld{mutually disjoint} if the intersection of every pair of sets in the collection is empty. If we apply the principle of inclusion-exclusion to determine the union of a collection of mutually disjoint sets, then all the terms with the intersections are zero. Thus, for a collection of mutually disjoint sets, the cardinality of the union of the sets is just equal to the sum of the cardinality of each of the individual sets:
+\[
+  |A_1 \cup A_2 \cup \cdots \cup A_n| = |A_1| + |A_2| + \cdots + |A_n|.
+\]
+The equation above is a restatement of the sum rule which only applies when the sets are mutually disjoint.
+
+\subsubsection*{Determining the Cardinality of a Union by Complement}
+Counting by complement can be used to express the size of the union as:
+\[
+  |U| - |\overline{P_1 \cup P_2 \cup \cdots \cup P_n}| = |P_1 \cup P_3 \cup \cdots \cup P_n|
+\]

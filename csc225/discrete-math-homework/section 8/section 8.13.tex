@@ -1,0 +1,58 @@
+\documentclass{article}
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\newcommand{\assignment}{Section 8.13}
+
+\lhead{Discrete Math II}
+\chead{\assignment}
+\rhead{Peter Schaefer}
+
+\begin{document}
+\section*{\assignment}
+
+\question{8.13.3}{Adapting mergesort to remove duplicates}
+\begin{enumerate}
+  \biitem{a}{Change mergesort so that the algorithm removes duplicate items in the list as well as sort the remaining items. For example, on input (15,2,21,5,15,2,15), the output should be (2,5,15,21).}
+  \begin{lstlisting}
+MergeSort( X, F=true )
+If ( F )
+  For i := 1 to n
+    For j := i to n
+      If (X_i = X_j)
+        remove(X_j)
+        n := n-1
+      End-if
+    End-for
+  End-for
+End-if
+
+If ( size(X) = 1 ), Return(X)
+
+L := createEmptyQueue()
+R := createEmptyQueue()
+
+n := size(X)
+m := ceil(n/2)
+
+For i := 1 to m
+  x := remove(X)
+  add(L, x)
+End-for
+
+For i := 1 to (n-m)
+  x := remove(X)
+  add(R, x)
+End-for
+
+A := MergeSort(L, F=false)
+B: = MergeSort(R, F=false)
+
+C := Merge(A, B)
+
+Return(C)
+    \end{lstlisting}
+    \qdash
+\end{enumerate}
+
+\end{document}

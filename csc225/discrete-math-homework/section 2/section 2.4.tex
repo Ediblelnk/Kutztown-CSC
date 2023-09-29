@@ -1,0 +1,121 @@
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\lhead{Discrete Math II}
+\chead{Section 2.4}
+\rhead{Peter Schaefer}
+
+\begin{document}
+
+\section*{Section 2.4}
+
+\subsection*{2.4.1 Proving Statements about odd and even integers with direct proofs}
+\begin{enumerate}
+  \bitem{a} The sum of an odd and an even integer is odd
+  \begin{proof}
+    Let $x$ be an even integer and $y$ be an odd integer. $x=2k$ for some integer $k$ and $y=2j+1$ for some integer $j$.
+    \begin{align*}
+      x + y & = 2k + 2j +1 \\
+            & = 2(k+j)+1
+    \end{align*}
+    Since $k$ and $j$ are integers, $k+j$ is an integer. Therefore, $2(k+j)+1$ is an odd integer. \\
+    $\therefore$ the sum of an odd and an even integer is odd
+  \end{proof}
+  \bitem{e} If $x$ is an even integer and $y$ is an odd integer, then $x^2+y^2$ is odd
+  \begin{proof}
+    Since $x$ is an even integer, $x = 2k$ for some $k \in \bb{Z}$.
+    Since $y$ is an odd integer, $x = 2j + 1$ for some $j \in \bb{Z}$.
+    \begin{align*}
+      x^2+y^2 & = (2k)^2 + (2j+1)^2       \\
+              & = 4k^2 + 4j^2 + 4j + 1    \\
+              & = 2(2k^2 + 2j^2 + 2j) + 1
+    \end{align*}
+    Since $k,j \in \bb{Z}$, $2k^2 + 2j^2 + 2j \in \bb{Z}$. Therefore $2(2k^2 + 2j^2 + 2j) + 1$ is an odd integer. \\
+    $\therefore$ if $x$ is an even integer and $y$ is an odd integer, then $x^2+y^2$ is odd
+  \end{proof}
+\end{enumerate}
+
+\subsection*{2.4.2 Proving statements about rational numbers with direct proofs}
+\begin{enumerate}
+  \bitem{c} If $x$ and $y$ are rational numbers, then $3x + 2y$ is also a rational number
+  \begin{proof}
+    Since $x \in \bb{Q}$, $x = \frac{a}{b}$ for some $a,b \in \bb{Z}$ with $b \neq 0$.
+    Since $y \in \bb{Q}$, $y = \frac{c}{d}$ for some $c,d \in \bb{Z}$ with $d \neq 0$.
+    \begin{align*}
+      3x + 2y & = 3\frac{a}{b} + 2\frac{c}{d}              \\
+              & = \frac{3ad}{bd} + \frac{2bc}{bd}          \\
+              & = \frac{3ad + 2bc}{bd}, b \neq 0, d \neq 0
+    \end{align*}
+    Since both $b \neq 0$ and $d \neq 0$, $bd \neq 0$. $3ad + 2bc \in \bb{Z}$ by properties of $\bb{Z}$.
+    $bd \in \bb{Z}$ by properties of $\bb{Z}$. Therefore $\frac{3ad + 2bc}{bd}$ takes the form of a rational number. \\
+    $\therefore$ if $x$ and $y$ are rational numbers, then $3x + 2y$ is also a rational number
+  \end{proof}
+  \bitem{f} The average of two rational number is also rational
+  \begin{proof}
+    Let $x,y \in \bb{Q}$. \\
+    Since $x \in \bb{Q}$, $x = \frac{a}{b}$ for some $a,b \in \bb{Z}$ with $b \neq 0$.
+    Since $y \in \bb{Q}$, $y = \frac{c}{d}$ for some $c,d \in \bb{Z}$ with $d \neq 0$. \\
+    The average of two numbers is found by $\frac{x + y}{2}$.
+    \begin{align*}
+      \frac{x+y}{2} & = \frac{\frac{a}{b} + \frac{c}{d}}{2}           \\
+                    & = \frac{\frac{a}{b}}{2} + \frac{\frac{c}{d}}{2} \\
+                    & = \frac{a}{2b} + \frac{c}{2d}                   \\
+                    & = \frac{ad}{2bd} + \frac{bc}{2bd}               \\
+                    & = \frac{ad + bc}{2bd}, b \neq 0, d \neq 0
+    \end{align*}
+    Since both $b \neq 0$ and $d \neq 0$, $bd \neq 0$. $ad + bc \in \bb{Z}$ by properties of $\bb{Z}$.
+    $2bd \in \bb{Z}$ by properties of $\bb{Z}$. Therefore $\frac{ad + bc}{2bd}$ takes the form of a rational number. \\
+    $\therefore$ The average of two rational number is also rational
+  \end{proof}
+\end{enumerate}
+
+\subsection*{2.4.3 Proving algebraic statements with direct proofs}
+\begin{enumerate}
+  \bitem{a} For any positive real numbers $x$ and $y$, $(x+y)^2 \geq xy$
+  \begin{proof}
+    Let $x \in \bb{R}$ such that $x > 0$. Let $y \in \bb{R}$ such that $y > 0$.
+    Since $x > 0$ and $y > 0$, $x^2 > 0$, $xy > 0$, and $y^2 > 0$. Therefore their sum is also greater than $0$.
+    \begin{align*}
+      x^2 + xy + y^2  & \geq 0  \\
+      x^2 + xy + y^2  & \geq 0  \\
+      x^2 + 2xy + y^2 & \geq xy \\
+      (x+y)^2         & \geq xy \\
+    \end{align*}
+    $\therefore$ for any positive real numbers $x$ and $y$, $(x+y)^2 \geq xy$
+  \end{proof}
+  \bitem{b} If $x$ is a real number and $x \leq 3$, then $12 - 7x + x^2 \geq 0$
+  \begin{proof}
+    Let $x \in \bb{R}$ such that $x \leq 3$.
+    \begin{align*}
+      x-3           & \leq 0                                                               \\
+      (x-3)(x-4)    & \geq 0,~\text{sign changes since $x \leq 3$ and therefore $x-4 < 0$} \\
+      12 - 7x + x^2 & \geq 0
+    \end{align*}
+    $\therefore$ if $x$ is a real number and $x \leq 3$, then $12 - 7x + x^2 \geq 0$
+  \end{proof}
+  \bitem{c} If $n$ is a real number and $n > 1$, then $n^2 > n$
+  \begin{proof}
+    Let $n \in \bb{R}$ such that $n > 1$.
+    \begin{align*}
+      n         & > 1                                                  \\
+      n \cdot n & > 1 \cdot n,~\text{sign stays since $n$ is positive} \\
+      n^2       & > n                                                  \\
+    \end{align*}
+    $\therefore$ if $n$ is a real number and $n > 1$, then $n^2 > n$
+  \end{proof}
+  \bitem{d} If $x$ is a real number such that $0 < x < 1$, then $\frac{1}{x(1-x)} \geq 4$
+  \begin{proof}
+    Let $x \in \bb{R}$ such that $0 < x < 1$.
+    \begin{align*}
+      (x-\frac{1}{2})^2 & \geq 0,~\text{since $n^2 \geq 0$ for $n \in \bb{R}$} \\
+      x^2-x+\frac{1}{4} & \geq 0                                               \\
+      4x^2-4x+1         & \geq 0                                               \\
+      1                 & \geq 4x - 4x^2                                       \\
+      \frac{1}{x-x^2}   & \geq 4,~\text{sign stays when $0 < x < 1$}           \\
+      \frac{1}{x(1-x)}  & \geq 4
+    \end{align*}
+    $\therefore$ if $x$ is a real number such that $0 < x < 1$, then $\frac{1}{x(1-x)} \geq 4$
+  \end{proof}
+\end{enumerate}
+
+\end{document}

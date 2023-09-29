@@ -1,0 +1,82 @@
+\documentclass{article}
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\newcommand{\assignment}{Section 8.12}
+
+\lhead{Discrete Math II}
+\chead{\assignment}
+\rhead{Peter Schaefer}
+
+\begin{document}
+\section*{\assignment}
+
+\question{8.12.1}{Simplify each recurrence reltion as much as possible. The simplified formula for the function should have the same asymptotic growth as the original recurrence relation.}
+\begin{enumerate}
+  \qitem{a}{$T(n) = T(n-1) + 5n^3 + 4n$}{
+    \begin{proof}[work]
+      \begin{align*}
+        T(n) & = T(n-1) + 5n^3 + 4n                                                       \\
+             & = T(n-1) + \Theta(n^3)                                                     \\
+             & = \Theta(n^3) + \Theta(n^3) + \cdots + \Theta(n^3) &  & \text{[$n$ times]} \\
+             & = n \cdot \Theta(n^3)                                                      \\
+             & = \Theta(n^4)
+      \end{align*}
+    \end{proof}
+  }
+  \qitem{b}{$T(n) = T(\left\lfloor n/2\right\rfloor) + T(\left\lceil n/2\right\rceil) + 7n$}{
+    \begin{proof}[work]
+      \begin{align*}
+        T(n) & = T(\left\lfloor n/2\right\rfloor) + T(\left\lceil n/2\right\rceil) + 7n                               \\
+             & = 2T(n/2) + \Theta(n)                                                                                  \\
+             & = 2(2T(n/4) + \Theta(n)) + \Theta(n)                                                                   \\
+             & = \Theta(n) + \Theta(n) + \cdots + \Theta(n)                             &  & \text{($\log_2n$ times)} \\
+             & = \log_2n \cdot \Theta(n)                                                                              \\
+             & = \Theta(n\log n)
+      \end{align*}
+    \end{proof}
+  }
+  \qitem{c}{$T(n) = 3 \cdot T(\left\lfloor n/2\right\rfloor) + 14$}{
+    \begin{proof}[work]
+      \begin{align*}
+        T(n) & = 3 \cdot T(\left\lfloor n/2\right\rfloor) + 14                              \\
+             & = 3T(n/2) + \Theta(1)                                                        \\
+             & = \Theta(n^{\log_23})                           &  & \text{(master theorem)}
+      \end{align*}
+    \end{proof}
+  }
+  \qitem{d}{$T(n) = 3 \cdot T(\left\lceil n/3\right\rceil) + 4n + 6n\log n$}{
+    \begin{proof}[work]
+      \begin{align*}
+        T(n) & = 3 \cdot T(\left\lceil n/3\right\rceil) + 4n + 6n\log n                                    \\
+             & = 3 \cdot T(n/3) + \Theta(n\log n)                                                          \\
+             & = 3(3T(n/9) + \Theta(n\log n)) + \Theta(n\log n)                                            \\
+             & = 9T(n/9) + \Theta(n \log n) + \Theta(n\log n)                                              \\
+             & = \Theta(n\log n) + \Theta(n\log n) + \cdot + \Theta(n\log n) &  & \text{($log_3 n$ times)} \\
+             & = \log n \cdot \Theta(n \log n)                                                             \\
+             & = \Theta(n \log^2n)
+      \end{align*}
+    \end{proof}
+  }
+\end{enumerate}
+
+\question{8.12.2}{}
+\begin{enumerate}
+  \item[\bld{a.}]
+    \itl{Give the recurrence relation to describe the asymptotic time complexity of your algorithm to compute the sum of the cubes of the first $n$ positive integers.}
+    \begin{lstlisting}
+CubeSum(n)
+{
+  if(n == 1) return(1);
+  return(n**3 + CubeSum(n-1));
+}
+      \end{lstlisting}
+    \begin{proof}[work]
+      \begin{align*}
+        T(n) & = T(n-1) + \Theta(1) \\
+        T(1) & = \Theta(1)
+      \end{align*}
+    \end{proof}
+\end{enumerate}
+
+\end{document}

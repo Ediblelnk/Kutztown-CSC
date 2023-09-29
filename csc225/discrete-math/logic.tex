@@ -1,0 +1,535 @@
+\section{Logic}
+\subsection{Propositions and Logical Operations}
+
+\textbf{Proposition}: a statement that is either \underline{true} or \underline{false}.
+
+
+Some examples include "It is raining today" and "$3 \cdot 8 = 20 $".
+
+
+However, not all statements are propositions, such as "open the door"
+
+\begin{center}
+  \begin{tabular}{c|c|c}
+    \textbf{Name} & \textbf{Symbol} & \textbf{alternate name} \\
+    \hline
+    NOT           & $\lnot$         & negation                \\
+    AND           & $\land$         & conjunction             \\
+    OR            & $\lor$          & disjunction             \\
+    XOR           & $\oplus$        & exclusive or            \\
+  \end{tabular}
+  \qquad
+  \begin{tabular}{c|c|c|c|c|c}
+    \textbf{$p$} & \textbf{$q$} & \textbf{$\lnot p$} & \textbf{$p \land q$} & \textbf{$p \lor q$} & \textbf{$p \oplus q$} \\
+    \hline
+    T            & T            & F                  & T                    & T                   & F                     \\
+    T            & F            & F                  & F                    & T                   & T                     \\
+    F            & T            & T                  & F                    & T                   & T                     \\
+    F            & F            & T                  & F                    & F                   & F                     \\
+  \end{tabular}
+\end{center}
+
+XOR is very useful for encryption and binary arithmetic.
+
+\subsection{Evaluating Compound Propositions}
+
+\begin{align*}
+  p & : \text{The weather is bad.}    & p \land q            & : \text{The weather is bad \textit{and} the trip is cancelled}                            \\
+  q & : \text{The trip is cancelled.} & p \lor q             & : \text{The weather is bad \textit{or} the trip is cancelled}                             \\
+  r & : \text{The trip is delayed.}   & p \land (q \oplus r) & : \text{The weather is bad \textit{and} either the trip is cancelled \textit{or} delayed} \\
+\end{align*}
+
+\textbf{Order of Evaluation} $\lnot$, then $\land$, then $\lor$, but parenthesis always help for clarity.
+
+\begin{center}
+  Example Truth Table:
+  \qquad
+  \begin{tabular}{c|c|c|c|c}
+    $p$ & $q$ & $p \land q$ & $\lnot q$ & $(p \land q) \oplus \lnot q$ \\
+    \hline
+    T   & T   & T           & F         & T                            \\
+    T   & F   & F           & T         & T                            \\
+    F   & T   & F           & F         & F                            \\
+    F   & F   & F           & T         & T                            \\
+  \end{tabular}
+\end{center}
+
+\subsection{Conditional Statements}
+
+\begin{center}
+  $p \rightarrow q$ \ where $p$ is the \underline{hypothesis} and $q$ is the \underline{conclusion}
+\end{center}
+
+\begin{center}
+  \begin{tabular}{c|c}
+    Format                     & Terminology    \\
+    \hline
+    $p \rightarrow q$             & given          \\
+    $\lnot q \rightarrow \lnot p$ & contrapositive \\
+    $q \rightarrow p$             & converse       \\
+    $\lnot p \rightarrow \lnot q$ & inverse        \\
+  \end{tabular}
+  \qquad
+  \begin{tabular}{ccccc}
+    given   & $p \rightarrow q$             & $\equiv$ & $\lnot q \rightarrow \lnot p$ & contrapositive \\
+    inverse & $\lnot p \rightarrow \lnot q$ & $\equiv$ & $q \rightarrow p$             & converse
+  \end{tabular}
+\end{center}
+
+\begin{center}
+  \begin{tabular}{c|c|c}
+    $p$ & $q$ & $p \rightarrow q$ \\
+    \hline
+    T   & T   & T              \\
+    T   & F   & F              \\
+    F   & T   & T              \\
+    F   & F   & T              \\
+  \end{tabular}
+  \quad
+  \begin{tabular}{c}
+    $p$ is a \underline{sufficient} condition for $q$ \\
+    $q$ is a \underline{necessary} condition for $p$
+  \end{tabular}
+  \quad
+  \begin{tabular}{c|c}
+    Phrase                 & Logic          \\
+    \hline
+    $q$ if $p$             & $p \rightarrow q$ \\
+    $q$ only if $p$        & $q \rightarrow p$ \\
+    $q$ if and only if $p$ & $p \iff q$
+  \end{tabular}
+\end{center}
+
+\begin{center}
+  \textbf{Order of Operations}: $p \land q \rightarrow r \equiv (p \land q) \rightarrow r$
+\end{center}
+
+\subsection{Logical Equivalence}
+
+\begin{center}
+  \textbf{Tautology}: a proposition that is always \underline{true}
+  \qquad
+  \textbf{Contradiction}: a proposition that is always \underline{false}
+\end{center}
+
+\textbf{Logically equivalent}: same truth value regardless of the truth values of their individual propositions
+
+\textbf{DeMorgan's Laws}:
+\qquad
+\begin{tabular}{c}
+  $\lnot (p \lor q) \equiv \lnot p \land \lnot q$ \\
+  $\lnot (p \land q) \equiv \lnot p \lor \lnot q$
+\end{tabular}
+
+\begin{center}
+  \begin{tabular}{c}
+    Verbally,                                                                                   \\
+    It is not true that the patient has migraines \textit{or} high blood pressure $\equiv$      \\
+    $\equiv$ The patient does not have migraines \textit{and} does not have high blood pressure \\
+    \hline
+    It is not true that the patient has migraines \textit{and} high blood pressure $\equiv$     \\
+    $\equiv$ The patient does not have migraines \textit{or} does not have high blood pressure  \\
+  \end{tabular}
+\end{center}
+
+\subsection{Laws of Propositional Logic}
+
+\begin{center}
+  You can use \textbf{substitution} on logically equivalent propositions.
+\end{center}
+
+\begin{center}
+  \begin{tabular}{r|c|c}
+    \textbf{Law Name} & $\lor$ or                                               & $\land$ and                                              \\
+    \hline
+    Idempotent        & $p \lor p \equiv p$                                     & $p \land p \equiv p$                                     \\
+    Associative       & $(p \lor q) \lor r \equiv p \lor (q \lor r)$            & $(p \land q) \land r \equiv p \land (q \land r)$         \\
+    Commutative       & $p \lor q \equiv q \lor p$                              & $p \land q \equiv q \land p$                             \\
+    Distributive      & $p \lor (q \land r) \equiv (p \lor q) \land (p \lor r)$ & $p \land (q \lor r) \equiv (p \land q) \lor (p \land r)$ \\
+    Identity          & $p \lor $ F $\equiv p$                                  & $p \land $ T $\equiv p$                                  \\
+    Domination        & $p \lor $ T $\equiv $ T                                 & $p \land $ F $\equiv $ F                                 \\
+    Double Negation   & $\lnot \lnot p \equiv p$                                                                                           \\
+    Complement        & $p \lor \lnot p \equiv$ T                               & $p \land \lnot p \equiv$ F                               \\
+    DeMorgan          & $\lnot (p \lor q) \equiv \lnot p \land \lnot q$         & $\lnot (p \land q) \equiv \lnot p \lor \lnot q$          \\
+    Absorption        & $p \lor (p \land q) \equiv p$                           & $p \land (p \lor q) \equiv p$                            \\
+    Conditional       & $p \rightarrow q \equiv \lnot p \lor q$                    & $p \iff q \equiv (p \rightarrow q) \land (q \rightarrow p)$
+  \end{tabular}
+\end{center}
+
+\subsection{Predicates and Quantifiers}
+
+\textbf{Predicate}: a logical statement where truth value is a \underline{function} of a variable.
+
+\begin{center}
+  P($x$): $x$ is an even number. \qquad P(5): false \qquad P(2): true
+\end{center}
+
+\noindent \textbf{Domain}: the set of all possible values for a variable in a predicate.
+
+\begin{center}
+  Ex. $ \mathbb{Z}^+ $ is the set of all positive integers.
+
+  *If domain is not clear from context, it should be given as part of the definition of the predicate.
+\end{center}
+
+\noindent \textbf{Quantifier}: converts a predicate to a proposition.
+\qquad
+\begin{tabular}{c|c|c}
+  Quantifier  & Symbol     & Meaning        \\
+  \hline
+  Universal   & $\forall$ & "for all"      \\
+  Existential & $\exists$  & "there exists" \\
+\end{tabular}
+
+\begin{center}
+  $\exists~ x (x+1 < x)$ is false.
+\end{center}
+
+\noindent \textbf{Counter Example}: universally quantified statement where an element in the domain
+for which the predicate is false. Useful to prove a $\forall~$ statement false.
+
+\subsection{Quantified Statements}
+
+Consider the two following two predicates:
+\begin{align*}
+  P(x) & : x \text{ is prime, } x \in \mathbb{Z}^+ \\
+  O(x) & : x \text{ is odd}
+\end{align*}
+
+\begin{center}
+  Proposition made of predicates: \qquad $\exists~ x (\text{P}(x) \land \lnot \text{O}(x))$ \\
+  Verbally: there exists a positive integer that is prime but is \underline{not} odd.
+\end{center}
+
+\noindent \textbf{Free Variable}: a variable that is free to be any value in the domain.
+
+\noindent \textbf{Bound Variable}: a variable that is bound to a quantifier.
+
+\begin{center}
+  \begin{tabular}{rl}
+    $\text{P}(x)$: & $x \text{ came to the party}$ \\
+    $\text{S}(x)$: & $x \text{ was sick}$          \\
+  \end{tabular}
+  \qquad
+  \begin{tabular}{c}
+    $\text{P}(x) \overset{?}{\equiv} \lnot \text{S}(x)$ \\
+    $\text{P}(x) \centernot{\equiv} \lnot \text{S}(x)$
+  \end{tabular}
+  \qquad
+  \begin{tabular}{c|ccc}
+         & P$(x)$ & S$(x)$ & $\lnot$S$(x)$ \\
+    \hline
+    Joe  & T      & F      & T             \\
+    Theo & F      & T      & F             \\
+    Gert & T      & F      & T             \\
+    Sam  & F      & F      & T
+  \end{tabular}
+\end{center}
+
+\subsection{DeMorgan's law for Quantified Statements}
+
+
+Consider the predicate: F$(x):$ "$x$ can fly", where $x$ is a bird.
+According to the DeMorgan Identity for Quantified Statements,
+
+\begin{align*}
+  \lnot \forall~ x \text{F}(x)    & \equiv \exists~ x \lnot \text{F}(x)                 \\
+  \text{"not every bird can fly} & \equiv \text{"there exists a bird that cannot fly}
+\end{align*}
+
+Example using DeMorgan Identities:
+\begin{align*}
+  \lnot \exists~ x (\text{P}(x) \rightarrow \lnot \text{Q}(x)) & \equiv \forall~ x \lnot (\text{P}(x) \rightarrow \lnot \text{Q}(x))          \\
+                                                           & \equiv \forall~ x (\lnot \lnot \text{P}(x) \land \lnot \lnot \text{Q}(x)) \\
+                                                           & \equiv \forall~ x (\text{P}(x) \land \text{Q}(x))
+\end{align*}
+
+\subsection{Nested Quantifiers}
+
+A logical expression with more than one quantifier that binds different variables in the same predicate
+is said to have \textbf{Nested Quantifiers}.
+
+\begin{center}
+  \begin{tabular}{c|c}
+    Logic                                    & Variable Boundedness     \\
+    \hline
+    $\forall~ x \exists~ y \text{ P}(x, y)$    & $x$, $y$ bound           \\
+    $\forall~ x \text{ P}(x, y)$              & $x$ bound, $y$ free      \\
+    $\exists~ x \exists~ y \text{ T}(x, y, z)$ & $x$, $y$ bound, $z$ free \\
+  \end{tabular}
+  \quad
+  \begin{tabular}{c|c}
+    Logic                                 & Meaning                              \\
+    \hline
+    $\forall~ x \forall~ y \text{ M}(x, y)$ & "everyone sent an email to everyone" \\
+    $\forall~ x \exists~ y \text{ M}(x, y)$ & "everyone sent an email to someone"  \\
+    $\exists~ x \forall~ y \text{ M}(x, y)$ & "someone sent an email to everyone"  \\
+    $\exists~ x \exists~ y \text{ M}(x, y)$ & "someone sent an email to someone"   \\
+  \end{tabular}
+\end{center}
+
+\noindent There is a two-player game analogy for how quantifiers work:
+
+\begin{center}
+  \begin{tabular}{c|c|c}
+    Player                       & Action                                          & Goal                                       \\
+    \hline
+    Existential Player $\exists~$ & selects value for existentially-bound variables & tries to make expression \underline{true}  \\
+    Universal Player $\forall~$   & selects value for universally-bound variables   & tries to make expression \underline{false}
+  \end{tabular}
+\end{center}
+
+\noindent Consider the predicate L$(x,y):$ "$x$ likes $y$".
+\begin{align*}
+  \exists~ x \forall~ y \text{L}(x, y)       & \text{ means "there is a student who likes everyone in the school".}  \\
+  \lnot \exists~ x \forall~ y \text{L}(x, y) & \text{ means "there is no student who likes everyone in the school".}
+\end{align*}
+After applying DeMorgan's Laws,
+\begin{align*}
+  \forall~ x \exists~ y \lnot \text{L}(x, y) & \text{ means "there is no student who likes everyone in the school".}
+\end{align*}
+
+\subsection{More Nested Quantifiers}
+
+M$(x, y):$ "x sent an email to y". Consider $\forall~ x \forall~ y$ M $(x, y)$.
+It means that "email sent an email to everyone including themselves".
+Using $( x \not = y \rightarrow \text{ M}(x, y))$ can fix this quirk.
+\begin{align*}
+  \forall~ x \forall~ y (x \not = y \rightarrow \text{ M}(x, y))
+  \text{ means "everyone sent an email to everyone else}
+\end{align*}
+
+\subsubsection*{Expressing Uniqueness in Quantified Statements}
+
+Consider L($x$): $x$ was late to the meeting. If someone was late to the meeting,
+how could you express that that someone was the only person late to the meeting?
+You want to express that there is someone where everyone else was not late, which
+can be done with
+\begin{align*}
+  \exists~ x (\text{L}(x) \land \forall~ y (x \not = y \rightarrow \lnot \text{L}(y)))
+\end{align*}
+
+\subsubsection*{Moving Quantifiers in Logical Statements}
+
+Consider M($x, y$): "$x$ is married to $y$" and A($x$): "$x$ is an adult".
+One way of expressing "For every person $x$, if $x$ is an adult, then
+there is a person $y$ to whom $x$ is married to" is by this statement:
+\begin{align*}
+  \forall~ x (\text{ A}(x) \rightarrow \exists~ \text{ M}(x, y))
+\end{align*}
+Since $y$ does not appear in A($x$), "$\exists~ y$" can be moved so that it appears
+just after the "$\forall~$", resulting with
+\begin{align*}
+  \forall~ x \exists~ y (\text{ A}(x) \rightarrow \text{ M}(x, y))
+\end{align*}
+When doing this, keep in mind that $\forall~ x \exists~ y \centernot \equiv \exists~ y \forall~ x$:
+\begin{align*}
+  \forall~ x \exists~ y & (\text{ A}(x) \rightarrow \text{ M}(x, y)) \text{ means}                                 \\
+                      & \text{for every $x$, if $x$ is an adult, there exists $y$ who is married to $x$.}     \\
+  \exists~ y \forall~ x & (\text{ A}(x) \rightarrow \text{ M}(x, y)) \text{ means}                                 \\
+                      & \text{There exists a $y$, such that every $x$ who is an adult is also married to $y$} \\
+\end{align*}
+
+\subsection{Logical Reasoning}
+
+\textbf{Argument}: a sequence of propositions, called \underline{hypothesis}, followed
+by a final proposition, called the \underline{conclusion}.
+
+An argument is \textbf{valid} if the conclusion is true whenever the hypothesis
+are \underline{all} true, otherwise the argument is \textbf{invalid}.
+
+\begin{center}
+  An argument is denoted as:
+  \begin{tabular}{c}
+    $p_1$     \\
+    $p_2$     \\
+    $\vdots $ \\
+    $p_n$     \\
+    \hline
+    $\therefore c$
+  \end{tabular}
+  where
+  \begin{tabular}{l}
+    $p_1, p_2, \ldots, p_n$ are hypothesis \\
+    $c$ is the conclusion
+  \end{tabular}
+\end{center}
+
+The argument is valid whenever the proposition $(p_1 \land p_1 \land \dots \land p_n) \rightarrow c$ is a tautology.
+Additionally, because of the commutative law, hypothesis can be reordered without changing the argument.
+\begin{center}
+  \begin{tabular}{lcl}
+    $p$            & \multirow{3}{*}{$\equiv$} & $p \rightarrow q$ \\
+    $p \rightarrow q$ &                           & $p$            \\
+    \hhline{-~-}
+    $\therefore q$ &                           & $\therefore q$
+  \end{tabular}
+\end{center}
+
+\subsubsection*{The Form of an Argument}
+
+\begin{center}
+  \begin{tabular}{lcl}
+    It is raining today.                                            &  & $p$            \\
+    If it is raining today, then I will not ride my bike to school. &  & $p \rightarrow q$ \\
+    \hhline{-~-}
+    $\therefore$ I will not ride my bike to school.                 &  & $\therefore q$
+  \end{tabular}
+
+  The argument is \underline{valid} because its form,
+  \begin{tabular}{l}
+    $p$            \\
+    $p \rightarrow q$ \\
+    \hline
+    $\therefore q$
+  \end{tabular}
+  is an valid argument.
+
+\end{center}
+
+\begin{center}
+  \begin{tabular}{lcl}
+    5 is not an even number.                          &  & $p$            \\
+    If 5 is an even number, then 7 is an even number. &  & $p \rightarrow q$ \\
+    \hhline{-~-}
+    $\therefore$ 7 is not an even number.             &  & $\therefore q$
+  \end{tabular}
+
+  The argument is \underline{invalid} because its form,
+  \begin{tabular}{l}
+    $\lnot p$      \\
+    $p \rightarrow q$ \\
+    \hline
+    $\therefore \lnot q$
+  \end{tabular}
+  is an invalid argument.
+\end{center}
+
+\subsection{Rules of Inference with Propositions}
+
+Using truth tables to establish the validity of an argument can become tedious, especially if an argument uses a large number of variables.
+
+\begin{center}
+  \begin{tabular}{llrll}
+    $p$                   & \multirow{3}{*}{Modus Ponens}   & \quad & $p$                       & \multirow{3}{*}{Conjunction}            \\
+    $p \rightarrow q$        &                                 &       & $q$                       &                                         \\
+    \hhline{-~~-~}
+    $\therefore q$        &                                 &       & $\therefore p \land q$    &                                         \\
+    \\
+    $\lnot q$             & \multirow{3}{*}{Modus Tollens}  &       & $p \rightarrow q$            & \multirow{3}{*}{Hypothetical Syllogism} \\
+    $p \rightarrow q$        &                                 &       & $q \rightarrow r$            &                                         \\
+    \hhline{-~~-~}
+    $\therefore \lnot p$  &                                 &       & $\therefore p \rightarrow r$ &                                         \\
+    \\
+                          & \multirow{3}{*}{Addition}       &       & $p \lor q$                & \multirow{3}{*}{Disjunctive Syllogism}  \\
+    $p$                   &                                 &       & $\lnot p$                 &                                         \\
+    \hhline{-~~-~}
+    $\therefore p \lor q$ &                                 &       & $\therefore q$            &                                         \\
+    \\
+                          & \multirow{3}{*}{Simplification} &       & $p \rightarrow q$            & \multirow{3}{*}{Resolution}             \\
+    $p \land q$           &                                 &       & $q \rightarrow r$            &                                         \\
+    \hhline{-~~-~}
+    $\therefore p$        &                                 &       & $\therefore q \lor r$     &                                         \\
+    \\
+  \end{tabular}
+\end{center}
+
+Example expressed in English:
+\begin{center}
+  \begin{tabular}{lrl}
+    If it is raining or windy or both, the game will be cancelled. &  & $(r \lor w) \rightarrow c$ \\
+    The game will not be cancelled                                 &  & $\lnot c$               \\
+    \hhline{-~-}
+    $\therefore$ It is not windy.                                  &  & $\therefore \lnot w$
+  \end{tabular}
+
+  Steps to Solve:
+  \begin{align}
+     & (r \lor w) \rightarrow c &  & \qquad \text{Hypothesis}          \\
+     & \lnot c               &  & \qquad \text{Hypothesis}          \\
+     & \lnot (r \lor w)      &  & \qquad \text{Modus Tollens: 1, 2} \\
+     & \lnot r \land \lnot w &  & \qquad \text{DeMorgan's Law: 3}   \\
+     & \lnot w \land \lnot r &  & \qquad \text{Commutative Law: 4}  \\
+     & \lnot w               &  & \qquad \text{Simplification: 5}
+  \end{align}
+\end{center}
+
+\subsection{Rules of Inference with Quantifiers}
+
+In order to apply the rules of quantified expressions, such as $\forall~ x \lnot (\text{ P}(x) \land \text{ Q}(x))$,
+we need to remove the quantifier by plugging in a value from the domain to replace the variable x.
+
+For example:
+\begin{center}
+  \begin{tabular}{lrl}
+    Every employee who received a large bonus works hard. &  & $\forall~ x (\text{B}(x) \rightarrow \text{ H}(x))$ \\
+    Linda is an employee at the company.                  &  & Linda $\in x$                                   \\
+    Linda received a large bonus.                         &  & B(Linda)                                        \\
+    \hhline{-~-}
+    $\therefore$ Some employee works hard.                &  & $\therefore \exists~ x \text{ H}(x)$
+  \end{tabular}
+\end{center}
+
+\textbf{Arbitrary Element}: has no special properties other than those shared by all elements of the domain.
+
+\textbf{Particular Element}: may have special properties that are not shared by all the elements of the domain.
+For example, if the domain is the set of all integers, $\mathbb{Z}$, a particular element is 3, because it is odd,
+which is not true for all integers.
+
+\begin{center}
+  \begin{tabular}{lclc}
+    \multicolumn{4}{c}{\textbf{Rules of Inference for Quantified Statements}}                                                                                             \\
+    $c$ is an element           & \multirow{3}{*}{Universal Instantiation}  &                                               & \multirow{3}{*}{Existential Instantiation*} \\
+    $\forall~ x$ P $(x)$         &                                           & $\exists~ x$ P$(x)$                            &                                             \\
+    \hhline{-~-~}
+    $\therefore$ P$(c)$         &                                           & $\therefore c$ is particular  $\land$ P $(c)$ &                                             \\
+    \\
+    $c$ is arbitrary            & \multirow{3}{*}{Universal Generalization} & $c$ is an element                             & \multirow{3}{*}{Existential Generalization} \\
+    P $(c)$                     &                                           & P$(c)$                                        &                                             \\
+    \hhline{-~-~}
+    $\therefore \forall~$ P$(x)$ &                                           & $\therefore \exists~ x$ P$(x)$                 &                                             \\
+  \end{tabular}
+\end{center}
+
+*Each use of Existential Instantiation must define a new element with its own symbol or name.
+
+\subsubsection*{Example of using the Laws of Inference for Quantified Statements}
+
+Consider the following argument:
+\begin{tabular}{l}
+  $\forall~ x (\text{P}(x) \lor \text{ Q}(x))$ \\
+  $3 \text{ is an integer}$                   \\
+  $\lnot \text{ P}(3)$                        \\
+  \hline
+  $\therefore \text{ Q}(3)$
+\end{tabular}
+
+\begin{center}
+  Steps to Solve:
+  \begin{align}
+     & \forall~ x (\text{P}(x) \lor \text{ Q}(x)) &  & \qquad \text{Hypothesis}                    \\
+     & 3 \text{ is an integer}                   &  & \qquad \text{Hypothesis}                    \\
+     & (\text{P}(3) \lor \text{Q}(3))            &  & \qquad \text{Universal Instantiation: 1, 2} \\
+     & \lnot \text{ P}(3)                        &  & \qquad \text{ Hypothesis}                   \\
+     & \text{ Q}(3)                              &  & \qquad \text{Disjunctive Syllogism: 3, 4}
+  \end{align}
+\end{center}
+
+\subsubsection*{Showing an Argument with Quantified Statements is Invalid}
+
+Consider the following argument:
+\begin{tabular}{l}
+  $\exists~ x \text{P}(x)$ \\
+  $\exists~ x \text{Q}(x)$ \\
+  \hline
+  $\therefore \exists~ x (\text{P}(x) \land \text{ Q}(x))$
+\end{tabular}
+
+Using a supposed domain \{$c, d$\}, with truth values of
+\begin{tabular}{c|cc}
+    & P & Q \\
+  \hline
+  c & T & F \\
+  d & F & T
+\end{tabular},
+the argument is invalid.

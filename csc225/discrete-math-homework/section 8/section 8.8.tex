@@ -1,0 +1,84 @@
+\documentclass{article}
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\lhead{Discrete Math II}
+\chead{Section 8.8}
+\rhead{Peter Schaefer}
+
+\begin{document}
+
+\section*{Section 8.8}
+
+\subsection*{8.8.1}
+\begin{enumerate}
+  \biitem{a}{Give a recursive definition for strings of properly nested parentheses and curly braces. For example, \(\{\}\)\{\}\(\) is properly nested but \(\{\)\} is not properly nested. The empty string should not be included in your definition.}
+  \begin{itemize}
+    \item Basis: $\lambda$ has properly nested parentheses and curly braces.
+    \item Recursive rules: If $u$ and $v$ are properly nested sequences of parentheses and curly braces then:
+          \subitem{1.} $(u),~\{u\},~(\{u\}), \tand \{(u)\}$ is properly nested.
+          \subitem{2.} $uv$ is properly nested.
+    \item Exclusion statement: a string is properly nested only if it given in the basis or can be constructed by applying the recursive rules to the string in the basis.
+  \end{itemize}
+\end{enumerate}
+
+\subsection*{8.8.2}
+\itl{Let $A = \{a,b\}$.}
+\begin{enumerate}
+  \biitem{a}{Give a recursive definition for $A^*$.}
+  \begin{itemize}
+    \item Basis: $\lambda \in A^*$.
+    \item Recursive rules: If $u \in A^*$ then:
+          \subitem{1.} $ub \tand ua \in A^*$.
+          \subitem{2.} $bu \tand au \in A^*$.
+    \item Exclusion statement: a string is in $A^*$ if it given in the basis or can be constructed by applying the recursive rules to the string in the basis.
+  \end{itemize}
+  \biitem{b}{The set $A^+$ is the set of strings over the alphabet $\{a,b\}$ of length at least 1. That is $A^+ = A^* - \{\lambda\}$. Give a recursive definition for $A^+$.}
+  \begin{itemize}
+    \item Basis: $a \tand b \in A^+$.
+    \item Recursive rules: If $u \in A^+$ then:
+          \subitem{1.} $ub \tand ua \in A^+$.
+          \subitem{2.} $bu \tand au \in A^+$.
+    \item Exclusion statement: a string is in $A^+$ if it given in the basis or can be constructed by applying the recursive rules to the strings in the basis.
+  \end{itemize}
+  \biitem{c}{Let $S$ be the set of all strings from $A^*$ in which there is no $b$ before an $a$. For example, the strings $\lambda$, $aa$, $bbb$, $aabbbb$ all belong to $S$, but $aabab \not \in S$. Give a recursive definition for the set $S$.}
+  \begin{itemize}
+    \item Basis: $\lambda \in S$.
+    \item Recursive rules: If $u \in S$ then:
+          \subitem{1.} $au \in S$.
+          \subitem{2.} $ub \in S$.
+    \item Exclusion statement: a string is in $S$ if it given in the basis or can be constructed by applying the recursive rules to the string in the basis.
+  \end{itemize}
+\end{enumerate}
+
+\subsection*{8.8.4}
+\itl{Give a recursive definition for each subset of the binary strings. A string $x$ should be in the recursively defined set if and only if $x$ has the property described.}
+\begin{enumerate}
+  \biitem{a}{The set $S$ consists of all strings with an even number of 1's.}
+  \begin{itemize}
+    \item Basis: $\lambda \in S$.
+    \item Recursive rules: If $u \in S$ then:
+          \subitem{1.} $1u1,~11u, \tand u11 \in S$.
+          \subitem{2.} $0u \tand u0 \in S$.
+    \item Exclusion statement: a string is in $S$ if it given in the basis or can be constructed by applying the recursive rules to the string in the basis.
+  \end{itemize}
+  \biitem{b}{The set $S$ is the set of all binary strings that are palindromes. A string is a palindrome if it is equal to its reverse. For example, $0110$ and $11011$ are both palindromes.}
+  \begin{itemize}
+    \item Basis: $\lambda,~0, \tand 1 \in S$.
+    \item Recursive rules: If $u \in S$ then:
+          \subitem{1.} $1u1 \in S$.
+          \subitem{2.} $0u0 \in S$.
+    \item Exclusion statement: a string is in $S$ if it given in the basis or can be constructed by applying the recursive rules to the string in the basis.
+  \end{itemize}
+  \biitem{c}{The set $S$ consists of all strings that have the same number of 0's and 1's.}
+  \begin{itemize}
+    \item Basis: $\lambda \in S$.
+    \item Recursive rules: If $u \tand v \in S$ then:
+          \subitem{1.} $1u0 \in S$.
+          \subitem{2.} $0u1 \in S$.
+          \subitem{3.} $uv \in S$.
+    \item Exclusion statement: a string is in $S$ if it given in the basis or can be constructed by applying the recursive rules to the string in the basis.
+  \end{itemize}
+\end{enumerate}
+
+\end{document}

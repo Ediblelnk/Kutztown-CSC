@@ -1,0 +1,292 @@
+\section{Functions}
+\subsection{Definition of functions}
+
+A \textbf{function} maps elements of one set $X$ to elements of another set $Y$.
+A function from $X$ to $Y$ can be viewed as a subset of $X \times Y : (x, y) \in f$ if $f$ maps $x$ to $y$.
+The notation for a function is:
+\[
+  f: X \rightarrow Y \text{, where $X$ is the \textbf{domain} and $Y$ is the \textbf{co-domain}.}
+\]
+
+*if $f$ maps an element of the domain to zero elements \underline{or} more than one element of the target,
+then $f$ is \underline{not} \textit{well-defined}
+
+\textbf{Arrow Diagram}:
+\begin{align*}
+  X & = \{w, x, y, z\} \\
+  Y & = \{a, b, c, d\}
+\end{align*}
+
+Well-defined functions:
+\begin{center}
+  \begin{tikzpicture}
+    \foreach[count=\i] \set/\elements in {X/{w,x,y,z}, Y/{a,b,c,d}} { %domain and co-domain
+    \begin{scope}[local bounding box=\set, x=2cm, y=0.5cm]
+      \foreach[count=\j] \element in \elements {
+        \node[minimum width=1em,anchor=base,text height=1.4ex,text depth=0.25ex]
+        (\i-\element) at (\i,-\j) {$\element$};
+      }
+    \end{scope}
+    \node[draw, fit=(\set), label={[name=\i]above:$\set$}] {};
+    }
+    \foreach \domain/\target in {w/b,x/c,y/a,z/c} { %function pairs, uses indices
+        \draw[->] (1-\domain) -- (2-\target);
+      }
+    \draw[->] (1) -- node[above]{$f$}(2); %function name
+  \end{tikzpicture}
+  \qquad
+  \begin{tikzpicture}
+    \foreach[count=\i] \set/\elements in {X/{w,x,y,z}, Y/{a,b,c,d}} { %domain and co-domain
+    \begin{scope}[local bounding box=\set, x=2cm, y=0.5cm]
+      \foreach[count=\j] \element in \elements {
+        \node[minimum width=1em,anchor=base,text height=1.4ex,text depth=0.25ex]
+        (\i-\element) at (\i,-\j) {$\element$};
+      }
+    \end{scope}
+    \node[draw, fit=(\set), label={[name=\i]above:$\set$}] {};
+    }
+    \foreach \domain/\target in {w/a,x/d,y/c,z/a} { %function pairs, uses indices
+        \draw[->] (1-\domain) -- (2-\target);
+      }
+    \draw[->] (1) -- node[above]{$g$}(2); %function name
+  \end{tikzpicture}
+\end{center}
+
+\underline{Not} well-defined functions:
+\begin{center}
+  \begin{tikzpicture}
+    \foreach[count=\i] \set/\elements in {X/{w,x,y,z}, Y/{a,b,c,d}} { %domain and co-domain
+    \begin{scope}[local bounding box=\set, x=2cm, y=0.5cm]
+      \foreach[count=\j] \element in \elements {
+        \node[minimum width=1em,anchor=base,text height=1.4ex,text depth=0.25ex]
+        (\i-\element) at (\i,-\j) {$\element$};
+      }
+    \end{scope}
+    \node[draw, fit=(\set), label={[name=\i]above:$\set$}] {};
+    }
+    \foreach \domain/\target in {w/a,w/d,x/b,y/c,z/b} { %function pairs, uses indices
+        \draw[->] (1-\domain) -- (2-\target);
+      }
+    \draw[->] (1) -- node[above]{$h$}(2); %function name
+  \end{tikzpicture}
+  \qquad
+  \begin{tikzpicture}
+    \foreach[count=\i] \set/\elements in {X/{w,x,y,z}, Y/{a,b,c,d}} { %domain and co-domain
+    \begin{scope}[local bounding box=\set, x=2cm, y=0.5cm]
+      \foreach[count=\j] \element in \elements {
+        \node[minimum width=1em,anchor=base,text height=1.4ex,text depth=0.25ex]
+        (\i-\element) at (\i,-\j) {$\element$};
+      }
+    \end{scope}
+    \node[draw, fit=(\set), label={[name=\i]above:$\set$}] {};
+    }
+    \foreach \domain/\target in {w/a,x/c,z/b,z/d} { %function pairs, uses indices
+        \draw[->] (1-\domain) -- (2-\target);
+      }
+    \draw[->] (1) -- node[above]{$k$}(2); %function name
+  \end{tikzpicture}
+\end{center}
+
+For function $f: X \rightarrow Y$, an element $y$ is in the \textbf{range} of $f$
+iff there is an $x \in X$ such that $(x, y) \in f$.
+\[
+  \text{Range of } f = \{y : (x, y) \in f, \text{ for some } x \in X\}
+\]
+Two functions, $f$ and $g$, are \textbf{equal} if $f$ and $g$ have the same domain and target and
+$f(x) = g(x)$ for \underline{every} $x$ in the domain.
+\[
+  \forall~ x : f(x) = g(x) \implies f = g
+\]
+
+\subsection{Floor and Ceiling functions}
+
+The \textbf{Floor} function, $\left\lfloor x\right\rfloor$
+\[
+  \text{floor}: \mathbb{R} \rightarrow \mathbb{Z}, \text{ where floor$(x)$ = the largest integer $y$ such that $y \leq x$.}
+\]
+Notation: $\text{floor}(x) = \left\lfloor x\right\rfloor$
+\[\]
+\noindent The \textbf{Ceiling} function, $\left\lceil x\right\rceil$
+\[
+  \text{ceiling}: \mathbb{R} \rightarrow \mathbb{Z}, \text{ where ceiling$(x)$ = the smallest integer $y$ such that $y \geq x$.}
+\]
+Notation: $\text{ceiling}(x) = \left\lceil x\right\rceil$
+
+\noindent Examples of floor and ceiling:
+\begin{align*}
+  \left\lceil 4.32\right\rceil  & = 5  & \left\lfloor 4.32\right\rfloor  & = 4  \\
+  \left\lceil -4.32\right\rceil & = -4 & \left\lfloor -4.32\right\rfloor & = -5 \\
+  \left\lceil 4\right\rceil     & = 4  & \left\lfloor 4\right\rfloor     & = 4  \\
+  \left\lceil -4\right\rceil    & = -4 & \left\lfloor -4\right\rfloor    & = -4 \\
+\end{align*}
+
+\subsection{Properties of functions}
+
+A function $f: X \rightarrow Y$ is \textbf{one-to-one} or \textbf{injective} if $x_1 \not = x_2$ implies that $f(x_1) \not = f(x_2)$.
+$f$ maps different elements in x to different elements in y.
+
+A function $f: X \rightarrow Y$ is \textbf{onto} or \textbf{surjective} if the range of $f$ is equal to the target $Y$.
+That is, $\forall~ y \exists~ x (y \in Y \land x \in X \land f(x) = y)$
+
+A function $f: X \rightarrow Y$ is \textbf{bijective} if it is both \textbf{injective} and \textbf{surjective}.
+A \textbf{bijective} function is called a \textbf{bijection}, or a \textbf{one-to-one correspondence}.
+
+When the domain and target are finite sets, it is possible to infer information about their relative sizes
+based on whether a function is one-to-one or onto.
+\begin{align*}
+  f: D \rightarrow T & \text{ is \textbf{one-to-one}} & \implies &  & \left\lvert D\right\rvert & \leq \left\lvert T\right\rvert \\
+  f: D \rightarrow T & \text{ is \textbf{onto}}       & \implies &  & \left\lvert D\right\rvert & \geq \left\lvert T\right\rvert \\
+  f: D \rightarrow T & \text{ is \textbf{bijective}}  & \implies &  & \left\lvert D\right\rvert & = \left\lvert T\right\rvert
+\end{align*}
+
+\subsection{The inverse of a function}
+
+If a function $f: X \rightarrow Y$ is a \textit{bijection},
+then the \textbf{inverse} of f is obtained by exchanging the first and second entries in each pair in $f$.
+\begin{align*}
+  \text{given } f        & : X \rightarrow Y           \\
+  \text{inverse } f^{-1} & : \{(y, x) : (x, y) \in f\}
+\end{align*}
+Reversing the cartesian pair does not always create a well-defined function.
+\textit{Some functions do not have an inverse}.
+
+\textbf{Examples}:
+\begin{align*}
+  X & = \{1, 2, 3\} & f = \{(1, 7), (2, 9), (3, 9)\} \\
+  Y & = \{7, 8, 9\} & g = \{(1, 9), (2, 7), (3, 8)\}
+\end{align*}
+
+\begin{center}
+  \begin{tikzpicture}
+    \foreach[count=\i] \set/\elements in {X/{1,2,3}, Y/{7,8,9}} { %domain and co-domain
+    \begin{scope}[local bounding box=\set, x=2cm, y=0.5cm]
+      \foreach[count=\j] \element in \elements {
+        \node[minimum width=1em,anchor=base,text height=1.4ex,text depth=0.25ex]
+        (\i-\element) at (\i,-\j) {$\element$};
+      }
+    \end{scope}
+    \node[draw, fit=(\set), label={[name=\i]above:$\set$}] {};
+    }
+    \foreach \domain/\target in {1/7,2/9,3/9} { %function pairs, uses indices
+        \draw[->] (1-\domain) -- (2-\target);
+      }
+    \draw[->] (1) -- node[above]{$f$}(2); %function name
+  \end{tikzpicture}
+  \qquad
+  \begin{tikzpicture}
+    \foreach[count=\i] \set/\elements in {Y/{7,8,9}, X/{1,2,3}} { %domain and co-domain
+    \begin{scope}[local bounding box=\set, x=2cm, y=0.5cm]
+      \foreach[count=\j] \element in \elements {
+        \node[minimum width=1em,anchor=base,text height=1.4ex,text depth=0.25ex]
+        (\i-\element) at (\i,-\j) {$\element$};
+      }
+    \end{scope}
+    \node[draw, fit=(\set), label={[name=\i]above:$\set$}] {};
+    }
+    \foreach \domain/\target in {7/1,9/2,9/3} { %function pairs, uses indices
+        \draw[->] (1-\domain) -- (2-\target);
+      }
+    \draw[->] (1) -- node[above]{$f^{-1}$}(2); %function name
+  \end{tikzpicture}
+
+  $f^{-1}$ is not well defined, therefore $f$ does not have an inverse.
+\end{center}
+\begin{center}
+  \begin{tikzpicture}
+    \foreach[count=\i] \set/\elements in {X/{1,2,3}, Y/{7,8,9}} { %domain and co-domain
+    \begin{scope}[local bounding box=\set, x=2cm, y=0.5cm]
+      \foreach[count=\j] \element in \elements {
+        \node[minimum width=1em,anchor=base,text height=1.4ex,text depth=0.25ex]
+        (\i-\element) at (\i,-\j) {$\element$};
+      }
+    \end{scope}
+    \node[draw, fit=(\set), label={[name=\i]above:$\set$}] {};
+    }
+    \foreach \domain/\target in {1/9,2/7,3/8} { %function pairs, uses indices
+        \draw[->] (1-\domain) -- (2-\target);
+      }
+    \draw[->] (1) -- node[above]{$g$}(2); %function name
+  \end{tikzpicture}
+  \qquad
+  \begin{tikzpicture}
+    \foreach[count=\i] \set/\elements in {Y/{7,8,9}, X/{1,2,3}} { %domain and co-domain
+    \begin{scope}[local bounding box=\set, x=2cm, y=0.5cm]
+      \foreach[count=\j] \element in \elements {
+        \node[minimum width=1em,anchor=base,text height=1.4ex,text depth=0.25ex]
+        (\i-\element) at (\i,-\j) {$\element$};
+      }
+    \end{scope}
+    \node[draw, fit=(\set), label={[name=\i]above:$\set$}] {};
+    }
+    \foreach \domain/\target in {9/1,7/2,8/3} { %function pairs, uses indices
+        \draw[->] (1-\domain) -- (2-\target);
+      }
+    \draw[->] (1) -- node[above]{$g^{-1}$}(2); %function name
+  \end{tikzpicture}
+
+  $g^{-1}$ is well defined, therefore $g$ does have an inverse.
+\end{center}
+
+\subsection{Composition of functions}
+
+The process of applying a function to the result of another function is called \textbf{composition}.
+\begin{align*}
+  f           & : X \rightarrow Y                                                                   \\
+  g           & : Y \rightarrow Z                                                                   \\
+  (g \circ f) & : X \rightarrow Z, \text{ such that } \forall~ x : x \in X, (g \circ f)(x) = g(f(x))
+\end{align*}
+Remember that order matters, as often $(g \circ f)(x) \not = (f \circ g)(x)$. However, composition is associative:
+\[
+  (f \circ g \circ h)(x) = ((f \circ g) \circ h)(x) = (f \circ (g \circ h))(x) = f(g(h(x)))
+\]
+
+\subsubsection*{Identity Function}
+
+The \textbf{Identity Function} maps a set onto itself and maps every element to itself. It is notated as $I_A: A \rightarrow A$,
+where $A$ is the set it maps. There are a number of identities about the Identity Function.
+
+Let $f: A \rightarrow B$ be a bijection. Then,
+\[
+  f \circ f^{-1} = I_B \text{ and } f^{-1} \circ f = I_A
+\]
+
+\subsection{Logarithms and exponents}
+
+The \textbf{Exponential} function, $\text{exp}_b: \mathbb{R} \rightarrow \mathbb{R}^+, \text{exp}_b(x) = b^x$.
+$b$ is the base of the exponent and $x$ is the exponent.
+
+Properties of exponents:
+\begin{align*}
+  b^{x}b^{y}      & = b^{x+y} & b & \in \mathbb{R}^+ & c & \in \mathbb{R}^+ \\
+  (b^x)^{y}       & = b^{xy}  & x & \in \mathbb{R}   & y & \in \mathbb{R}   \\
+  \frac{b^x}{b^y} & = b^{x-y}                                               \\
+  (bc)^x          & = b^xc^x
+\end{align*}
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[<->] (-3,0) -- (3,0) node[right] {$x$};
+    \draw[<->] (0,-3) -- (0,3) node[above] {$y$};
+    \begin{scope}
+      \clip (-3,-3) rectangle (3,3);
+      \draw[domain=-3:3, variable=\x, samples=50, smooth, blue, thick] plot ({\x}, {(exp(\x))});
+    \end{scope}
+    \begin{scope}
+      \clip (-3,-3) rectangle (3,3);
+      \draw[domain=0.0001:3, variable=\x, samples=50, smooth, red, thick] plot ({\x}, {(ln(\x))});
+    \end{scope}
+    \draw (-1,-1) node[red] {log$(x)$};
+    \draw (2,2) node[blue] {exp$(x)$};
+  \end{tikzpicture}
+\end{center}
+
+The \textbf{Logarithms} function, $\text{log}_b: \mathbb{R} \rightarrow \mathbb{R}^+, \text{log}_b(y) = x$.
+$b$ is the base of the logarithm and $x$ is the exponent.
+
+Properties of exponents:
+\begin{align*}
+  \text{log}_b(xy)          & = \text{log}_bx + \text{log}_by       & b & \in \mathbb{R}^+ \\
+  \text{log}_b(\frac{x}{y}) & = \text{log}_bx - \text{log}_by       & c & \in \mathbb{R}^+ \\
+  \text{log}_b(x^y)         & = y\text{log}_bx                      & x & \in \mathbb{R}   \\
+  \text{log}_cx             & = \frac{\text{log}_bx}{\text{log}_bc} & y & \in \mathbb{R}
+\end{align*}

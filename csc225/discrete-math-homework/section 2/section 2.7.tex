@@ -1,0 +1,83 @@
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\lhead{Discrete Math II}
+\chead{Section 2.7}
+\rhead{Peter Schaefer}
+
+\begin{document}
+
+\section*{Section 2.7}
+
+\subsection*{2.7.1}
+\begin{enumerate}
+  \biitem{b}{For every integer $n$, $n^2 \geq n$}
+  \begin{proof}
+    Consider cases $n = 0$, $n > 0$, and $n < 0$. \\
+    Case 1: $n=0$
+    \begin{align*}
+      n^2 & \geq n            \\
+      0^2 & \geq 0            \\
+      0   & \geq 0~\checkmark
+    \end{align*}
+    Case 2: $n > 0$
+    \begin{align*}
+      n^2           & \geq n                                                                  \\
+      \frac{n^2}{n} & \geq \frac{n}{n} & \text{defined since $n > 0$}                         \\
+      n             & \geq 1           & \text{equivalent to $n \geq 0$ since $n \in \bb{Z}$}
+    \end{align*}
+    Case 3: $n < 0$
+    \begin{align*}
+      n^2           & \geq n                                               \\
+      \frac{n^2}{n} & \leq \frac{n}{n} & \text{sign changes since $n < 0$} \\
+      n             & \leq 1           & \text{true since $n < 0$}
+    \end{align*}
+    Since the statement is true for all cases, and the cases completely cover the possibility space, therefore for every integer $n$, $n^2 \geq n$.
+  \end{proof}
+\end{enumerate}
+
+\subsection*{2.7.2}
+\begin{enumerate}
+  \biitem{a}{If $x$ is an integer, then $x^2 + 5x - 1$ is odd}
+  \begin{proof}
+    Consider cases $x$ is even and $x$ is odd. \\
+    Case 1: $x$ is odd, $x = 2k+1$, for some $k \in \bb{Z}$
+    \begin{align*}
+      (2k+1)^2 + 5(2k+1) - 1 & = 2k^2 + 4k + 1 + 10k + 5 - 1 \\
+                             & = 2k^2 + 14k + 5              \\
+      \text{odd form}        & = 2(k^2 + 7k + 2) + 1
+    \end{align*}
+    Case 2: $x$ is even, $x = 2j$, for some $j \in \bb{Z}$
+    \begin{align*}
+      (2j)^2 + 5(2k) - 1 & = 4j^2 + 10k - 1       \\
+      \text{odd form}    & = 2(2j^2 + 5j - 1) + 1
+    \end{align*}
+    Since the statement is true for all cases, and the cases completely cover the possibility space, therefore if $x$ is an integer, then $x^2 + 5x - 1$ is odd.
+  \end{proof}
+\end{enumerate}
+
+\subsection*{2.7.3}
+\begin{enumerate}
+  \biitem{a}{For any real number $x$, $\left\lvert x \right\rvert \geq 0$}
+  \begin{proof}
+    Consider cases $x = 0$, $x < 0$, $x > 0$. \\
+    Case 1: $x = 0$
+    \begin{align*}
+      0                          & \geq 0            \\
+      \left\lvert 0 \right\rvert & \geq 0~\checkmark
+    \end{align*}
+    Case 2: $x < 0$
+    \begin{align*}
+      x                          & \leq 0                                                  \\
+      \left\lvert x \right\rvert & \geq 0 & \text{since $x = -\left\lvert x \right\rvert$}
+    \end{align*}
+    Case 3: $x > 0$
+    \begin{align*}
+      x                          & \geq 0                                                 \\
+      \left\lvert x \right\rvert & \geq 0 & \text{since $x = \left\lvert x \right\rvert$}
+    \end{align*}
+    Since the statement is true for all cases, and the cases completely cover the possibility space, therefore for any real number $x$, $\left\lvert x \right\rvert \geq 0$.
+  \end{proof}
+\end{enumerate}
+
+\end{document}

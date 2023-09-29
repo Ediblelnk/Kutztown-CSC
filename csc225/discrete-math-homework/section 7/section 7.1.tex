@@ -1,0 +1,50 @@
+\input{../../templates/packages-article.tex}
+\input{../../templates/macros.tex}
+
+\lhead{Discrete Math II}
+\chead{Section 7.1}
+\rhead{Peter Schaefer}
+
+\begin{document}
+
+\section*{Section 7.1}
+
+\subsection*{7.1.1}
+\begin{enumerate}
+  \bitem{a}
+  \itl{\bld{Input}: $a_1, a_2, \ldots,a_n$, a sequence of numbers, where $n \geq 1$. $n$, the length of the sequence.}
+
+  \itl{\bld{Output}: "True" if the sequence is non-decreasing and "False" otherwise.}
+
+  \itl{(A sequence of numbers is non-decreasing if each number is at least as large as the one before.)}
+  \begin{lstlisting}
+    nonDecreasing := true
+    For i = 2 to n
+      If (nonDecreasing && a[i-1] > a[i]), nonDecreasing := false
+    End-for
+    Return (nonDecreasing)
+  \end{lstlisting}
+
+  \bitem{b}
+  \itl{\bld{Input}: $a_1, a_2, \ldots,a_n$, a sequence of numbers, where $n \geq 1$. $n$, the length of the sequence.}
+
+  \itl{\bld{Output}: "True" if there are two consecutive numbers in the sequence that are the same and "False" otherwise.}
+  \begin{lstlisting}
+    sameConsecutive := false
+    For i = 2 to n
+      If (!sameConsecutive && a[i-1] = a[i]), sameConsecutive := true
+    End-for
+    Return (sameConsecutive)
+  \end{lstlisting}
+
+  \bitem{c}
+  \itl{\bld{Input}: $a_1, a_2, \ldots,a_n$, a sequence of numbers, where $n \geq 1$. $n$, the length of the sequence.}
+
+  \itl{\bld{Output}: "True" if there are any two numbers in the sequence whose sum is 0 and "False" otherwise.}
+  \begin{lstlisting}
+    zeroSum := false
+    For i = 2 to n
+      If (!zeroSum && a[i-1] + a[i] = 0) zeroSum := true
+  \end{lstlisting}
+\end{enumerate}
+\end{document}
