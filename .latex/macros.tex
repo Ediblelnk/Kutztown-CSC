@@ -1,0 +1,68 @@
+%formatting
+\newcommand{\bld}{\textbf}
+\newcommand{\itl}{\textit}
+\newcommand{\uln}{\underline}
+
+%math word symbols
+\newcommand{\bb}{\mathbb}
+\DeclareMathOperator{\tif}{~\text{if}~}
+\DeclareMathOperator{\tand}{~\text{and}~}
+\DeclareMathOperator{\tbut}{~\text{but}~}
+\DeclareMathOperator{\tor}{~\text{or}~}
+\DeclareMathOperator{\tsuchthat}{~\text{such that}~}
+\DeclareMathOperator{\tsince}{~\text{since}~}
+\DeclareMathOperator{\twhen}{~\text{when}~}
+\DeclareMathOperator{\twhere}{~\text{where}~}
+\DeclareMathOperator{\tfor}{~\text{for}~}
+\DeclareMathOperator{\tthen}{~\text{then}~}
+\DeclareMathOperator{\tto}{~\text{to}~}
+\DeclareMathOperator{\tin}{~\text{in}~}
+
+%display shortcut
+\DeclareMathOperator{\dstyle}{\displaystyle}
+\DeclareMathOperator{\sstyle}{\scriptstyle}
+
+%linear algebra
+\DeclareMathOperator{\id}{\bld{id}}
+\DeclareMathOperator{\vecspan}{\text{span}}
+\DeclareMathOperator{\adj}{\text{adj}}
+
+%discrete math - integer properties
+\DeclareMathOperator{\tdiv}{\text{div}}
+\DeclareMathOperator{\tmod}{\text{mod}}
+\DeclareMathOperator{\lcm}{\text{lcm}}
+
+%augmented matrix environment
+\newenvironment{apmatrix}[2]{%
+  \left(\begin{array}{@{~}*{#1}{c}|@{~}*{#2}{c}}
+    }{
+  \end{array}\right)
+}
+\newenvironment{abmatrix}[2]{%
+  \left[\begin{array}{@{~}*{#1}{c}|@{~}*{#2}{c}}
+      }{
+    \end{array}\right]
+}
+
+\newenvironment{determinant}[1]{
+  \left\lvert
+  \begin{array}{@{~}*{#1}{c}}
+    }{
+  \end{array}
+  \right\rvert
+}
+
+%lists
+\newcommand{\bitem}[1]{\item[\bld{#1.}]}
+\newcommand{\bbitem}[2]{\item[\bld{#1.}] \bld{#2}}
+\newcommand{\biitem}[2]{\item[\bld{#1.}] \itl{#2}}
+\newcommand{\iitem}[1]{\item[\itl{#1.}]}
+\newcommand{\iiitem}[2]{\item[\itl{#1.}] \bld{#2}}
+\newcommand{\btitem}[2]{\item[\bld{#1.}] \texttt{#2}}
+
+%homework
+\newcommand{\question}[2]{\noindent {\large\bld{#1}} #2 \qline}
+\newcommand{\qitem}[3]{\item[\bld{#1.}] #2 \qdash \\ #3 \qdash}
+
+\newcommand{\qline}{~\newline\noindent\textcolor[RGB]{200,200,200}{\rule[0.5ex]{\linewidth}{0.2pt}}}
+\newcommand{\qdash}{~\newline\noindent\textcolor[RGB]{200,200,200}{\hdashrule[0.5ex]{\linewidth}{0.2pt}{2pt}}}
