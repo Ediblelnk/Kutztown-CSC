@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 325.5
+    "width": 325.5,
+    "collapsed": true
   },
   "right": {
     "id": "eed1c29b8dc56122",
@@ -158,7 +159,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,7 +172,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e8dede7b321b99ec",
+  "active": "3948b7a560bd39f3",
   "lastOpenFiles": [
     "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
     "csc235/Assembly Language for x86 Processors",
