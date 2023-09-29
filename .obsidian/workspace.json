@@ -1,0 +1,190 @@
+{
+  "main": {
+    "id": "ea237a41dfdaed36",
+    "type": "split",
+    "children": [
+      {
+        "id": "b49edb729e6bd211",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e8dede7b321b99ec",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7d789f22ae3844a6",
+    "type": "split",
+    "children": [
+      {
+        "id": "978ee13a91460b47",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "193a145084d490be",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "1815a46f257e01d0",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#todo",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "bbd5c8e7a099391f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 325.5
+  },
+  "right": {
+    "id": "eed1c29b8dc56122",
+    "type": "split",
+    "children": [
+      {
+        "id": "5ce81063ac306f71",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "db96d008954556ed",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "cad49bf2190bc0d7",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e67c34cf958c841f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "8e339089dcfe012f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md"
+              }
+            }
+          },
+          {
+            "id": "60e39f4e96f0f99c",
+            "type": "leaf",
+            "state": {
+              "type": "online.larslockefeer.obsidian-plugin-todo",
+              "state": {}
+            }
+          },
+          {
+            "id": "36115c63f911d022",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "3948b7a560bd39f3",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 6
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "e8dede7b321b99ec",
+  "lastOpenFiles": [
+    "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
+    "csc235/Assembly Language for x86 Processors",
+    "First Note.md",
+    "Kutztown/CSC/CSC 235/1. Basic Concepts.md",
+    "Untitled.canvas",
+    "Kutztown/CSC/CSC 235",
+    "Untitled",
+    "Kutztown/CSC",
+    "Kutztown",
+    "Daily Notes/2023-06-20.md",
+    "Kutztown",
+    "Daily Notes/2023-06-19.md",
+    "Daily Notes/2023-06-18.md",
+    "Daily Notes"
+  ]
+}
