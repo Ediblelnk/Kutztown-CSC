@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/02/23 23:06:55
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/02/23 23:33:15
 fibs.asm						     Page 1 - 1
 
 
@@ -49,6 +49,7 @@ fibs.asm						     Page 1 - 1
  00000012  83 C6 04			add esi, TYPE fibs				; increment to next place
  00000015  E2 F3			loop FIB_FILL
 
+ 00000017			FIB_CLEAN:
  00000017  83 EE 04			sub esi, TYPE fibs	; move back to last fib number
  0000001A  B9 00000019			mov ecx, NUM		; reset loop counter
 
@@ -59,11 +60,12 @@ fibs.asm						     Page 1 - 1
  0000002B  83 EE 04			sub esi, TYPE fibs	; go to previous fib number
  0000002E  E2 EF			loop FIB_PRINT
 
+ 00000030			ENDING:
  00000030  E8 00000000 E		call WaitMsg
-					invoke ExitProcess,0		; bye
+					invoke ExitProcess,0	; bye
  0000003C			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/02/23 23:06:55
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/02/23 23:33:15
 fibs.asm						     Symbols 2 - 1
 
 
@@ -267,7 +269,9 @@ WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000003C Public STDCALL
   FIB_FILL . . . . . . . . . . .	L Near	 0000000A _TEXT	
+  FIB_CLEAN  . . . . . . . . . .	L Near	 00000017 _TEXT	
   FIB_PRINT  . . . . . . . . . .	L Near	 0000001F _TEXT	
+  ENDING . . . . . . . . . . . .	L Near	 00000030 _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C

@@ -23,6 +23,7 @@ FIB_FILL:
 	add esi, TYPE fibs				; increment to next place
 	loop FIB_FILL
 
+FIB_CLEAN:
 	sub esi, TYPE fibs	; move back to last fib number
 	mov ecx, NUM		; reset loop counter
 
@@ -33,7 +34,8 @@ FIB_PRINT:
 	sub esi, TYPE fibs	; go to previous fib number
 	loop FIB_PRINT
 
+ENDING:
 	call WaitMsg
-	invoke ExitProcess,0		; bye
+	invoke ExitProcess,0	; bye
 main ENDP
 END main
