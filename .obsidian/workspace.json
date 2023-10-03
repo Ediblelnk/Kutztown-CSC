@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "b49edb729e6bd211",
+        "id": "296e8cb022263c9c",
         "type": "tabs",
         "children": [
           {
-            "id": "e8dede7b321b99ec",
+            "id": "611312dedb0a7032",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -16,6 +16,22 @@
                 "file": "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
                 "mode": "source",
                 "source": false
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "99e43f425c8a9c5d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e8dede7b321b99ec",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf"
               }
             }
           }
@@ -159,8 +175,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -172,23 +187,25 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3948b7a560bd39f3",
+  "active": "611312dedb0a7032",
   "lastOpenFiles": [
+    "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
+    "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
+    "csc235/Assembly Language for x86 Processors/assets/img2.png",
+    "csc235/Assembly Language for x86 Processors/assets/img1.png",
+    "assets.md",
+    "csc235/Assembly Language for x86 Processors/assets",
+    "csc235/Assembly Language for x86 Processors/New folder",
+    "csc235/Assembly Language for x86 Processors/Unconfirmed 845615.crdownload",
     "csc237/Homework1/homework 1.tex",
     "csc237/Homework1/homework 1.synctex.gz",
     "csc237/Homework1/homework 1.pdf",
     "csc237/Homework1/data-structures-homework/homework 1.tex",
     "csc237/Homework1/data-structures-homework/homework 1.synctex.gz",
     "csc237/Homework1/data-structures-homework/homework 1.pdf",
-    "csc237/Homework1/data-structures-homework",
-    "csc237/Homework1",
-    "csc237/New folder",
-    "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
-    "csc235/Assembly Language for x86 Processors",
     "First Note.md",
     "Kutztown/CSC/CSC 235/1. Basic Concepts.md",
     "Untitled.canvas",
-    "Kutztown/CSC/CSC 235",
     "Daily Notes/2023-06-20.md",
     "Daily Notes/2023-06-19.md",
     "Daily Notes/2023-06-18.md"
