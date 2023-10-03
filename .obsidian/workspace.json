@@ -175,7 +175,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -189,20 +190,22 @@
   },
   "active": "611312dedb0a7032",
   "lastOpenFiles": [
-    "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.24260.write.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.24260.read.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.24260-cvtres.write.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.24260-cvtres.read.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.24260-rc.write.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.24260-rc.read.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/unsuccessfulbuild",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.26108.write.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.26108.read.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.26108-cvtres.write.1.tlog",
+    "csc235/Project 2/fibs/Project235/Debug/Project235.tlog/link.26108-cvtres.read.1.tlog",
+    "csc235/Assignment 1/VisualStudioSnip.png",
     "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
     "csc235/Assembly Language for x86 Processors/assets/img2.png",
     "csc235/Assembly Language for x86 Processors/assets/img1.png",
     "assets.md",
-    "csc235/Assembly Language for x86 Processors/assets",
-    "csc235/Assembly Language for x86 Processors/New folder",
-    "csc235/Assembly Language for x86 Processors/Unconfirmed 845615.crdownload",
-    "csc237/Homework1/homework 1.tex",
-    "csc237/Homework1/homework 1.synctex.gz",
-    "csc237/Homework1/homework 1.pdf",
-    "csc237/Homework1/data-structures-homework/homework 1.tex",
-    "csc237/Homework1/data-structures-homework/homework 1.synctex.gz",
-    "csc237/Homework1/data-structures-homework/homework 1.pdf",
     "First Note.md",
     "Kutztown/CSC/CSC 235/1. Basic Concepts.md",
     "Untitled.canvas",
