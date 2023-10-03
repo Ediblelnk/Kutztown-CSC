@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 12.00.40629.0	    08/10/17 15:39:48
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/02/23 23:06:55
 fibs.asm						     Page 1 - 1
 
 
@@ -6,6 +6,7 @@ fibs.asm						     Page 1 - 1
 				; Find first 25 Fibonacci numbers
 				; print them in reverse order
 				; 
+				; Name: Peter Schaefer
 
 				include Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
@@ -27,14 +28,42 @@ fibs.asm						     Page 1 - 1
 			      C 
 
  00000000			.data
+ = 00000019			NUM = 25
+
+ 00000000  00000002 [		fibs DWORD 2 DUP(1), NUM-2 DUP(?)	; NUM number of dwords
+	    00000001
+	   ]
+	   00000017 [
+	    00000000
+	   ]
 
  00000000			.code
  00000000			main PROC
+ 00000000  B9 00000017			mov ecx, NUM - 2						; prepare the loop, two less
+ 00000005  BE 00000008 R		mov esi, OFFSET fibs + 2 * TYPE fibs	; already set 2 fib nums
 
-					invoke ExitProcess,0			; 'bye
- 00000007			main ENDP
+ 0000000A			FIB_FILL:
+ 0000000A  8B 46 F8			mov eax, [esi - 2 * TYPE fibs]	; value of second prior number
+ 0000000D  03 46 FC			add eax, [esi - TYPE fibs]		; value of first prior number
+ 00000010  89 06			mov [esi], eax					; set value of next fib number
+ 00000012  83 C6 04			add esi, TYPE fibs				; increment to next place
+ 00000015  E2 F3			loop FIB_FILL
+
+ 00000017  83 EE 04			sub esi, TYPE fibs	; move back to last fib number
+ 0000001A  B9 00000019			mov ecx, NUM		; reset loop counter
+
+ 0000001F			FIB_PRINT:
+ 0000001F  8B 06			mov eax, [esi]		; load value of last fib number
+ 00000021  E8 00000000 E		call WriteDec		; write to output
+ 00000026  E8 00000000 E		call Crlf			; newline
+ 0000002B  83 EE 04			sub esi, TYPE fibs	; go to previous fib number
+ 0000002E  E2 EF			loop FIB_PRINT
+
+ 00000030  E8 00000000 E		call WaitMsg
+					invoke ExitProcess,0		; bye
+ 0000003C			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 12.00.40629.0	    08/10/17 15:39:48
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/02/23 23:06:55
 fibs.asm						     Symbols 2 - 1
 
 
@@ -128,8 +157,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000007 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000064 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000003C Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -236,7 +265,9 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000007 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000003C Public STDCALL
+  FIB_FILL . . . . . . . . . . .	L Near	 0000000A _TEXT	
+  FIB_PRINT  . . . . . . . . . .	L Near	 0000001F _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -357,6 +388,7 @@ MOUSE_EVENT  . . . . . . . . . .	Number	 00000002h
 MessageBox . . . . . . . . . . .	Text   	 MessageBoxA
 NULL . . . . . . . . . . . . . .	Number	 00000000h   
 NUMLOCK_ON . . . . . . . . . . .	Number	 00000020h   
+NUM  . . . . . . . . . . . . . .	Number	 00000019h   
 OPEN_ALWAYS  . . . . . . . . . .	Number	 00000004h   
 OPEN_EXISTING  . . . . . . . . .	Number	 00000003h   
 PeekConsoleInput . . . . . . . .	Text   	 PeekConsoleInputA
@@ -460,6 +492,7 @@ blue . . . . . . . . . . . . . .	Number	 00000001h
 brown  . . . . . . . . . . . . .	Number	 00000006h   
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
+fibs . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
