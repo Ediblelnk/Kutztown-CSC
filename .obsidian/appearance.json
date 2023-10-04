@@ -1,6 +1,8 @@
 {
   "accentColor": "#ef6b6b",
-  "cssTheme": "Minimal",
+  "cssTheme": "Everforest",
   "interfaceFontFamily": "",
-  "theme": "obsidian"
+  "theme": "system",
+  "baseFontSize": 16,
+  "baseFontSizeAction": false
 }
