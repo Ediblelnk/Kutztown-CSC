@@ -16,8 +16,8 @@ main PROC
 	mov esi, OFFSET fibs + TYPE fibs	; already set a fib num
 
 FIB_FILL:
+	mov eax, [esi - TYPE fibs]		; value of second prior number
 	add esi, TYPE fibs				; increment to next place
-	mov eax, [esi - 2 * TYPE fibs]	; value of second prior number
 	add eax, [esi - TYPE fibs]		; value of first prior number
 	mov [esi], eax					; set value of next fib number
 	loop FIB_FILL

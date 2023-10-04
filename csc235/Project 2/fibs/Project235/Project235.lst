@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/03/23 11:58:01
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/04/23 09:12:43
 fibs.asm						     Page 1 - 1
 
 
@@ -29,7 +29,6 @@ fibs.asm						     Page 1 - 1
 
  00000000			.data
  = 00000019			NUM = 25
-
  00000000  00000002 [		fibs DWORD 2 DUP(1), NUM-2 DUP(?)	; NUM number of dwords
 	    00000001
 	   ]
@@ -40,11 +39,11 @@ fibs.asm						     Page 1 - 1
  00000000			.code
  00000000			main PROC
  00000000  B9 00000017			mov ecx, NUM - 2					; prepare the loop, two less
- 00000005  BE 00000004 R		mov esi, OFFSET fibs + TYPE fibs	; already set 2 fib nums
+ 00000005  BE 00000004 R		mov esi, OFFSET fibs + TYPE fibs	; already set a fib num
 
  0000000A			FIB_FILL:
- 0000000A  83 C6 04			add esi, TYPE fibs				; increment to next place
- 0000000D  8B 46 F8			mov eax, [esi - 2 * TYPE fibs]	; value of second prior number
+ 0000000A  8B 46 FC			mov eax, [esi - TYPE fibs]		; value of second prior number
+ 0000000D  83 C6 04			add esi, TYPE fibs				; increment to next place
  00000010  03 46 FC			add eax, [esi - TYPE fibs]		; value of first prior number
  00000013  89 06			mov [esi], eax					; set value of next fib number
  00000015  E2 F3			loop FIB_FILL
@@ -62,9 +61,10 @@ fibs.asm						     Page 1 - 1
  0000002D			ENDING:
  0000002D  E8 00000000 E		call WaitMsg
 					invoke ExitProcess,0
+
  00000039			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/03/23 11:58:01
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/04/23 09:12:43
 fibs.asm						     Symbols 2 - 1
 
 
