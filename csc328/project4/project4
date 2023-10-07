@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+
+# Filename:     project4
+# Author:       Schaefer, Peter
+# Assignment:   Fall 2023, Project 4: Pipes
+# Course:       CSC 328 Network and Secure Programming
+# Professor:    Schwesinger
+
+import os
+import sys
+import random
+
+
+def parent(pipeIn, pipeOut, childPid):
+    """
+    Runs the parent side of the program. 
+    Sends a random number to the child, and the random number times the child's pid. 
+    The child either approves or denies, after which the parent tells the child to end.
+    """
+
+    # create random number based on parent's PID.
+    random.seed(int(os.getpid()))
+    num = random.randint(1, 99)
+
+    # send random number to child.
+    text = str(num)
+    print("Parent sending to pipe:", text, flush=True, sep='  \t')
+    pipeOut.write(text + "\n")
+    pipeOut.flush()
+
+    # send random number times child's PID to child.
+    text = str(num * childPid)
+    print("Parent sending to pipe:", text, flush=True, sep='  \t')
+    pipeOut.write(text + "\n")
+    pipeOut.flush()
+
+    # wait for and get response from child.
+    response = str(pipeIn.readline()).strip()
+    print("Parent received from pipe:", response, sep='  \t')
+
+    # handle response, either approved or denied.
+    if response == "Approved":
+        print("Parent: Thanks for playing!")
+    else:
+        print("Parent: Wrong. Please play again.")
+
+    # release the child.
+    text = "Released"
+    print("Parent sending to pipe:", text, flush=True, sep='  \t')
+    pipeOut.write(text + "\n")
+    pipeOut.flush()
+
+    # wait on child process to end.
+    pid, status = os.wait()
+    if not os.WIFEXITED(status):
+        print("wait returned, pid = ", pid)
+
+    # close pipes
+    pipeIn.close()
+    pipeOut.close()
+
+
+def child(pipeIn, pipeOut):
+    """
+    Runs the child side of the program. 
+    The child waits to get a random number, and then that random num times the child's PID.
+    If the values seem correct according to the child, Approve, else Deny.
+    Wait to get released by the parent, and exit.
+    """
+
+    # wait for random number
+    num = int(pipeIn.readline())
+    print("Child received from pipe:", num, sep='  \t')
+
+    # wait for random number times child PID
+    numProduct = int(pipeIn.readline())
+    print("Child received from pipe:", numProduct, sep='  \t')
+
+    # double check is random number times child PID
+    if os.getpid() * num == numProduct:
+        text = "Approved"
+    else:
+        text = "Denied"
+
+    # send check to parent
+    print("Child sending to pipe:", text, flush=True, sep='  \t')
+    pipeOut.write(text + "\n")
+    pipeOut.flush()
+
+    finalResponse = str(pipeIn.readline()).strip()
+    print("Child received from pipe:", finalResponse, sep='  \t')
+
+    # close pipes and end process
+    pipeIn.close()
+    pipeOut.close()
+    os._exit(0)
+
+
+def main():
+    """
+    A program that utilizes pipes to allow a parent and a child process to communicate.
+    Uses the fork() and pipe() system call.
+    """
+
+    # create two pipes, one for child r/w, one for parent r/w
+    try:
+        parent_read, child_write = os.pipe()
+        child_read, parent_write = os.pipe()
+    except OSError as err:
+        print("Error creating pipe:", err.strerror)
+        sys.exit(-1)
+
+    # create a child process
+    try:
+        pid = os.fork()
+    except OSError as err:
+        print("Error creating process:", err.strerror)
+        sys.exit(-1)
+
+    # parent process
+    if pid > 0:
+        # closes unneeded pipes
+        os.close(child_read)
+        os.close(child_write)
+
+        # run parent subroutine
+        parent(os.fdopen(parent_read, 'r'), os.fdopen(parent_write, 'w'), pid)
+
+    # child process
+    else:
+        # closes unneeded pipes
+        os.close(parent_read)
+        os.close(parent_write)
+
+        # run child subroutine
+        child(os.fdopen(child_read, 'r'), os.fdopen(child_write, 'w'))
+
+
+# only runs program when requested to run
+if __name__ == "__main__":
+    main()
