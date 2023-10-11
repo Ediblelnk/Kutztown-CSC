@@ -38,7 +38,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
+                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
                 "mode": "source",
                 "source": false
               }
@@ -129,7 +129,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
+                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -146,7 +146,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
+                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -169,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md"
+                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md"
               }
             }
           },
@@ -216,22 +216,23 @@
   },
   "active": "ca9e7e15dcb805ca",
   "lastOpenFiles": [
-    "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
-    "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
-    "csc235/Assembly Language for x86 Processors/assets/img11.png",
     "csc235/Assembly Language for x86 Processors/2. x86 Processor Architecture.md",
+    "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
+    "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
     "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
+    "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
+    "csc328/project4_rust/target/CACHEDIR.TAG",
+    "csc328/project4_rust/src/main.rs",
+    "csc328/project4_rust/target",
+    "csc328/project4_rust/src",
+    "csc328/project4_rust/Makefile",
+    "csc328/project4_rust/Cargo.toml",
+    "csc328/project4_rust/Cargo.lock",
+    "csc328/project4_rust",
+    "csc328/project4/readme.txt",
+    "csc235/Assembly Language for x86 Processors/assets/img11.png",
     "csc235/Assembly Language for x86 Processors/assets/img10.png",
     "csc235/Assembly Language for x86 Processors/assets/img9.png",
-    "csc328/project4/target/debug/deps/project4.pdb",
-    "csc328/project4/target/debug/deps/project4.exe",
-    "csc328/project4/target/debug/deps/project4.2mcq8s4wxs2iz30a.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.30dxmn7kr9ei6zhw.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.qj05euvqguhoo8x.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.3w2luysfy67c7gtp.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.485k19oz38s3vqvr.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.176ip11o9lx14o6d.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.42lc4yqmah1wf5tw.rcgu.o",
     "csc235/Assembly Language for x86 Processors/assets/img8.png",
     "csc235/Assembly Language for x86 Processors/assets/img7.png",
     "csc235/Assembly Language for x86 Processors/assets/img6.png",
