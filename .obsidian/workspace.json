@@ -21,12 +21,14 @@
             }
           },
           {
-            "id": "ea875af1033e3c1f",
+            "id": "74f31e2ae73e8d92",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/assets/img11.png"
+                "file": "csc235/Assembly Language for x86 Processors/2. x86 Processor Architecture.md",
+                "mode": "source",
+                "source": false
               }
             }
           },
@@ -230,6 +232,8 @@
     "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
     "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
     "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
+    "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
+    "csc235/Assembly Language for x86 Processors/2. x86 Processor Architecture.md",
     "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
     "csc235/Assembly Language for x86 Processors/assets/img11.png",
     "csc235/Assembly Language for x86 Processors/assets/img10.png",
@@ -241,7 +245,7 @@
     "csc235/Assembly Language for x86 Processors/assets/img4.png",
     "csc235/Assembly Language for x86 Processors/assets/img3.png",
     "csc235/Assembly Language for x86 Processors/assets/img2.png",
-    "csc235/Assembly Language for x86 Processors/2. x86 Processor Architecture.md",
+    "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
     "csc225/discrete-math/discrete-math.synctex(busy)",
     "csc225/discrete-math/discrete-math.fls",
     "csc225/discrete-math/discrete-math.toc",
