@@ -1,8 +1,10 @@
 {
   "accentColor": "#ef6b6b",
   "cssTheme": "Everforest",
-  "interfaceFontFamily": "",
+  "interfaceFontFamily": "Inter",
   "theme": "obsidian",
   "baseFontSize": 16,
-  "baseFontSizeAction": false
+  "baseFontSizeAction": false,
+  "textFontFamily": "Inter",
+  "monospaceFontFamily": "Inter"
 }

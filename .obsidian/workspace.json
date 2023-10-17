@@ -31,18 +31,6 @@
             }
           },
           {
-            "id": "ca9e7e15dcb805ca",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "f73e56e4715ebb94",
             "type": "leaf",
             "state": {
@@ -53,8 +41,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "ca9e7e15dcb805ca",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "f6a466ed87291b4e",
@@ -138,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
+                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +156,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
+                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -178,7 +179,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md"
+                "file": "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md"
               }
             }
           },
@@ -211,7 +212,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -223,8 +225,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e8dede7b321b99ec",
+  "active": "ca9e7e15dcb805ca",
   "lastOpenFiles": [
+    "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
+    "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
     "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
     "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
     "csc235/Assembly Language for x86 Processors/assets/img11.png",
@@ -238,8 +242,6 @@
     "csc235/Assembly Language for x86 Processors/assets/img3.png",
     "csc235/Assembly Language for x86 Processors/assets/img2.png",
     "csc235/Assembly Language for x86 Processors/2. x86 Processor Architecture.md",
-    "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
-    "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
     "csc225/discrete-math/discrete-math.synctex(busy)",
     "csc225/discrete-math/discrete-math.fls",
     "csc225/discrete-math/discrete-math.toc",
@@ -249,7 +251,6 @@
     "csc237/Homework1/homework 1.fls",
     "csc237/Homework1/homework 1.synctex(busy)",
     "csc237/Homework1/homework 1.log",
-    "csc237/Homework1/homework 1.fdb_latexmk",
     "assets.md",
     "First Note.md",
     "Kutztown/CSC/CSC 235/1. Basic Concepts.md",
