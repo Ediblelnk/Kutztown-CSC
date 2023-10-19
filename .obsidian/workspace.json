@@ -16,8 +16,21 @@
                 "file": "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf"
               }
             }
+          },
+          {
+            "id": "e65d71dea4646db9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "conflict-files-obsidian-git.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -84,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
+                "file": "conflict-files-obsidian-git.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
+                "file": "conflict-files-obsidian-git.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf"
+                "file": "conflict-files-obsidian-git.md"
               }
             }
           },
@@ -169,25 +182,27 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2e6ad314ce6ad662",
+  "active": "e65d71dea4646db9",
   "lastOpenFiles": [
-    "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
     "csc235/Assembly Language for x86 Processors/Kip R. Irvine - Assembly Language for x86 Processors-Pearson (2019).pdf",
+    "conflict-files-obsidian-git.md",
+    "csc225/discrete-math/9-integer-properties.tex",
+    "csc225/discrete-math/8-induction-and-recursion.tex",
+    "csc225/discrete-math/7-computation.tex",
+    "csc225/discrete-math/6-relations-and-digraphs.tex",
+    "csc225/discrete-math/5-boolean-algebra.tex",
+    "csc225/discrete-math/4-functions.tex",
+    "csc225/discrete-math/3-sets.tex",
+    "csc225/discrete-math/2-proofs.tex",
+    "csc225/discrete-math/14-trees.tex",
+    "csc225/discrete-math/13-graphs.tex",
+    "csc235/Assembly Language for x86 Processors/4. Data Transfers, Addressing, and Arithmetic.md",
     "csc235/Assembly Language for x86 Processors/3. Assembly Language Fundamentals.md",
-    "csc237/Homework1/indent.log",
     "csc235/Assembly Language for x86 Processors/assets/img11.png",
     "csc235/Assembly Language for x86 Processors/2. x86 Processor Architecture.md",
     "csc235/Assembly Language for x86 Processors/1. Basic Concepts.md",
     "csc235/Assembly Language for x86 Processors/assets/img10.png",
     "csc235/Assembly Language for x86 Processors/assets/img9.png",
-    "csc328/project4/target/debug/deps/project4.pdb",
-    "csc328/project4/target/debug/deps/project4.exe",
-    "csc328/project4/target/debug/deps/project4.2mcq8s4wxs2iz30a.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.30dxmn7kr9ei6zhw.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.qj05euvqguhoo8x.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.3w2luysfy67c7gtp.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.485k19oz38s3vqvr.rcgu.o",
-    "csc328/project4/target/debug/deps/project4.176ip11o9lx14o6d.rcgu.o",
     "csc235/Assembly Language for x86 Processors/assets/img8.png",
     "csc235/Assembly Language for x86 Processors/assets/img7.png",
     "csc235/Assembly Language for x86 Processors/assets/img6.png",
