@@ -13,3 +13,5 @@
 
 [beej's guide to network programming](https://beej.us/guide/bgnet/)
 
+[sockets by example](https://www.cs.brandeis.edu/~cs146a/rust/rustbyexample-02-21-2015/sockets.html)
+
