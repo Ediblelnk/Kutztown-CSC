@@ -311,9 +311,9 @@ Any problem that can be solved efficiently on any computing device can be solved
 \begin{itemize}
   \item memory is a 1-dimensional tape. \\
         \begin{tikzpicture}
-          \pgfmathsetmacro{\x}{0.5};
-          \pgfmathsetmacro{\y}{0.5};
-          \pgfmathsetmacro{\vset}{0};
+          \pgfmathsetmacro{\x}{0.5}
+          \pgfmathsetmacro{\y}{0.5}
+          \pgfmathsetmacro{\vset}{0}
 
           \foreach[count=\i] \element in {a,b,b,b,a,b,a,b,a,b,b,b,a} {
               \draw (\i * \x,0) rectangle ++(\x,\y);
@@ -325,10 +325,10 @@ Any problem that can be solved efficiently on any computing device can be solved
   \item a \underline{configuration} consists of the contents of the tape, the current state,
         and the tape cell to which the head is currently pointing \\
         \begin{tikzpicture}
-          \pgfmathsetmacro{\x}{0.5};
-          \pgfmathsetmacro{\y}{0.5};
-          \pgfmathsetmacro{\vset}{0};
-          \pgfmathsetmacro{\qset}{7};
+          \pgfmathsetmacro{\x}{0.5}
+          \pgfmathsetmacro{\y}{0.5}
+          \pgfmathsetmacro{\vset}{0}
+          \pgfmathsetmacro{\qset}{7}
 
           \foreach[count=\i] \element in {a,b,b,b,a,b,a,b,a,b,b,b,a} {
               \draw (\i * \x,0) rectangle ++(\x,\y);
@@ -377,10 +377,10 @@ Turing machine that accepts strings with 2 $b$'s
 \begin{center}
   \begin{tabular}{c}
     \begin{tikzpicture}
-      \pgfmathsetmacro{\x}{0.5};
-      \pgfmathsetmacro{\y}{0.5};
-      \pgfmathsetmacro{\vset}{0};
-      \pgfmathsetmacro{\qset}{1};
+      \pgfmathsetmacro{\x}{0.5}
+      \pgfmathsetmacro{\y}{0.5}
+      \pgfmathsetmacro{\vset}{0}
+      \pgfmathsetmacro{\qset}{1}
 
       \foreach[count=\i] \element in {a,b,b,a,*} {
           \draw (\i * \x,0) rectangle ++(\x,\y);
@@ -394,10 +394,10 @@ Turing machine that accepts strings with 2 $b$'s
   \qquad
   \begin{tabular}{c}
     \begin{tikzpicture}
-      \pgfmathsetmacro{\x}{0.5};
-      \pgfmathsetmacro{\y}{0.5};
-      \pgfmathsetmacro{\vset}{0};
-      \pgfmathsetmacro{\qset}{1};
+      \pgfmathsetmacro{\x}{0.5}
+      \pgfmathsetmacro{\y}{0.5}
+      \pgfmathsetmacro{\vset}{0}
+      \pgfmathsetmacro{\qset}{1}
 
       \foreach[count=\i] \element in {a,b,a,a,*} {
           \draw (\i * \x,0) rectangle ++(\x,\y);
@@ -426,8 +426,8 @@ Transition function for Turing machine that recognizes powers of 2:
 \begin{center}
   \begin{tikzpicture}
     %VARIABLES
-    \pgfmathsetmacro{\gsize}{1};
-    \pgfmathsetmacro{\gnum}{4};
+    \pgfmathsetmacro{\gsize}{1}
+    \pgfmathsetmacro{\gnum}{4}
 
     \foreach[count=\i] \element in {1,2,3,4} { %domain
         \node (\element) at (\i * 360 / \gnum:\gsize) {$\element$};
