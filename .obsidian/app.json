@@ -1,4 +1,6 @@
 {
   "showLineNumber": true,
-  "promptDelete": false
+  "promptDelete": false,
+  "attachmentFolderPath": "./",
+  "readableLineLength": false
 }
