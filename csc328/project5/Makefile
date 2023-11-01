@@ -1,15 +1,15 @@
-all: project5 target/debug/project5
+all: client target/debug/client
 
-project5: target/debug/project5
-	cp target/debug/project5 project5
+client: target/debug/client
+	cp target/debug/client client
 
-target/debug/project5: src/main.rs
+target/debug/client: src/main.rs
 	cargo build
 
 .PHONY: clean
 clean:
 	cargo clean
-	rm project5
+	rm client
 
 .PHONY: submit
 submit:
