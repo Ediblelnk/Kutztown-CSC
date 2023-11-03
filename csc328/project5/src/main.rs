@@ -93,7 +93,7 @@ fn main() {
     // ensure the proper number of arguments to program.
     // if not, then error and prompt usage
     if args.len() != 3 {
-        panic!("USAGE:\n\t./project5 <host: IPv4 address> <port>");
+        panic!("USAGE:\n\t./client <host: IPv4 address> <port>");
     }
 
     // get host and port based on arguments
