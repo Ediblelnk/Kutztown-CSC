@@ -41,7 +41,7 @@ fn main() {
 
     //set up TcpListener, bind to port, and listen for connections
     let listener: TcpListener =
-        TcpListener::bind(format!("localhost:{port}")).unwrap_or_else(|why| {
+        TcpListener::bind(format!("127.0.0.1:{port}")).unwrap_or_else(|why| {
             eprintln!("ERROR: {why}");
             process::exit(ERR);
         });
