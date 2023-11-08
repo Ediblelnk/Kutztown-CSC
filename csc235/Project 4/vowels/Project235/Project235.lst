@@ -1,11 +1,11 @@
-Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/07/23 00:48:26
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/07/23 22:48:35
 vowels.asm						     Page 1 - 1
 
 
 				; 
 				; Count matching vowels in a string
 				; 
-				; Name:
+				; Name: Peter Schaefer
 				;
 				include Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
@@ -27,17 +27,19 @@ vowels.asm						     Page 1 - 1
 			      C 
 
  00000000			.data
- 00000000 74 73 75		vowels BYTE "tsu"
- 00000003 = 00000003		vowels_len = ($ - vowels)
- 00000003  00000003 [		vowel_counts BYTE vowels_len DUP(0)
+				; vowel variables
+ 00000000 61 65 69 6F 75	vowels BYTE "aeiou"
+ 00000005 = 00000005		vowels_len = ($ - vowels)
+ 00000005  00000005 [		vowel_counts BYTE vowels_len DUP(0)
 	    00
 	   ]
 
- 00000006 45 6E 74 65 72	prompt BYTE "Enter a string: ",0
+				; string variables / prompts
+ 0000000A 45 6E 74 65 72	prompt BYTE "Enter a string: ",0
 	   20 61 20 73 74
 	   72 69 6E 67 3A
 	   20 00
- 00000017 3A 20 00		separator BYTE ": ",0
+ 0000001B 3A 20 00		separator BYTE ": ",0
 
  = 00000064			string_len = 100
 
@@ -46,9 +48,8 @@ vowels.asm						     Page 1 - 1
 
  00000000			.code
  00000000			main PROC
-
 				; prompt the user for a user input string
- 00000000  BA 00000006 R		mov edx, OFFSET prompt
+ 00000000  BA 0000000A R		mov edx, OFFSET prompt
  00000005  E8 00000000 E		call WriteString
 
 				; read and store a user input string
@@ -57,67 +58,65 @@ vowels.asm						     Page 1 - 1
  00000014  E8 00000000 E		call ReadString
 
 				; loop and call CountChars on each vowel
- 00000019  B9 00000003			mov ecx, vowels_len
- 0000001E  BE 00000000 R		mov esi, OFFSET vowels
+ 00000019  B9 00000005			mov ecx, vowels_len					; set up loop amount
+ 0000001E  BE 00000000 R		mov esi, OFFSET vowels				; point ESI at beginning of vowel array
  00000023			COUNT:
- 00000023  8A 06			mov al, BYTE PTR [esi]			; eax holds the test character
- 00000025  BB 00000000 R		mov ebx, OFFSET string			; ebx holds the string
+ 00000023  8A 06			mov al, BYTE PTR [esi]				; eax holds the test character
+ 00000025  BB 00000000 R		mov ebx, OFFSET string				; ebx holds the string
+ 0000002A  E8 0000003E			call CountChars					
+ 0000002F  88 56 05			mov BYTE PTR [esi+vowels_len], dl	; move result from CountChars into num array
 
- 0000002A  E8 0000003E			call CountChars
- 0000002F  88 56 03			mov BYTE PTR [esi+vowels_len], dl
-
- 00000032  46				inc esi
+ 00000032  46				inc esi								; increment to next test character and loop
  00000033  E2 EE			loop COUNT
 
 				; print out all the characters and their corresponding amounts
- 00000035  B9 00000003			mov ecx, vowels_len
- 0000003A  BE 00000000 R		mov esi, OFFSET vowels
+ 00000035  B9 00000005			mov ecx, vowels_len						; set up loop amount
+ 0000003A  BE 00000000 R		mov esi, OFFSET vowels					; point ESI at beginning of vowel array
  0000003F			PRINT:
- 0000003F  8A 06			mov al, BYTE PTR [esi]
+ 0000003F  8A 06			mov al, BYTE PTR [esi]					; eax holds character to write
  00000041  E8 00000000 E		call WriteChar
 
- 00000046  BA 00000017 R		mov edx, OFFSET separator
+ 00000046  BA 0000001B R		mov edx, OFFSET separator				; edx holds string to write
  0000004B  E8 00000000 E		call WriteString
 
- 00000050  0F B6 46 03			movzx eax, BYTE PTR [esi+vowels_len]
+ 00000050  0F B6 46 05			movzx eax, BYTE PTR [esi+vowels_len]	; move count of vowel into eax
  00000054  E8 00000000 E		call WriteDec
-
  00000059  E8 00000000 E		call Crlf
 
- 0000005E  46				inc esi
+ 0000005E  46				inc esi									; move to next character
  0000005F  E2 DE			loop PRINT
 
 				; wait and cleanup
- 00000061  E8 00000000 E		call WaitMsg					; wait for user to hit enter
-					invoke ExitProcess,0		
+ 00000061  E8 00000000 E		call WaitMsg
+					invoke ExitProcess,0
  0000006D			main ENDP
 
  0000006D			CountChars PROC
 				; Descrption:
 				;	Calculates and returns the amount a character is contained in a string
 				; Receives:
-				;	EAX = the character searched for
+				;	EAX = the character searched for, stored in AL
 				;	EBX = memory address of the beginning of string
 				; Returns:
 				;	EDX = the number of times the character occured in the string
 				; Requires:
 				;	EBX string MUST be null-terminated
 
- 0000006D  BA 00000000			mov edx, 0
+ 0000006D  BA 00000000			mov edx, 0				; edx will return the final count so start with 0
  00000072			NEXT_CHAR:
- 00000072  3A 03			cmp al, BYTE PTR [ebx]
- 00000074  75 01			jnz NO_MATCH
- 00000076  42				inc edx	; only increments the count if they do match
+ 00000072  3A 03			cmp al, BYTE PTR [ebx]	; does the current character match the test character?
+ 00000074  75 01			jnz NO_MATCH			; no match, skip over count increment
+ 00000076  42				inc edx					; only increments the count if they do match
  00000077			NO_MATCH:
- 00000077  43				inc ebx
- 00000078  80 3B 00			cmp BYTE PTR [ebx], 0
- 0000007B  75 F5			jnz NEXT_CHAR
+ 00000077  43				inc ebx					; move to the next character
+ 00000078  80 3B 00			cmp BYTE PTR [ebx], 0	; is the next charater the null temrinator?
+ 0000007B  75 F5			jnz NEXT_CHAR			; not null terminator, continue
 
- 0000007D  C3				ret
+ 0000007D  C3				ret						; was the null terminator, return
  0000007E			CountChars ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/07/23 00:48:26
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/07/23 22:48:35
 vowels.asm						     Symbols 2 - 1
 
 
@@ -212,7 +211,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
 _BSS . . . . . . . . . . . . . .	32 Bit	 00000065 Para	  Public  'BSS'  
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000001A Para	  Public  'DATA'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000001E Para	  Public  'DATA'	
 _TEXT  . . . . . . . . . . . . .	32 Bit	 0000007E Para	  Public  'CODE'	
 
 
@@ -558,13 +557,13 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-prompt . . . . . . . . . . . . .	Byte	 00000006 _DATA	
+prompt . . . . . . . . . . . . .	Byte	 0000000A _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-separator  . . . . . . . . . . .	Byte	 00000017 _DATA	
+separator  . . . . . . . . . . .	Byte	 0000001B _DATA	
 string_len . . . . . . . . . . .	Number	 00000064h   
 string . . . . . . . . . . . . .	Byte	 00000000 _BSS	
-vowel_counts . . . . . . . . . .	Byte	 00000003 _DATA	
-vowels_len . . . . . . . . . . .	Number	 00000003h   
+vowel_counts . . . . . . . . . .	Byte	 00000005 _DATA	
+vowels_len . . . . . . . . . . .	Number	 00000005h   
 vowels . . . . . . . . . . . . .	Byte	 00000000 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
