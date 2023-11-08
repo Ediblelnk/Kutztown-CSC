@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/07/23 22:48:35
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    11/08/23 13:22:56
 vowels.asm						     Page 1 - 1
 
 
@@ -91,7 +91,7 @@ vowels.asm						     Page 1 - 1
 					invoke ExitProcess,0
  0000006D			main ENDP
 
- 0000006D			CountChars PROC
+ 0000006D			CountChars PROC USES eax ebx
 				; Descrption:
 				;	Calculates and returns the amount a character is contained in a string
 				; Receives:
@@ -102,21 +102,21 @@ vowels.asm						     Page 1 - 1
 				; Requires:
 				;	EBX string MUST be null-terminated
 
- 0000006D  BA 00000000			mov edx, 0				; edx will return the final count so start with 0
- 00000072			NEXT_CHAR:
- 00000072  3A 03			cmp al, BYTE PTR [ebx]	; does the current character match the test character?
- 00000074  75 01			jnz NO_MATCH			; no match, skip over count increment
- 00000076  42				inc edx					; only increments the count if they do match
- 00000077			NO_MATCH:
- 00000077  43				inc ebx					; move to the next character
- 00000078  80 3B 00			cmp BYTE PTR [ebx], 0	; is the next charater the null temrinator?
- 0000007B  75 F5			jnz NEXT_CHAR			; not null terminator, continue
+ 0000006F  BA 00000000			mov edx, 0				; edx will return the final count so start with 0
+ 00000074			NEXT_CHAR:
+ 00000074  3A 03			cmp al, BYTE PTR [ebx]	; does the current character match the test character?
+ 00000076  75 01			jnz NO_MATCH			; no match, skip over count increment
+ 00000078  42				inc edx					; only increments the count if they do match
+ 00000079			NO_MATCH:
+ 00000079  43				inc ebx					; move to the next character
+ 0000007A  80 3B 00			cmp BYTE PTR [ebx], 0	; is the next charater the null temrinator?
+ 0000007D  75 F5			jnz NEXT_CHAR			; not null terminator, continue
 
- 0000007D  C3				ret						; was the null terminator, return
- 0000007E			CountChars ENDP
+					ret						; was the null terminator, return
+ 00000082			CountChars ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/07/23 22:48:35
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    11/08/23 13:22:56
 vowels.asm						     Symbols 2 - 1
 
 
@@ -212,7 +212,7 @@ FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
 _BSS . . . . . . . . . . . . . .	32 Bit	 00000065 Para	  Public  'BSS'  
 _DATA  . . . . . . . . . . . . .	32 Bit	 0000001E Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000007E Para	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000082 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -222,9 +222,9 @@ Procedures, parameters, and locals:
 CloseFile  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 CloseHandle  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Clrscr . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-CountChars . . . . . . . . . . .	P Near	 0000006D _TEXT	Length= 00000011 Public STDCALL
-  NEXT_CHAR  . . . . . . . . . .	L Near	 00000072 _TEXT	
-  NO_MATCH . . . . . . . . . . .	L Near	 00000077 _TEXT	
+CountChars . . . . . . . . . . .	P Near	 0000006D _TEXT	Length= 00000015 Public STDCALL
+  NEXT_CHAR  . . . . . . . . . .	L Near	 00000074 _TEXT	
+  NO_MATCH . . . . . . . . . . .	L Near	 00000079 _TEXT	
 CreateFileA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 CreateOutputFile . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL

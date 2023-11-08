@@ -65,7 +65,7 @@ PRINT:
 	invoke ExitProcess,0
 main ENDP
 
-CountChars PROC
+CountChars PROC USES eax ebx
 ; Descrption:
 ;	Calculates and returns the amount a character is contained in a string
 ; Receives:
