@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30147.0	    06/02/23 16:35:49
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    12/04/23 23:54:54
 olympians.asm						     Page 1 - 1
 
 
@@ -46,10 +46,10 @@ olympians.asm						     Page 1 - 1
  00000020  00000020 [			country BYTE STRSIZE DUP('c')	; 32
 	    63
 	   ]
- 00000040  00000003 [			medals DWORD NUMTESTS DUP(0)	; NUMTESTS x 32
+ 00000040  00000003 [			medals DWORD NUMTESTS DUP(0)	; NUMTESTS x 4
 	    00000000
 	   ]
-				olympian ENDS						; 160 total
+				olympian ENDS						; 76 total
 
  00000000			.data
  00000000  00000096 [		filename BYTE FSIZE DUP(?)			; array to hold the file name
@@ -91,24 +91,36 @@ olympians.asm						     Page 1 - 1
  00000000  BA 0000009A R	    mov edx,OFFSET prompt1			; output the prompt
  00000005  E8 00000000 E		call WriteString				; uses edx 
  0000000A  E8 00000000 E		call ReadInt					; get the maximium number of olympians
- 0000000F  A3 000000DE R		mov maxnum,eax					; save it
+ 0000000F  A3 000000DE R		mov maxnum, eax					; save it
 
 					;;;;;;;;;;;;;;;;;;;
 					; access the heap and allocate memory for olympian struct array
 					;;;;;;;;;;;;;;;;;;
 
+ 00000014  A1 000000DE R		mov eax, maxnum					;
+ 00000019  6B C0 4C			imul eax, SIZEOF olympian		; calculate number of bytes needed to allocate
+ 0000001C  50				push eax						; push value as argument of allocOlympians
+ 0000001D  E8 00000060			call allocOlympians
+ 00000022  72 2D			jc ERROR						; end the program if unable to allocate
+
 					; prompt for the file name 
- 00000014  BA 000000BA R	    mov edx,OFFSET prompt2			; output the prompt
- 00000019  E8 00000000 E		call WriteString				; uses edx 
+ 00000024  BA 000000BA R	    mov edx,OFFSET prompt2			; output the prompt
+ 00000029  E8 00000000 E		call WriteString				; uses edx 
 
 					; read the file name
- 0000001E  BA 00000000 R		mov edx,OFFSET filename			; point to the start of the file name string
- 00000023  B9 00000096			mov ecx,FSIZE				    ; max size for file name
- 00000028  E8 00000000 E		call ReadString					; load the file name (string pointer in edx, max size in ecx)
+ 0000002E  BA 00000000 R		mov edx, OFFSET filename		; point to the start of the file name string
+ 00000033  B9 00000096			mov ecx, FSIZE				    ; max size for file name
+ 00000038  E8 00000000 E		call ReadString					; load the file name (string pointer in edx, max size in ecx)
 					
 					;;;;;;;;;;;;;;;;;;
 					; open the file, get the file pointer
 					;;;;;;;;;;;;;;;;;;
+ 0000003D  BA 00000000 R		mov edx, OFFSET filename		
+ 00000042  E8 00000000 E		call OpenInputFile
+ 00000047  83 F8 FF			cmp eax, INVALID_HANDLE_VALUE
+ 0000004A  74 05			je ERROR						; an error has occured with opening the file
+ 0000004C  A3 00000096 R		mov fileptr, eax				; store the file pointer
+
 
 					;;;;;;;;;;;;;;;;;;
 					; load the olympian information
@@ -124,40 +136,68 @@ olympians.asm						     Page 1 - 1
 					;     handle any errors encountered
 					;;;;;;;;;;;;;;;;;;
 
- 0000002D			DONE:
- 0000002D  E8 00000000 E		call WaitMsg					; wait for user to hit enter
+ 00000051			ERROR:
+
+ 00000051			DONE:
+ 00000051  E8 00000000 E		call WaitMsg					; wait for user to hit enter
 					invoke ExitProcess,0			; bye
- 00000039			main ENDP
+ 0000005D			main ENDP
 
 				; read a character from a file
 				; receives:
 				;	[ebp+8]  = file pointer
 				; returns:
 				;	eax = character read, or system error code if carry flag is set
- 00000039			readFileChar PROC
- 00000039  55				push ebp						; save the base pointer
- 0000003A  8B EC			mov ebp,esp						; base of the stack frame
- 0000003C  83 EC 04			sub esp,4						; create a local variable for the return value
- 0000003F  52				push edx						; save the registers
- 00000040  51				push ecx
+ 0000005D			readFileChar PROC
+ 0000005D  55				push ebp						; save the base pointer
+ 0000005E  8B EC			mov ebp,esp						; base of the stack frame
+ 00000060  83 EC 04			sub esp,4						; create a local variable for the return value
+ 00000063  52				push edx						; save the registers
+ 00000064  51				push ecx
 
- 00000041  8B 45 08			mov eax,[ebp+8]					; file pointer
- 00000044  8D 55 FC			lea edx,[ebp-4]					; pointer to value read
- 00000047  B9 00000001			mov ecx,1						; number of chars to read
- 0000004C  E8 00000000 E		call ReadFromFile				; gets file handle from eax (loaded above)
- 00000051  72 03			jc DONE							; if CF is set, leave the error code in eax
- 00000053  8B 45 FC			mov eax,[ebp-4]					; otherwise, copy the char read from local variable
+ 00000065  8B 45 08			mov eax,[ebp+8]					; file pointer
+ 00000068  8D 55 FC			lea edx,[ebp-4]					; pointer to value read
+ 0000006B  B9 00000001			mov ecx,1						; number of chars to read
+ 00000070  E8 00000000 E		call ReadFromFile				; gets file handle from eax (loaded above)
+ 00000075  72 03			jc DONE							; if CF is set, leave the error code in eax
+ 00000077  8B 45 FC			mov eax,[ebp-4]					; otherwise, copy the char read from local variable
 
- 00000056			DONE:
- 00000056  59				pop ecx							; restore the registers
- 00000057  5A				pop edx
- 00000058  8B E5			mov esp,ebp						; remove local var from stack 
- 0000005A  5D				pop ebp
- 0000005B  C2 0004			ret 4
- 0000005E			readFileChar ENDP
+ 0000007A			DONE:
+ 0000007A  59				pop ecx							; restore the registers
+ 0000007B  5A				pop edx
+ 0000007C  8B E5			mov esp,ebp						; remove local var from stack 
+ 0000007E  5D				pop ebp
+ 0000007F  C2 0004			ret 4
+ 00000082			readFileChar ENDP
+
+
+ 00000082			allocOlympians PROC,
+					ssize: DWORD
+
+ 00000085  E8 00000000 E		call GetProcessHeap		; get a handle to this process heap in EAX
+ 0000008A  FF 75 08			push ssize				; requested size of allocation
+ 0000008D  6A 08			push HEAP_ZERO_MEMORY	; zero out all data in the allocation
+ 0000008F  50				push eax				; handle to process heap
+ 00000090  E8 00000000 E		call HeapAlloc
+
+ 00000095  83 F8 00			cmp eax, 0				; pointer to memory
+ 00000098  75 03			jne OK					; zero on failure
+ 0000009A  F9				stc
+ 0000009B  EB 01			jmp DONE
+
+ 0000009D			OK:
+ 0000009D  F8				clc						; return with CF = 0
+
+ 0000009E			DONE:
+					ret
+ 000000A2			allocOlympians ENDP
+
+ 000000A2			readFileLine PROC
+ 000000A2  C3				ret
+ 000000A3			readFileLine ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.29.30147.0	    06/02/23 16:35:49
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    12/04/23 23:54:54
 olympians.asm						     Symbols 2 - 1
 
 
@@ -256,7 +296,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 00000108 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000005E Para	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000A3 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -363,11 +403,17 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000039 Public STDCALL
-  DONE . . . . . . . . . . . . .	L Near	 0000002D _TEXT	
+allocOlympians . . . . . . . . .	P Near	 00000082 _TEXT	Length= 00000020 Public STDCALL
+  ssize  . . . . . . . . . . . .	DWord	 bp + 00000008
+  OK . . . . . . . . . . . . . .	L Near	 0000009D _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 0000009E _TEXT	
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000005D Public STDCALL
+  ERROR  . . . . . . . . . . . .	L Near	 00000051 _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 00000051 _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-readFileChar . . . . . . . . . .	P Near	 00000039 _TEXT	Length= 00000025 Public STDCALL
-  DONE . . . . . . . . . . . . .	L Near	 00000056 _TEXT	
+readFileChar . . . . . . . . . .	P Near	 0000005D _TEXT	Length= 00000025 Public STDCALL
+  DONE . . . . . . . . . . . . .	L Near	 0000007A _TEXT	
+readFileLine . . . . . . . . . .	P Near	 000000A2 _TEXT	Length= 00000001 Public STDCALL
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 

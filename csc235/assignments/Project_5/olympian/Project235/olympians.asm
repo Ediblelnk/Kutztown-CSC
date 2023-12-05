@@ -46,24 +46,36 @@ main PROC
     mov edx,OFFSET prompt1			; output the prompt
 	call WriteString				; uses edx 
 	call ReadInt					; get the maximium number of olympians
-	mov maxnum,eax					; save it
+	mov maxnum, eax					; save it
 
 	;;;;;;;;;;;;;;;;;;;
 	; access the heap and allocate memory for olympian struct array
 	;;;;;;;;;;;;;;;;;;
+
+	mov eax, maxnum					;
+	imul eax, SIZEOF olympian		; calculate number of bytes needed to allocate
+	push eax						; push value as argument of allocOlympians
+	call allocOlympians
+	jc ERROR						; end the program if unable to allocate
 
 	; prompt for the file name 
     mov edx,OFFSET prompt2			; output the prompt
 	call WriteString				; uses edx 
 
 	; read the file name
-	mov edx,OFFSET filename			; point to the start of the file name string
-	mov ecx,FSIZE				    ; max size for file name
+	mov edx, OFFSET filename		; point to the start of the file name string
+	mov ecx, FSIZE				    ; max size for file name
 	call ReadString					; load the file name (string pointer in edx, max size in ecx)
 	
 	;;;;;;;;;;;;;;;;;;
 	; open the file, get the file pointer
 	;;;;;;;;;;;;;;;;;;
+	mov edx, OFFSET filename		
+	call OpenInputFile
+	cmp eax, INVALID_HANDLE_VALUE
+	je ERROR						; an error has occured with opening the file
+	mov fileptr, eax				; store the file pointer
+
 
 	;;;;;;;;;;;;;;;;;;
 	; load the olympian information
@@ -78,6 +90,8 @@ main PROC
 	;     close the file
 	;     handle any errors encountered
 	;;;;;;;;;;;;;;;;;;
+
+ERROR:
 
 DONE:
 	call WaitMsg					; wait for user to hit enter
@@ -110,5 +124,31 @@ DONE:
 	pop ebp
 	ret 4
 readFileChar ENDP
+
+
+allocOlympians PROC,
+	ssize: DWORD
+
+	call GetProcessHeap		; get a handle to this process heap in EAX
+	push ssize				; requested size of allocation
+	push HEAP_ZERO_MEMORY	; zero out all data in the allocation
+	push eax				; handle to process heap
+	call HeapAlloc
+
+	cmp eax, 0				; pointer to memory
+	jne OK					; zero on failure
+	stc
+	jmp DONE
+
+OK:
+	clc						; return with CF = 0
+
+DONE:
+	ret
+allocOlympians ENDP
+
+readFileLine PROC
+	ret
+readFileLine ENDP
 
 END main
