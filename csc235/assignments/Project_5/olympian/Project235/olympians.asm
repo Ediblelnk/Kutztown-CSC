@@ -26,7 +26,8 @@ olympian ENDS						; 76 total
 
 .data
 filename BYTE FSIZE DUP(?)			; array to hold the file name
-fileptr DWORD 0						; the file pointer
+filehandle DWORD 0					; the file handle
+loadstring BYTE FSIZE DUP(1)		; string buffer to load from file
 prompt1 BYTE "Enter the number of olympians: ",0	; prompt for a string
 prompt2 BYTE "Enter a filename: ",0	; prompt for a string
 ferror BYTE "Invalid input...",0	; error message
@@ -72,9 +73,18 @@ main PROC
 	;;;;;;;;;;;;;;;;;;
 	mov edx, OFFSET filename		
 	call OpenInputFile
+
 	cmp eax, INVALID_HANDLE_VALUE
 	je ERROR						; an error has occured with opening the file
-	mov fileptr, eax				; store the file pointer
+
+	mov filehandle, eax				; store the file pointer
+
+L1:
+	push filehandle					; pointer to the file
+	push OFFSET loadstring			; pointer to the string buffer
+	push FSIZE						; need to leave room for NULL terminator
+	call readFileLine				;
+	jmp L1
 
 
 	;;;;;;;;;;;;;;;;;;
@@ -98,12 +108,14 @@ DONE:
 	invoke ExitProcess,0			; bye
 main ENDP
 
-; read a character from a file
-; receives:
+readFileChar PROC
+; description:
+;	read a character from a file
+; receives (in reverse order):
 ;	[ebp+8]  = file pointer
 ; returns:
 ;	eax = character read, or system error code if carry flag is set
-readFileChar PROC
+
 	push ebp						; save the base pointer
 	mov ebp,esp						; base of the stack frame
 	sub esp,4						; create a local variable for the return value
@@ -125,9 +137,13 @@ DONE:
 	ret 4
 readFileChar ENDP
 
-
+; descriptions:
+;	allocates sufficient memory from to store the inputted number of olypian structs
+; receives (in reverse order):
 allocOlympians PROC,
-	ssize: DWORD
+	ssize: DWORD	; the number of structs in the array
+; returns:
+;	eax = a pointer to the allocated array, or carry flag if error
 
 	call GetProcessHeap		; get a handle to this process heap in EAX
 	push ssize				; requested size of allocation
@@ -147,7 +163,54 @@ DONE:
 	ret
 allocOlympians ENDP
 
-readFileLine PROC
+; description:
+;	reads a line from the specified filepointer/filehandle, 
+;	and puts it into stringpointer buffer, up to stringsize characters
+; receives (in reverse order):
+readFileLine PROC uses EBX,
+	stringsize: DWORD,		; maximum size of the buffer
+	stringpointer: DWORD,	; pointer to the string buffer
+	filepointer: DWORD,		; pointer to the filehandle
+; returns:
+;	eax = the number of characters read and stored in the target array
+
+	push stringsize				; save the arguments to restore later
+	push stringpointer
+
+	mov ebx, 0					; EBX will hold count of characters loaded
+	mov esi, stringpointer		; load the address of the string buffer
+
+NEXT_CHAR:
+	push filepointer
+	call readFileChar			; load a character
+	jc ERROR
+
+	cmp al, CR					; if the loaded character was a carriage return, ignore
+	jz NEXT_CHAR
+
+	inc ebx
+	dec stringsize				; there is one less byte available in the buffer
+	jz NULL_TERMINATE			; terminate string and leave
+
+	cmp al, LF					; if the loaded character was a line fead, null terminate
+	jz NULL_TERMINATE
+
+	mov BYTE PTR [esi], al		; store the character in string array
+	inc esi						; point to next position in string array
+	jmp NEXT_CHAR
+
+NULL_TERMINATE:
+	mov BYTE PTR [esi], 0		; null terminate the string
+	jmp DONE
+
+ERROR:
+	stc
+
+DONE:
+	pop stringpointer
+	pop stringsize				; restore the arguments previously saved
+
+	mov eax, ebx				; eax returns the number of characters read/stored
 	ret
 readFileLine ENDP
 
