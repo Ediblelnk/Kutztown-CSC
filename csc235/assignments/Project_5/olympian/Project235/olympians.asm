@@ -18,19 +18,21 @@ STRSIZE = 32						; string sizes in struct
 NUMTESTS = 3						; number of olympian medals
 ROUND = 1							; cutoff for rounding
 
+MEDAL TYPEDEF DWORD					; just in case you don't a medal to be a DWORD
+
 olympian STRUCT
 	sname BYTE STRSIZE DUP('n')		; 32 bytes	
 	country BYTE STRSIZE DUP('c')	; 32
-	medals DWORD NUMTESTS DUP(0)	; NUMTESTS x 4
+	medals MEDAL NUMTESTS DUP(0)	; NUMTESTS x 4
 olympian ENDS						; 76 total
 
 .data
 filename BYTE FSIZE DUP(?)			; array to hold the file name
 filehandle DWORD 0					; the file handle
-loadstring BYTE FSIZE DUP(1)		; string buffer to load from file
 prompt1 BYTE "Enter the number of olympians: ",0	; prompt for a string
 prompt2 BYTE "Enter a filename: ",0	; prompt for a string
 ferror BYTE "Invalid input...",0	; error message
+perror BYTE "Fatal program error...",0				; internal error
 
 maxnum DWORD 0						; max number of olympians
 slistptr DWORD 0					; pointer to olympian list
@@ -43,24 +45,30 @@ outmedals  BYTE "Medals: ",0
 
 .code
 main PROC
-	; prompt for the number of olympians 
-    mov edx,OFFSET prompt1			; output the prompt
+	; prompt for the number of olympians
+REPROMPT_NUM:
+    mov edx, OFFSET prompt1			; output the prompt
 	call WriteString				; uses edx 
 	call ReadInt					; get the maximium number of olympians
+	jno ACCEPT_NUM
+	mov edx, OFFSET ferror
+	call WriteString
+	call Crlf						; newline
+	jmp REPROMPT_NUM
+
+ACCEPT_NUM:
 	mov maxnum, eax					; save it
 
 	;;;;;;;;;;;;;;;;;;;
 	; access the heap and allocate memory for olympian struct array
-	;;;;;;;;;;;;;;;;;;
-
-	mov eax, maxnum					;
-	imul eax, SIZEOF olympian		; calculate number of bytes needed to allocate
-	push eax						; push value as argument of allocOlympians
+	push maxnum						; push value as argument of allocOlympians
 	call allocOlympians
 	jc ERROR						; end the program if unable to allocate
+	mov slistptr, eax				; store a pointer to the heap data
 
+REPROMPT_FILE:
 	; prompt for the file name 
-    mov edx,OFFSET prompt2			; output the prompt
+    mov edx, OFFSET prompt2			; output the prompt
 	call WriteString				; uses edx 
 
 	; read the file name
@@ -70,38 +78,40 @@ main PROC
 	
 	;;;;;;;;;;;;;;;;;;
 	; open the file, get the file pointer
-	;;;;;;;;;;;;;;;;;;
 	mov edx, OFFSET filename		
 	call OpenInputFile
 
 	cmp eax, INVALID_HANDLE_VALUE
-	je ERROR						; an error has occured with opening the file
+	jne ACCEPT_FILE					; has an error occured opening the file?
+	mov edx, OFFSET ferror
+	call WriteString
+	call Crlf
+	jmp REPROMPT_FILE
 
+ACCEPT_FILE:
 	mov filehandle, eax				; store the file pointer
-
-L1:
-	push filehandle					; pointer to the file
-	push OFFSET loadstring			; pointer to the string buffer
-	push FSIZE						; need to leave room for NULL terminator
-	call readFileLine				;
-	jmp L1
-
 
 	;;;;;;;;;;;;;;;;;;
 	; load the olympian information
-	;;;;;;;;;;;;;;;;;;
+	push slistptr					; push arguments to loadALLOlympians
+	push filehandle
+	push maxnum
+	call loadAllOlympians
 
 	;;;;;;;;;;;;;;;;;;
 	; output the olympian information
-	;;;;;;;;;;;;;;;;;;
 
 	;;;;;;;;;;;;;;;;;;
 	; be sure to:
 	;     close the file
 	;     handle any errors encountered
-	;;;;;;;;;;;;;;;;;;
+
+	jmp DONE
 
 ERROR:
+	mov edx, OFFSET perror			; something went horribly wrong
+	call WriteString
+	call Crlf
 
 DONE:
 	call WaitMsg					; wait for user to hit enter
@@ -137,7 +147,7 @@ DONE:
 	ret 4
 readFileChar ENDP
 
-; descriptions:
+; description:
 ;	allocates sufficient memory from to store the inputted number of olypian structs
 ; receives (in reverse order):
 allocOlympians PROC,
@@ -145,19 +155,21 @@ allocOlympians PROC,
 ; returns:
 ;	eax = a pointer to the allocated array, or carry flag if error
 
-	call GetProcessHeap		; get a handle to this process heap in EAX
-	push ssize				; requested size of allocation
-	push HEAP_ZERO_MEMORY	; zero out all data in the allocation
-	push eax				; handle to process heap
+	mov eax, ssize
+	imul eax, SIZEOF OLYMPIAN	; calculate number of bytes needed to allocate
+	mov ssize, eax
+	
+	call GetProcessHeap			; get a handle to this process heap in EAX
+	push ssize					; requested size of allocation
+	push HEAP_ZERO_MEMORY		; zero out all data in the allocation
+	push eax					; handle to process heap
 	call HeapAlloc
-
-	cmp eax, 0				; pointer to memory
-	jne OK					; zero on failure
-	stc
+	cmp eax, 0					; NULL pointer?
+	je ERROR
 	jmp DONE
 
-OK:
-	clc						; return with CF = 0
+ERROR:
+	stc							; return with CF = 0
 
 DONE:
 	ret
@@ -167,7 +179,7 @@ allocOlympians ENDP
 ;	reads a line from the specified filepointer/filehandle, 
 ;	and puts it into stringpointer buffer, up to stringsize characters
 ; receives (in reverse order):
-readFileLine PROC uses EBX,
+readFileLine PROC uses EBX ESI,
 	stringsize: DWORD,		; maximum size of the buffer
 	stringpointer: DWORD,	; pointer to the string buffer
 	filepointer: DWORD,		; pointer to the filehandle
@@ -188,19 +200,19 @@ NEXT_CHAR:
 	cmp al, CR					; if the loaded character was a carriage return, ignore
 	jz NEXT_CHAR
 
-	inc ebx
 	dec stringsize				; there is one less byte available in the buffer
 	jz NULL_TERMINATE			; terminate string and leave
 
 	cmp al, LF					; if the loaded character was a line fead, null terminate
 	jz NULL_TERMINATE
 
+	inc ebx						; increment the characters read
 	mov BYTE PTR [esi], al		; store the character in string array
 	inc esi						; point to next position in string array
 	jmp NEXT_CHAR
 
 NULL_TERMINATE:
-	mov BYTE PTR [esi], 0		; null terminate the string
+	mov BYTE PTR [esi], NULL	; null terminate the string
 	jmp DONE
 
 ERROR:
@@ -213,5 +225,101 @@ DONE:
 	mov eax, ebx				; eax returns the number of characters read/stored
 	ret
 readFileLine ENDP
+
+; description:	
+;	reads information from a file and loads it into an olympian struct.
+; recieves (in reverse order):
+loadOlympian PROC uses ESI EDI ECX EDX,
+	filepointer: DWORD,			; the pointer to the file read from
+	structpointer: DWORD		; the pointer to the memory to write the struct
+	local stringbuffer[STRSIZE]: BYTE
+; returns:
+;	eax = updated file pointer, which has been advanced past the information just loaded
+; error:
+;	carry = set
+	
+	mov esi, [structpointer]	; esi points to the struct on the heap
+
+	push filepointer			; push arguments to readFileline
+	lea edi, stringbuffer
+	push edi					; loads local string for checking if properly formatted
+	push STRSIZE
+	call readFileLine
+	jc ERROR
+	cmp stringbuffer, ASTERISK	; properly formatted has '*' at beginning
+	jnz ERROR
+
+	push filepointer			; load the name
+	push esi
+	push STRSIZE
+	call readFileLine
+	jc ERROR
+
+	add esi, SIZEOF OLYMPIAN.sname
+
+	push filepointer			; load the country
+	push esi
+	push STRSIZE
+	call readFileLine
+	jc ERROR
+
+	add esi, SIZEOF OLYMPIAN.country
+
+	mov ecx, NUMTESTS			; repeat for the number of medals
+LOAD_MEDAL:
+	push filepointer			; load goal medals INTO buffer
+	push edi
+	push STRSIZE
+	call readFileLine
+	jc ERROR
+
+	push ecx					; store loop counter
+	mov ecx, eax				; move the number of characters read into ecx
+	mov edx, edi				; store pointer to stringbuffer in edx
+	call ParseInteger32
+	jo ERROR					; if parsing error, exit
+
+	mov [esi], eax				; write medal amount to struct
+	add esi, SIZEOF MEDAL		; increment to next medal
+	pop ecx						; restore loop counter
+	loop LOAD_MEDAL
+	jmp DONE
+
+ERROR:
+	stc
+
+DONE:
+	mov eax, filepointer
+	ret
+loadOlympian ENDP
+
+; description:
+;	makes successive calls to loadOlympian to read olympian information from a 
+;	file into an array of olympian structs
+; receives (in reverse order):
+loadAllOlympians PROC uses ESI ECX EBX,
+	maxOlympians: DWORD,
+	filepointer: DWORD,
+	structpointer: DWORD
+; returns:
+;	eax = number of olympians actually read
+
+	mov ebx, 0					; zero olympians have been read initially
+	mov esi, structpointer		;
+	mov ecx, maxOlympians		; prepare loop
+LOAD_OLYMPIAN:
+	push esi					; push pointer to current place of struct array
+	push filepointer
+	call loadOlympian
+	jc ERROR
+	inc ebx						; one more olympian has been read
+	add esi, SIZEOF OLYMPIAN	; increment to next olympian in array
+	loop LOAD_OLYMPIAN
+
+ERROR:
+	mov eax, ebx				; return number of olympians read in eax
+	ret
+
+loadAllOlympians ENDP
 
 END main

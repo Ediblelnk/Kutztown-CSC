@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.37.32825.0	    12/06/23 00:52:03
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    12/08/23 00:07:39
 olympians.asm						     Page 1 - 1
 
 
@@ -39,6 +39,8 @@ olympians.asm						     Page 1 - 1
  = 00000003			NUMTESTS = 3						; number of olympian medals
  = 00000001			ROUND = 1							; cutoff for rounding
 
+				MEDAL TYPEDEF DWORD					; just in case you don't a medal to be a DWORD
+
  0000004C			olympian STRUCT
  00000000  00000020 [			sname BYTE STRSIZE DUP('n')		; 32 bytes	
 	    6E
@@ -46,7 +48,7 @@ olympians.asm						     Page 1 - 1
  00000020  00000020 [			country BYTE STRSIZE DUP('c')	; 32
 	    63
 	   ]
- 00000040  00000003 [			medals DWORD NUMTESTS DUP(0)	; NUMTESTS x 4
+ 00000040  00000003 [			medals MEDAL NUMTESTS DUP(0)	; NUMTESTS x 4
 	    00000000
 	   ]
 				olympian ENDS						; 76 total
@@ -56,106 +58,116 @@ olympians.asm						     Page 1 - 1
 	    00
 	   ]
  00000096 00000000		filehandle DWORD 0					; the file handle
- 0000009A  00000096 [		loadstring BYTE FSIZE DUP(1)		; string buffer to load from file
-	    01
-	   ]
- 00000130 45 6E 74 65 72	prompt1 BYTE "Enter the number of olympians: ",0	; prompt for a string
+ 0000009A 45 6E 74 65 72	prompt1 BYTE "Enter the number of olympians: ",0	; prompt for a string
 	   20 74 68 65 20
 	   6E 75 6D 62 65
 	   72 20 6F 66 20
 	   6F 6C 79 6D 70
 	   69 61 6E 73 3A
 	   20 00
- 00000150 45 6E 74 65 72	prompt2 BYTE "Enter a filename: ",0	; prompt for a string
+ 000000BA 45 6E 74 65 72	prompt2 BYTE "Enter a filename: ",0	; prompt for a string
 	   20 61 20 66 69
 	   6C 65 6E 61 6D
 	   65 3A 20 00
- 00000163 49 6E 76 61 6C	ferror BYTE "Invalid input...",0	; error message
+ 000000CD 49 6E 76 61 6C	ferror BYTE "Invalid input...",0	; error message
 	   69 64 20 69 6E
 	   70 75 74 2E 2E
 	   2E 00
+ 000000DE 46 61 74 61 6C	perror BYTE "Fatal program error...",0				; internal error
+	   20 70 72 6F 67
+	   72 61 6D 20 65
+	   72 72 6F 72 2E
+	   2E 2E 00
 
- 00000174 00000000		maxnum DWORD 0						; max number of olympians
- 00000178 00000000		slistptr DWORD 0					; pointer to olympian list
- 0000017C 00000000		numread	DWORD 0						; number of olympians loaded
+ 000000F5 00000000		maxnum DWORD 0						; max number of olympians
+ 000000F9 00000000		slistptr DWORD 0					; pointer to olympian list
+ 000000FD 00000000		numread	DWORD 0						; number of olympians loaded
 
 				; for output listing (these can be used as globals)
- 00000180 4F 6C 79 6D 70	outname  BYTE "Olympian: ",0
+ 00000101 4F 6C 79 6D 70	outname  BYTE "Olympian: ",0
 	   69 61 6E 3A 20
 	   00
- 0000018B 43 6F 75 6E 74	outcountry BYTE "Country: ",0
+ 0000010C 43 6F 75 6E 74	outcountry BYTE "Country: ",0
 	   72 79 3A 20 00
- 00000195 4D 65 64 61 6C	outmedals  BYTE "Medals: ",0
+ 00000116 4D 65 64 61 6C	outmedals  BYTE "Medals: ",0
 	   73 3A 20 00
 
  00000000			.code
  00000000			main PROC
-					; prompt for the number of olympians 
- 00000000  BA 00000130 R	    mov edx,OFFSET prompt1			; output the prompt
+					; prompt for the number of olympians
+ 00000000			REPROMPT_NUM:
+ 00000000  BA 0000009A R	    mov edx, OFFSET prompt1			; output the prompt
  00000005  E8 00000000 E		call WriteString				; uses edx 
  0000000A  E8 00000000 E		call ReadInt					; get the maximium number of olympians
- 0000000F  A3 00000174 R		mov maxnum, eax					; save it
+ 0000000F  71 11			jno ACCEPT_NUM
+ 00000011  BA 000000CD R		mov edx, OFFSET ferror
+ 00000016  E8 00000000 E		call WriteString
+ 0000001B  E8 00000000 E		call Crlf						; newline
+ 00000020  EB DE			jmp REPROMPT_NUM
+
+ 00000022			ACCEPT_NUM:
+ 00000022  A3 000000F5 R		mov maxnum, eax					; save it
 
 					;;;;;;;;;;;;;;;;;;;
 					; access the heap and allocate memory for olympian struct array
-					;;;;;;;;;;;;;;;;;;
+ 00000027  FF 35 000000F5 R		push maxnum						; push value as argument of allocOlympians
+ 0000002D  E8 0000009E			call allocOlympians
+ 00000032  72 5C			jc ERROR						; end the program if unable to allocate
+ 00000034  A3 000000F9 R		mov slistptr, eax				; store a pointer to the heap data
 
- 00000014  A1 00000174 R		mov eax, maxnum					;
- 00000019  6B C0 4C			imul eax, SIZEOF olympian		; calculate number of bytes needed to allocate
- 0000001C  50				push eax						; push value as argument of allocOlympians
- 0000001D  E8 00000077			call allocOlympians
- 00000022  72 44			jc ERROR						; end the program if unable to allocate
-
+ 00000039			REPROMPT_FILE:
 					; prompt for the file name 
- 00000024  BA 00000150 R	    mov edx,OFFSET prompt2			; output the prompt
- 00000029  E8 00000000 E		call WriteString				; uses edx 
+ 00000039  BA 000000BA R	    mov edx, OFFSET prompt2			; output the prompt
+ 0000003E  E8 00000000 E		call WriteString				; uses edx 
 
 					; read the file name
- 0000002E  BA 00000000 R		mov edx, OFFSET filename		; point to the start of the file name string
- 00000033  B9 00000096			mov ecx, FSIZE				    ; max size for file name
- 00000038  E8 00000000 E		call ReadString					; load the file name (string pointer in edx, max size in ecx)
+ 00000043  BA 00000000 R		mov edx, OFFSET filename		; point to the start of the file name string
+ 00000048  B9 00000096			mov ecx, FSIZE				    ; max size for file name
+ 0000004D  E8 00000000 E		call ReadString					; load the file name (string pointer in edx, max size in ecx)
 					
 					;;;;;;;;;;;;;;;;;;
 					; open the file, get the file pointer
-					;;;;;;;;;;;;;;;;;;
- 0000003D  BA 00000000 R		mov edx, OFFSET filename		
- 00000042  E8 00000000 E		call OpenInputFile
+ 00000052  BA 00000000 R		mov edx, OFFSET filename		
+ 00000057  E8 00000000 E		call OpenInputFile
 
- 00000047  83 F8 FF			cmp eax, INVALID_HANDLE_VALUE
- 0000004A  74 1C			je ERROR						; an error has occured with opening the file
+ 0000005C  83 F8 FF			cmp eax, INVALID_HANDLE_VALUE
+ 0000005F  75 11			jne ACCEPT_FILE					; has an error occured opening the file?
+ 00000061  BA 000000CD R		mov edx, OFFSET ferror
+ 00000066  E8 00000000 E		call WriteString
+ 0000006B  E8 00000000 E		call Crlf
+ 00000070  EB C7			jmp REPROMPT_FILE
 
- 0000004C  A3 00000096 R		mov filehandle, eax				; store the file pointer
-
- 00000051			L1:
- 00000051  FF 35 00000096 R		push filehandle					; pointer to the file
- 00000057  68 0000009A R		push OFFSET loadstring			; pointer to the string buffer
- 0000005C  68 00000096			push FSIZE						; need to leave room for NULL terminator
- 00000061  E8 00000053			call readFileLine				;
- 00000066  EB E9			jmp L1
-
+ 00000072			ACCEPT_FILE:
+ 00000072  A3 00000096 R		mov filehandle, eax				; store the file pointer
 
 					;;;;;;;;;;;;;;;;;;
 					; load the olympian information
-					;;;;;;;;;;;;;;;;;;
+ 00000077  FF 35 000000F9 R		push slistptr					; push arguments to loadALLOlympians
+ 0000007D  FF 35 00000096 R		push filehandle
+ 00000083  FF 35 000000F5 R		push maxnum
+ 00000089  E8 00000125			call loadAllOlympians
 
 					;;;;;;;;;;;;;;;;;;
 					; output the olympian information
-					;;;;;;;;;;;;;;;;;;
 
 					;;;;;;;;;;;;;;;;;;
 					; be sure to:
 					;     close the file
 					;     handle any errors encountered
-					;;;;;;;;;;;;;;;;;;
 
- 00000068			ERROR:
+ 0000008E  EB 0F			jmp DONE
 
- 00000068			DONE:
- 00000068  E8 00000000 E		call WaitMsg					; wait for user to hit enter
+ 00000090			ERROR:
+ 00000090  BA 000000DE R		mov edx, OFFSET perror			; something went horribly wrong
+ 00000095  E8 00000000 E		call WriteString
+ 0000009A  E8 00000000 E		call Crlf
+
+ 0000009F			DONE:
+ 0000009F  E8 00000000 E		call WaitMsg					; wait for user to hit enter
 					invoke ExitProcess,0			; bye
- 00000074			main ENDP
+ 000000AB			main ENDP
 
- 00000074			readFileChar PROC
+ 000000AB			readFileChar PROC
 				; description:
 				;	read a character from a file
 				; receives (in reverse order):
@@ -163,106 +175,204 @@ olympians.asm						     Page 1 - 1
 				; returns:
 				;	eax = character read, or system error code if carry flag is set
 
- 00000074  55				push ebp						; save the base pointer
- 00000075  8B EC			mov ebp,esp						; base of the stack frame
- 00000077  83 EC 04			sub esp,4						; create a local variable for the return value
- 0000007A  52				push edx						; save the registers
- 0000007B  51				push ecx
+ 000000AB  55				push ebp						; save the base pointer
+ 000000AC  8B EC			mov ebp,esp						; base of the stack frame
+ 000000AE  83 EC 04			sub esp,4						; create a local variable for the return value
+ 000000B1  52				push edx						; save the registers
+ 000000B2  51				push ecx
 
- 0000007C  8B 45 08			mov eax,[ebp+8]					; file pointer
- 0000007F  8D 55 FC			lea edx,[ebp-4]					; pointer to value read
- 00000082  B9 00000001			mov ecx,1						; number of chars to read
- 00000087  E8 00000000 E		call ReadFromFile				; gets file handle from eax (loaded above)
- 0000008C  72 03			jc DONE							; if CF is set, leave the error code in eax
- 0000008E  8B 45 FC			mov eax,[ebp-4]					; otherwise, copy the char read from local variable
+ 000000B3  8B 45 08			mov eax,[ebp+8]					; file pointer
+ 000000B6  8D 55 FC			lea edx,[ebp-4]					; pointer to value read
+ 000000B9  B9 00000001			mov ecx,1						; number of chars to read
+ 000000BE  E8 00000000 E		call ReadFromFile				; gets file handle from eax (loaded above)
+ 000000C3  72 03			jc DONE							; if CF is set, leave the error code in eax
+ 000000C5  8B 45 FC			mov eax,[ebp-4]					; otherwise, copy the char read from local variable
 
- 00000091			DONE:
- 00000091  59				pop ecx							; restore the registers
- 00000092  5A				pop edx
- 00000093  8B E5			mov esp,ebp						; remove local var from stack 
- 00000095  5D				pop ebp
- 00000096  C2 0004			ret 4
- 00000099			readFileChar ENDP
+ 000000C8			DONE:
+ 000000C8  59				pop ecx							; restore the registers
+ 000000C9  5A				pop edx
+ 000000CA  8B E5			mov esp,ebp						; remove local var from stack 
+ 000000CC  5D				pop ebp
+ 000000CD  C2 0004			ret 4
+ 000000D0			readFileChar ENDP
 
-				; descriptions:
+				; description:
 				;	allocates sufficient memory from to store the inputted number of olypian structs
 				; receives (in reverse order):
- 00000099			allocOlympians PROC,
+ 000000D0			allocOlympians PROC,
 					ssize: DWORD	; the number of structs in the array
 				; returns:
 				;	eax = a pointer to the allocated array, or carry flag if error
 
- 0000009C  E8 00000000 E		call GetProcessHeap		; get a handle to this process heap in EAX
- 000000A1  FF 75 08			push ssize				; requested size of allocation
- 000000A4  6A 08			push HEAP_ZERO_MEMORY	; zero out all data in the allocation
- 000000A6  50				push eax				; handle to process heap
- 000000A7  E8 00000000 E		call HeapAlloc
+ 000000D3  8B 45 08			mov eax, ssize
+ 000000D6  6B C0 4C			imul eax, SIZEOF OLYMPIAN	; calculate number of bytes needed to allocate
+ 000000D9  89 45 08			mov ssize, eax
+					
+ 000000DC  E8 00000000 E		call GetProcessHeap			; get a handle to this process heap in EAX
+ 000000E1  FF 75 08			push ssize					; requested size of allocation
+ 000000E4  6A 08			push HEAP_ZERO_MEMORY		; zero out all data in the allocation
+ 000000E6  50				push eax					; handle to process heap
+ 000000E7  E8 00000000 E		call HeapAlloc
+ 000000EC  83 F8 00			cmp eax, 0					; NULL pointer?
+ 000000EF  74 02			je ERROR
+ 000000F1  EB 01			jmp DONE
 
- 000000AC  83 F8 00			cmp eax, 0				; pointer to memory
- 000000AF  75 03			jne OK					; zero on failure
- 000000B1  F9				stc
- 000000B2  EB 01			jmp DONE
+ 000000F3			ERROR:
+ 000000F3  F9				stc							; return with CF = 0
 
- 000000B4			OK:
- 000000B4  F8				clc						; return with CF = 0
-
- 000000B5			DONE:
+ 000000F4			DONE:
 					ret
- 000000B9			allocOlympians ENDP
+ 000000F8			allocOlympians ENDP
 
 				; description:
 				;	reads a line from the specified filepointer/filehandle, 
 				;	and puts it into stringpointer buffer, up to stringsize characters
 				; receives (in reverse order):
- 000000B9			readFileLine PROC uses EBX,
+ 000000F8			readFileLine PROC uses EBX ESI,
 					stringsize: DWORD,		; maximum size of the buffer
 					stringpointer: DWORD,	; pointer to the string buffer
 					filepointer: DWORD,		; pointer to the filehandle
 				; returns:
 				;	eax = the number of characters read and stored in the target array
 
- 000000BD  FF 75 08			push stringsize				; save the arguments to restore later
- 000000C0  FF 75 0C			push stringpointer
+ 000000FD  FF 75 08			push stringsize				; save the arguments to restore later
+ 00000100  FF 75 0C			push stringpointer
 
- 000000C3  BB 00000000			mov ebx, 0					; EBX will hold count of characters loaded
- 000000C8  8B 75 0C			mov esi, stringpointer		; load the address of the string buffer
+ 00000103  BB 00000000			mov ebx, 0					; EBX will hold count of characters loaded
+ 00000108  8B 75 0C			mov esi, stringpointer		; load the address of the string buffer
 
- 000000CB			NEXT_CHAR:
- 000000CB  FF 75 10			push filepointer
- 000000CE  E8 FFFFFFA1			call readFileChar			; load a character
- 000000D3  72 18			jc ERROR
+ 0000010B			NEXT_CHAR:
+ 0000010B  FF 75 10			push filepointer
+ 0000010E  E8 FFFFFF98			call readFileChar			; load a character
+ 00000113  72 18			jc ERROR
 
- 000000D5  3C 0D			cmp al, CR					; if the loaded character was a carriage return, ignore
- 000000D7  74 F2			jz NEXT_CHAR
+ 00000115  3C 0D			cmp al, CR					; if the loaded character was a carriage return, ignore
+ 00000117  74 F2			jz NEXT_CHAR
 
- 000000D9  43				inc ebx
- 000000DA  FF 4D 08			dec stringsize				; there is one less byte available in the buffer
- 000000DD  74 09			jz NULL_TERMINATE			; terminate string and leave
+ 00000119  FF 4D 08			dec stringsize				; there is one less byte available in the buffer
+ 0000011C  74 0A			jz NULL_TERMINATE			; terminate string and leave
 
- 000000DF  3C 0A			cmp al, LF					; if the loaded character was a line fead, null terminate
- 000000E1  74 05			jz NULL_TERMINATE
+ 0000011E  3C 0A			cmp al, LF					; if the loaded character was a line fead, null terminate
+ 00000120  74 06			jz NULL_TERMINATE
 
- 000000E3  88 06			mov BYTE PTR [esi], al		; store the character in string array
- 000000E5  46				inc esi						; point to next position in string array
- 000000E6  EB E3			jmp NEXT_CHAR
+ 00000122  43				inc ebx						; increment the characters read
+ 00000123  88 06			mov BYTE PTR [esi], al		; store the character in string array
+ 00000125  46				inc esi						; point to next position in string array
+ 00000126  EB E3			jmp NEXT_CHAR
 
- 000000E8			NULL_TERMINATE:
- 000000E8  C6 06 00			mov BYTE PTR [esi], 0		; null terminate the string
- 000000EB  EB 01			jmp DONE
+ 00000128			NULL_TERMINATE:
+ 00000128  C6 06 00			mov BYTE PTR [esi], NULL	; null terminate the string
+ 0000012B  EB 01			jmp DONE
 
- 000000ED			ERROR:
- 000000ED  F9				stc
+ 0000012D			ERROR:
+ 0000012D  F9				stc
 
- 000000EE			DONE:
- 000000EE  8F 45 0C			pop stringpointer
- 000000F1  8F 45 08			pop stringsize				; restore the arguments previously saved
+ 0000012E			DONE:
+ 0000012E  8F 45 0C			pop stringpointer
+ 00000131  8F 45 08			pop stringsize				; restore the arguments previously saved
 
- 000000F4  8B C3			mov eax, ebx				; eax returns the number of characters read/stored
+ 00000134  8B C3			mov eax, ebx				; eax returns the number of characters read/stored
 					ret
- 000000FB			readFileLine ENDP
+ 0000013C			readFileLine ENDP
+
+				; description:	
+				;	reads information from a file and loads it into an olympian struct.
+				; recieves (in reverse order):
+ 0000013C			loadOlympian PROC uses ESI EDI ECX EDX,
+					filepointer: DWORD,			; the pointer to the file read from
+					structpointer: DWORD		; the pointer to the memory to write the struct
+					local stringbuffer[STRSIZE]: BYTE
+				; returns:
+				;	eax = updated file pointer, which has been advanced past the information just loaded
+				; error:
+				;	carry = set
+					
+ 00000146  8B 75 0C			mov esi, [structpointer]	; esi points to the struct on the heap
+
+ 00000149  FF 75 08			push filepointer			; push arguments to readFileline
+ 0000014C  8D 7D E0			lea edi, stringbuffer
+ 0000014F  57				push edi					; loads local string for checking if properly formatted
+ 00000150  6A 20			push STRSIZE
+ 00000152  E8 FFFFFFA1			call readFileLine
+ 00000157  72 4E			jc ERROR
+ 00000159  80 7D E0 2A			cmp stringbuffer, ASTERISK	; properly formatted has '*' at beginning
+ 0000015D  75 48			jnz ERROR
+
+ 0000015F  FF 75 08			push filepointer			; load the name
+ 00000162  56				push esi
+ 00000163  6A 20			push STRSIZE
+ 00000165  E8 FFFFFF8E			call readFileLine
+ 0000016A  72 3B			jc ERROR
+
+ 0000016C  83 C6 20			add esi, SIZEOF OLYMPIAN.sname
+
+ 0000016F  FF 75 08			push filepointer			; load the country
+ 00000172  56				push esi
+ 00000173  6A 20			push STRSIZE
+ 00000175  E8 FFFFFF7E			call readFileLine
+ 0000017A  72 2B			jc ERROR
+
+ 0000017C  83 C6 20			add esi, SIZEOF OLYMPIAN.country
+
+ 0000017F  B9 00000003			mov ecx, NUMTESTS			; repeat for the number of medals
+ 00000184			LOAD_MEDAL:
+ 00000184  FF 75 08			push filepointer			; load goal medals INTO buffer
+ 00000187  57				push edi
+ 00000188  6A 20			push STRSIZE
+ 0000018A  E8 FFFFFF69			call readFileLine
+ 0000018F  72 16			jc ERROR
+
+ 00000191  51				push ecx					; store loop counter
+ 00000192  8B C8			mov ecx, eax				; move the number of characters read into ecx
+ 00000194  8B D7			mov edx, edi				; store pointer to stringbuffer in edx
+ 00000196  E8 00000000 E		call ParseInteger32
+ 0000019B  70 0A			jo ERROR					; if parsing error, exit
+
+ 0000019D  89 06			mov [esi], eax				; write medal amount to struct
+ 0000019F  83 C6 04			add esi, SIZEOF MEDAL		; increment to next medal
+ 000001A2  59				pop ecx						; restore loop counter
+ 000001A3  E2 DF			loop LOAD_MEDAL
+ 000001A5  EB 01			jmp DONE
+
+ 000001A7			ERROR:
+ 000001A7  F9				stc
+
+ 000001A8			DONE:
+ 000001A8  8B 45 08			mov eax, filepointer
+					ret
+ 000001B3			loadOlympian ENDP
+
+				; description:
+				;	makes successive calls to loadOlympian to read olympian information from a 
+				;	file into an array of olympian structs
+				; receives (in reverse order):
+ 000001B3			loadAllOlympians PROC uses ESI ECX EBX,
+					maxOlympians: DWORD,
+					filepointer: DWORD,
+					structpointer: DWORD
+				; returns:
+				;	eax = number of olympians actually read
+
+ 000001B9  BB 00000000			mov ebx, 0					; zero olympians have been read initially
+ 000001BE  8B 75 10			mov esi, structpointer		;
+ 000001C1  8B 4D 08			mov ecx, maxOlympians		; prepare loop
+ 000001C4			LOAD_OLYMPIAN:
+ 000001C4  56				push esi					; push pointer to current place of struct array
+ 000001C5  FF 75 0C			push filepointer
+ 000001C8  E8 FFFFFF6F			call loadOlympian
+ 000001CD  72 06			jc ERROR
+ 000001CF  43				inc ebx						; one more olympian has been read
+ 000001D0  83 C6 4C			add esi, SIZEOF OLYMPIAN	; increment to next olympian in array
+ 000001D3  E2 EF			loop LOAD_OLYMPIAN
+
+ 000001D5			ERROR:
+ 000001D5  8B C3			mov eax, ebx				; return number of olympians read in eax
+					ret
+
+ 000001DE			loadAllOlympians ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.37.32825.0	    12/06/23 00:52:03
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    12/08/23 00:07:39
 olympians.asm						     Symbols 2 - 1
 
 
@@ -354,14 +464,21 @@ olympian . . . . . . . . . . . .	 0000004C
   medals . . . . . . . . . . . .	 00000040	 DWord
 
 
+Types:
+
+                N a m e                  Size     Attr
+
+MEDAL  . . . . . . . . . . . . .	 00000004     DWord
+
+
 Segments and Groups:
 
                 N a m e                 Size     Length   Align   Combine Class
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000019E Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000000FB Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000011F Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000001DE Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -468,25 +585,41 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-allocOlympians . . . . . . . . .	P Near	 00000099 _TEXT	Length= 00000020 Public STDCALL
+allocOlympians . . . . . . . . .	P Near	 000000D0 _TEXT	Length= 00000028 Public STDCALL
   ssize  . . . . . . . . . . . .	DWord	 bp + 00000008
-  OK . . . . . . . . . . . . . .	L Near	 000000B4 _TEXT	
-  DONE . . . . . . . . . . . . .	L Near	 000000B5 _TEXT	
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000074 Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 00000051 _TEXT	
-  ERROR  . . . . . . . . . . . .	L Near	 00000068 _TEXT	
-  DONE . . . . . . . . . . . . .	L Near	 00000068 _TEXT	
+  ERROR  . . . . . . . . . . . .	L Near	 000000F3 _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 000000F4 _TEXT	
+loadAllOlympians . . . . . . . .	P Near	 000001B3 _TEXT	Length= 0000002B Public STDCALL
+  maxOlympians . . . . . . . . .	DWord	 bp + 00000008
+  filepointer  . . . . . . . . .	DWord	 bp + 0000000C
+  structpointer  . . . . . . . .	DWord	 bp + 00000010
+  LOAD_OLYMPIAN  . . . . . . . .	L Near	 000001C4 _TEXT	
+  ERROR  . . . . . . . . . . . .	L Near	 000001D5 _TEXT	
+loadOlympian . . . . . . . . . .	P Near	 0000013C _TEXT	Length= 00000077 Public STDCALL
+  filepointer  . . . . . . . . .	DWord	 bp + 00000008
+  structpointer  . . . . . . . .	DWord	 bp + 0000000C
+  stringbuffer . . . . . . . . .	Byte	 bp - 00000020
+  LOAD_MEDAL . . . . . . . . . .	L Near	 00000184 _TEXT	
+  ERROR  . . . . . . . . . . . .	L Near	 000001A7 _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 000001A8 _TEXT	
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000AB Public STDCALL
+  REPROMPT_NUM . . . . . . . . .	L Near	 00000000 _TEXT	
+  ACCEPT_NUM . . . . . . . . . .	L Near	 00000022 _TEXT	
+  REPROMPT_FILE  . . . . . . . .	L Near	 00000039 _TEXT	
+  ACCEPT_FILE  . . . . . . . . .	L Near	 00000072 _TEXT	
+  ERROR  . . . . . . . . . . . .	L Near	 00000090 _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 0000009F _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-readFileChar . . . . . . . . . .	P Near	 00000074 _TEXT	Length= 00000025 Public STDCALL
-  DONE . . . . . . . . . . . . .	L Near	 00000091 _TEXT	
-readFileLine . . . . . . . . . .	P Near	 000000B9 _TEXT	Length= 00000042 Public STDCALL
+readFileChar . . . . . . . . . .	P Near	 000000AB _TEXT	Length= 00000025 Public STDCALL
+  DONE . . . . . . . . . . . . .	L Near	 000000C8 _TEXT	
+readFileLine . . . . . . . . . .	P Near	 000000F8 _TEXT	Length= 00000044 Public STDCALL
   stringsize . . . . . . . . . .	DWord	 bp + 00000008
   stringpointer  . . . . . . . .	DWord	 bp + 0000000C
   filepointer  . . . . . . . . .	DWord	 bp + 00000010
-  NEXT_CHAR  . . . . . . . . . .	L Near	 000000CB _TEXT	
-  NULL_TERMINATE . . . . . . . .	L Near	 000000E8 _TEXT	
-  ERROR  . . . . . . . . . . . .	L Near	 000000ED _TEXT	
-  DONE . . . . . . . . . . . . .	L Near	 000000EE _TEXT	
+  NEXT_CHAR  . . . . . . . . . .	L Near	 0000010B _TEXT	
+  NULL_TERMINATE . . . . . . . .	L Near	 00000128 _TEXT	
+  ERROR  . . . . . . . . . . . .	L Near	 0000012D _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 0000012E _TEXT	
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
@@ -717,7 +850,7 @@ blue . . . . . . . . . . . . . .	Number	 00000001h
 brown  . . . . . . . . . . . . .	Number	 00000006h   
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
-ferror . . . . . . . . . . . . .	Byte	 00000163 _DATA	
+ferror . . . . . . . . . . . . .	Byte	 000000CD _DATA	
 filehandle . . . . . . . . . . .	DWord	 00000096 _DATA	
 filename . . . . . . . . . . . .	Byte	 00000000 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
@@ -728,17 +861,17 @@ lightGray  . . . . . . . . . . .	Number	 00000007h
 lightGreen . . . . . . . . . . .	Number	 0000000Ah   
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
-loadstring . . . . . . . . . . .	Byte	 0000009A _DATA	
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-maxnum . . . . . . . . . . . . .	DWord	 00000174 _DATA	
-numread  . . . . . . . . . . . .	DWord	 0000017C _DATA	
-outcountry . . . . . . . . . . .	Byte	 0000018B _DATA	
-outmedals  . . . . . . . . . . .	Byte	 00000195 _DATA	
-outname  . . . . . . . . . . . .	Byte	 00000180 _DATA	
-prompt1  . . . . . . . . . . . .	Byte	 00000130 _DATA	
-prompt2  . . . . . . . . . . . .	Byte	 00000150 _DATA	
+maxnum . . . . . . . . . . . . .	DWord	 000000F5 _DATA	
+numread  . . . . . . . . . . . .	DWord	 000000FD _DATA	
+outcountry . . . . . . . . . . .	Byte	 0000010C _DATA	
+outmedals  . . . . . . . . . . .	Byte	 00000116 _DATA	
+outname  . . . . . . . . . . . .	Byte	 00000101 _DATA	
+perror . . . . . . . . . . . . .	Byte	 000000DE _DATA	
+prompt1  . . . . . . . . . . . .	Byte	 0000009A _DATA	
+prompt2  . . . . . . . . . . . .	Byte	 000000BA _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-slistptr . . . . . . . . . . . .	DWord	 00000178 _DATA	
+slistptr . . . . . . . . . . . .	DWord	 000000F9 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
