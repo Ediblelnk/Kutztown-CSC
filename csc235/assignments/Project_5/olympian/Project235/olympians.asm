@@ -2,7 +2,7 @@
 ; Load a list of olympians into an array of structs
 ; print them out, calculating the olympian's total medals
 ;
-; Name:
+; Name: PETER SCHAEFER
 ; 
 
 include Irvine32.inc
@@ -100,12 +100,14 @@ ACCEPT_FILE:
 
 	;;;;;;;;;;;;;;;;;;
 	; output the olympian information
+	push slistptr
+	push eax						; eax holds the number of olympians read
+	call outputAllOlympians
 
 	;;;;;;;;;;;;;;;;;;
-	; be sure to:
-	;     close the file
-	;     handle any errors encountered
-
+	; close the file
+	push filehandle
+	call CloseHandle
 	jmp DONE
 
 ERROR:
@@ -118,10 +120,10 @@ DONE:
 	invoke ExitProcess,0			; bye
 main ENDP
 
-readFileChar PROC
 ; description:
 ;	read a character from a file
 ; receives (in reverse order):
+readFileChar PROC
 ;	[ebp+8]  = file pointer
 ; returns:
 ;	eax = character read, or system error code if carry flag is set
@@ -321,5 +323,69 @@ ERROR:
 	ret
 
 loadAllOlympians ENDP
+
+; description:
+;	Outputs the contents of one olympian struct to the console in a 
+;	well formatted manner.
+; receives (in reverse order):
+outputOlympian PROC uses ESI EDX ECX EAX,
+	structpointer: DWORD,		; pointer to the struct
+; returns:
+;	there is no return value for this proc
+
+	mov esi, structpointer		; esi holds a pointer to beginning of struct
+
+	mov edx, OFFSET outname		; output the olympians name
+	call WriteString
+	mov edx, esi
+	call WriteString
+	call Crlf
+	add esi, SIZEOF OLYMPIAN.sname	; move pointer to country
+
+	mov edx, OFFSET outcountry		; output the olympians country
+	call WriteString
+	mov edx, esi
+	call WriteString
+	call Crlf
+	add esi, SIZEOF OLYMPIAN.country	; move pointer to gold medals
+	
+	mov ecx, NUMTESTS
+	mov eax, 0					; ebx holds the sum of the medals
+SUM_MEDAL:
+	add eax, MEDAL PTR [esi]
+	add esi, SIZEOF MEDAL
+	loop SUM_MEDAL
+
+	mov edx, OFFSET outmedals
+	call WriteString
+	call WriteDec				; writes sum of medals
+	call Crlf
+	
+	ret
+outputOlympian ENDP
+
+; description:
+;	output the entire array of Olympians to the console by successively
+;	calling outputOlympian
+; receives (in reverse order):
+outputAllOlympians PROC uses ESI,
+	maxOlympians: DWORD,		; number of olympians to output
+	structpointer: DWORD,		; pointer to array of olympians
+; returns:
+;	there is no return value for this proc
+	
+	mov esi, structpointer
+
+	call Crlf
+	mov ecx, maxOlympians		; repeat for requested olympians
+OUTPUT_OLYMPIAN:
+	push esi
+	call outputOlympian			; output an olympian
+	add esi, SIZEOF OLYMPIAN	; move to next olympian
+	call Crlf
+	loop OUTPUT_OLYMPIAN
+
+	ret
+outputAllOlympians ENDP
 
 END main
