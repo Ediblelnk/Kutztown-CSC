@@ -7,18 +7,18 @@
 
 include Irvine32.inc
 
-; define some constants
-FSIZE = 150							; max file name size
-CR = 0Dh							; c/r
-LF = 0Ah							; line feed
-ASTERISK = 2Ah						; asterisk for new entry
-NULL = 00h							; null character
-SPACE = 20h							; space character
-STRSIZE = 32						; string sizes in struct
-NUMTESTS = 3						; number of olympian medals
-ROUND = 1							; cutoff for rounding
+;;;; define some constants
+FSIZE = 150				; max file name size
+CR = 0Dh				; c/r
+LF = 0Ah				; line feed
+ASTERISK = 2Ah			; asterisk for new entry
+NULL = 00h				; null character
+SPACE = 20h				; space character
+STRSIZE = 32			; string sizes in struct
+NUMTESTS = 3			; number of olympian medals
+ROUND = 1				; cutoff for rounding
 
-MEDAL TYPEDEF DWORD					; just in case you don't a medal to be a DWORD
+MEDAL TYPEDEF DWORD		; just in case you don't want a medal to be a DWORD
 
 olympian STRUCT
 	sname BYTE STRSIZE DUP('n')		; 32 bytes	
@@ -27,26 +27,26 @@ olympian STRUCT
 olympian ENDS						; 76 total
 
 .data
-filename BYTE FSIZE DUP(?)			; array to hold the file name
-filehandle DWORD 0					; the file handle
+filename BYTE FSIZE DUP(?)							; array to hold the file name
+filehandle DWORD 0									; the file handle
 prompt1 BYTE "Enter the number of olympians: ",0	; prompt for a string
-prompt2 BYTE "Enter a filename: ",0	; prompt for a string
-ferror BYTE "Invalid input...",0	; error message
+prompt2 BYTE "Enter a filename: ",0					; prompt for a string
+ferror BYTE "Invalid input...",0					; error message
 perror BYTE "Fatal program error...",0				; internal error
 
-maxnum DWORD 0						; max number of olympians
-slistptr DWORD 0					; pointer to olympian list
-numread	DWORD 0						; number of olympians loaded
+maxnum DWORD 0		; max number of olympians
+slistptr DWORD 0	; pointer to olympian list
+numread	DWORD 0		; number of olympians loaded
 
-; for output listing (these can be used as globals)
+;;;; for output listing (these can be used as globals)
 outname  BYTE "Olympian: ",0
 outcountry BYTE "Country: ",0
 outmedals  BYTE "Medals: ",0
 
 .code
 main PROC
-	; prompt for the number of olympians
 REPROMPT_NUM:
+	;;;; prompt for the number of olympians
     mov edx, OFFSET prompt1			; output the prompt
 	call WriteString				; uses edx 
 	call ReadInt					; get the maximium number of olympians
@@ -59,25 +59,23 @@ REPROMPT_NUM:
 ACCEPT_NUM:
 	mov maxnum, eax					; save it
 
-	;;;;;;;;;;;;;;;;;;;
-	; access the heap and allocate memory for olympian struct array
+	;;;; access the heap and allocate memory for olympian struct array
 	push maxnum						; push value as argument of allocOlympians
 	call allocOlympians
 	jc ERROR						; end the program if unable to allocate
 	mov slistptr, eax				; store a pointer to the heap data
 
 REPROMPT_FILE:
-	; prompt for the file name 
+	;;;; prompt for the file name 
     mov edx, OFFSET prompt2			; output the prompt
 	call WriteString				; uses edx 
 
-	; read the file name
+	;;;; read the file name
 	mov edx, OFFSET filename		; point to the start of the file name string
 	mov ecx, FSIZE				    ; max size for file name
 	call ReadString					; load the file name (string pointer in edx, max size in ecx)
 	
-	;;;;;;;;;;;;;;;;;;
-	; open the file, get the file pointer
+	;;;; open the file, get the file pointer
 	mov edx, OFFSET filename		
 	call OpenInputFile
 
@@ -91,21 +89,18 @@ REPROMPT_FILE:
 ACCEPT_FILE:
 	mov filehandle, eax				; store the file pointer
 
-	;;;;;;;;;;;;;;;;;;
-	; load the olympian information
+	;;;; load the olympian information
 	push slistptr					; push arguments to loadALLOlympians
 	push filehandle
 	push maxnum
 	call loadAllOlympians
 
-	;;;;;;;;;;;;;;;;;;
-	; output the olympian information
+	;;;; output the olympian information
 	push slistptr
 	push eax						; eax holds the number of olympians read
 	call outputAllOlympians
 
-	;;;;;;;;;;;;;;;;;;
-	; close the file
+	;;;; close the file
 	push filehandle
 	call CloseHandle
 	jmp DONE
@@ -159,6 +154,7 @@ allocOlympians PROC,
 
 	mov eax, ssize
 	imul eax, SIZEOF OLYMPIAN	; calculate number of bytes needed to allocate
+	jz ERROR
 	mov ssize, eax
 	
 	call GetProcessHeap			; get a handle to this process heap in EAX
@@ -300,9 +296,9 @@ loadOlympian ENDP
 ;	file into an array of olympian structs
 ; receives (in reverse order):
 loadAllOlympians PROC uses ESI ECX EBX,
-	maxOlympians: DWORD,
-	filepointer: DWORD,
-	structpointer: DWORD
+	maxOlympians: DWORD,		; the max olympians to be read
+	filepointer: DWORD,			; pointer to the file
+	structpointer: DWORD		; pointer to struct on the heap
 ; returns:
 ;	eax = number of olympians actually read
 
@@ -333,16 +329,16 @@ outputOlympian PROC uses ESI EDX ECX EAX,
 ; returns:
 ;	there is no return value for this proc
 
-	mov esi, structpointer		; esi holds a pointer to beginning of struct
+	mov esi, structpointer				; esi holds a pointer to beginning of struct
 
-	mov edx, OFFSET outname		; output the olympians name
+	mov edx, OFFSET outname				; output the olympians name
 	call WriteString
 	mov edx, esi
 	call WriteString
 	call Crlf
-	add esi, SIZEOF OLYMPIAN.sname	; move pointer to country
+	add esi, SIZEOF OLYMPIAN.sname		; move pointer to country
 
-	mov edx, OFFSET outcountry		; output the olympians country
+	mov edx, OFFSET outcountry			; output the olympians country
 	call WriteString
 	mov edx, esi
 	call WriteString
@@ -350,7 +346,7 @@ outputOlympian PROC uses ESI EDX ECX EAX,
 	add esi, SIZEOF OLYMPIAN.country	; move pointer to gold medals
 	
 	mov ecx, NUMTESTS
-	mov eax, 0					; ebx holds the sum of the medals
+	mov eax, 0							; ebx holds the sum of the medals
 SUM_MEDAL:
 	add eax, MEDAL PTR [esi]
 	add esi, SIZEOF MEDAL
@@ -358,7 +354,7 @@ SUM_MEDAL:
 
 	mov edx, OFFSET outmedals
 	call WriteString
-	call WriteDec				; writes sum of medals
+	call WriteDec						; writes sum of medals
 	call Crlf
 	
 	ret
@@ -374,7 +370,7 @@ outputAllOlympians PROC uses ESI,
 ; returns:
 ;	there is no return value for this proc
 	
-	mov esi, structpointer
+	mov esi, structpointer		; esi points to the struct on the heap
 
 	call Crlf
 	mov ecx, maxOlympians		; repeat for requested olympians
