@@ -18,6 +18,7 @@ There are thousands of high-level programming languages, and new ones continue t
     - **Lisp** was developed for the implementation of A.I.
     - **Oracle** was developed for database.
     - **HTML** was developed for implementing a webpage.
+    - **Fortran** was created for scientific purposes.
 
 1. **Personal Preference**: Every programming language has pros and cons, which are very subjective.
     - d
@@ -111,7 +112,7 @@ Most interpreted languages employ an **initial translator** (a **preprocessor**)
 
 ### Fortran-style Compilation
 
-> The typical **Fortran** implementation comes close to **pure compilation**. The compiler relies on a separate program, known as the "linker", to merge the appropriate routines into the final program:
+> The **Fortran** implementation comes close to **pure compilation**. The compiler relies on a separate program, known as the "linker", to merge the appropriate routines into the final program:
 
 Fortran program --(Compiler)--> Incomplete machine language --(Linker, Library routines)--> Machine language program
 
@@ -120,3 +121,55 @@ Fortran program --(Compiler)--> Incomplete machine language --(Linker, Library r
 > Many compilers generate **assembly language** instead of machine language. This convention facilitates **debugging**, since assembly language is easier for people to read, and isolates the compiler from changes in the format of machine language files.
 
 Source program --(Compiler)--> Assembly language --(Assembler)--> Machine language.
+
+> Compilers for *C*, and many other languages under Unix, begin with a preprocessor that removes comments and expands macros.
+
+Source program --(Preprocessor)--> Modified source program --(Compiler)--> Assembly language.
+
+> *C++* early implementations actually generated an intermediate program in *C*, instead of assembly.
+
+C++ program --(C++ Compiler)--> C program --(C Compiler)--> Assembly language
+
+### Self-hosting and Bootstrapping
+
+Many compilers are **self-hosting**. They are written in the language they compile, for example **C compiler in C**.
+
+This uses a technique known as **bootstrapping**. One starts with a simple implementation and use it to build a progressively more sophisticated versions.
+
+For example, if we has a *C* compiler already, we might start by writing, in a simple subset of *C*, a compiler for an equally simple subset of Java. Once this compiler was working, we could hand-translate the *C* code into our subset of Java and run the compiler through itself. We could then repeatedly extend the compiler to accept a larger subset of Java, bootstrap it again, and repeat.
+
+### Late Binding
+
+Compilers for languages that permit a lot of **late binding** are traditionally *interpreted*. Examples are *Lisp, Prolog, Smalltalk, etc.* Late binding leads to increased **flexibility**.
+
+Recent implementations of **Java** employ a **just-in-time, JIT, compiler** that translate *byte code* into *machine language* immediately before each execution of the program. This is also done in **C#**.
+
+Note:
+
+> A compiler does not necessarily translate from a high-level language into machine language. The term *compilation* applies whenever we translate automatically from one nontrivial language to another, with full analysis of the meaning of the input.
+
+## 1.5 Programming Environments
+
+Programmers are assisted by other tools, for example assemblers, preprocessors, linkers, style checkers, configuration management, etc.
+
+In *older programming environments*, tools may be *executed individually*.
+
+More *recent environemnts* provide much more *integrated tools* and *integrated development environments (IDEs)*. The editor for an IDE may incorporate knowledge of language syntax, providing templates all the standard control structures, and checking syntax *as* it is typed in.
+
+Example:
+
+```C++
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    cout << "Hello World" << endl;
+}
+```
+
+Refer to diagram 3.
+
+## 1.6 An Overview of Compilation
+
+In a typical compiler, compilation proceeds through a **series of well-defined phases**.
