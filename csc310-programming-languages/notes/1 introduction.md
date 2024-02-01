@@ -154,7 +154,7 @@ Programmers are assisted by other tools, for example assemblers, preprocessors, 
 
 In *older programming environments*, tools may be *executed individually*.
 
-More *recent environemnts* provide much more *integrated tools* and *integrated development environments (IDEs)*. The editor for an IDE may incorporate knowledge of language syntax, providing templates all the standard control structures, and checking syntax *as* it is typed in.
+More *recent environments* provide much more *integrated tools* and *integrated development environments (IDEs)*. The editor for an IDE may incorporate knowledge of language syntax, providing templates all the standard control structures, and checking syntax *as* it is typed in.
 
 Example:
 
