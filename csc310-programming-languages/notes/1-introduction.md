@@ -173,3 +173,30 @@ Refer to diagram 3.
 ## 1.6 An Overview of Compilation
 
 In a typical compiler, compilation proceeds through a **series of well-defined phases**.
+
+### Phases of Compilation
+
+| Input | Process |
+| :-: | :-: |
+| Character stream | Scanner (lexical analysis) |
+| Token stream | Parser (syntax analysis) |
+| Parse tree | Semantic analysis and intermediate code generation |
+| Abstract syntax tree or other intermediate form | Machine-independent code improvement (optional) |
+| Modified intermediate form | Target code generation |
+| Target language (e.g. assembler) | Machine-specific code improvement (optional) |
+| Modified target language | |
+
+### Phases of Interpretation
+
+| Input | Process | Output |
+| :-: | :-: | :-: |
+| Character stream | Scanner (lexical analysis) | Token stream |
+| Token stream | Parser (syntax analysis) | Parse tree |
+| Parse tree | Semantic analysis and intermediate code generation | Abstract syntax tree or other intermediate form |
+| Abstract syntax tree of other intermediate form, Program input | Tree-walk routines | Program output |
+
+### 1.6.1 Lexical and Syntax Analysis
+
+Scanning and parsing serve to recognize the structure of the program, without regard to its meaning. The scanner reads characters and groups them into *tokens*, which are the smallest meaningful units of the program.
+
+Scanning is also known as *lexical analysis*. Parsing organizes tokens into a *parse tree* that represents the higher-level constructs.
