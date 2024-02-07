@@ -61,11 +61,41 @@ Regular Expression = **01(0|1)\*11**
 1. Let Alphabet = **{0,1}**. Strings that have at least three consecutive 0's, '000'.
 Regular Expression = **(0|1)\*000(0|1)\***
 
-identifier in *C++*: (\_|a|...|z|A|...|Z)(\_|a|...|z|A|...|Z|0|...|9)\*
+1. Let Alphabet = **{0,1}**. Strings that either have at least three consecutive 0's or at least three consecutive 1's.
+Regular Expression = **(0|1)\*(000|111)(0|1)\***
 
-number -> integer | real
-integer -> digit digit*
-real -> integer exponent | decimal (exponent | \lambda)
-decimal -> digit* (.digit|digit.) digit*
-exponent -> (e | E)(+|-| \lambda ) integer
-digit -> 0|1|2|3|4|5|6|7|8|9
+1. Let Alphabet = **{0,1}**. Strings on {a,b} terminated by either a or bb.
+Regular Expression = **(a|b)*(a|bb)**
+
+#### Example: Identifier in C++
+
+Regular Expression: (\_|a|...|z|A|...|Z)(\_|a|...|z|A|...|Z|0|...|9)\*
+
+C.F.G:
+
+- S --> FB
+- F --> \_|a|...|z|A|...|Z
+- B --> AB | \lambda
+- A --> \_|a|...|z|A|...|Z|0|...|9
+
+[diag.5]
+
+#### Example: Scientific Notation
+
+number --> integer | real
+integer --> digit digit*
+real --> integer exponent | decimal (exponent | \lambda)
+decimal --> digit* (.digit|digit.) digit*
+exponent --> (e | E)(+|-| \lambda ) integer
+digit --> 0|1|2|3|4|5|6|7|8|9
+
+expr --> id | number | -expr | (expr) | expr op expr
+op --> + | - | * | /
+
+Character sets and formatting issues for tokens
+
+1. Case sensitivity
+1. Character sets (letters, digits, underscores, or additional characters)
+1. Limits on the maximum length of identifiers
+
+**Regular expressions** work well for defining **tokens**. They are **unable to specify "nested" constructs**, which are central to **programming languages**.
