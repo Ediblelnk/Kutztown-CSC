@@ -29,7 +29,7 @@
 
 ## Four Components of a Computer System
 
-[diagram.1]
+![alt text](assets/diagram.1.png)
 
 ## What Operating Systems Do
 
@@ -67,7 +67,7 @@
 - Computer-system operation
   - One or more CPUs, device controllers connect through common bus providing access to shared memory
 
-[diagram.2]
+![alt text](assets/diagram.2.png)
 
 ## Computer System Operation
 
@@ -95,7 +95,7 @@
 
 ## Interrupt Timeline
 
-[diagram.3]
+![alt text](assets/diagram.3.png)
 
 ## I/O Structure
 
@@ -129,3 +129,133 @@
 - **Caching** - copying information into faster storage system; main memory can be viewed as a cache for secondary storage
 - **Device Driver** for each device controller to manage I/O
   - Provides uniform interface between controller and kernel
+
+![alt text](assets/diagram.4.png)
+
+## Caching
+
+- Important principle, performed at many levels in a computer (in hardware, opearting system, software)
+- Information in use copied from slower to faster storage temporarily
+- Faster storage (cache) checked first to determine if information is there
+  - If it is, information is used directly from the cache (fast)
+  - If not, data is copied to cache and used there
+- Cache smaller than storage being cached
+  - Cache management important design problem
+  - Cache size and replacement policy
+
+## Direct Memory Access Structure
+
+- Used for high-speed I/O devices able to transmit information at close to memory speeds
+- Device controller transfer blocks of data from buffer storage directly to main memory without CPU
+- Only one interrupt is generated per block, rather than the one interrupt per byte
+
+## How a Modern Computer Works
+
+![alt text](assets/diagram.5.png)
+
+## Computer-System Architecture
+
+- Most systems use a single general-purpose processor
+  - Most systems have special purpose processors as well
+- **Multiprocessor** system growing in use and importance
+  - Also known as **parallel systems**, **tightly-coupled systems**
+  - Advantages include:
+    1. **Increased throughput**
+    1. **Economy of scale**
+    1. **Increased reliability** - graceful degradation of fault tolerance
+  - Two types:
+    1. **Asymmetric Multiprocessing** - each processor is assigned a specific task.
+    1. **Symmetric Multiprocessing** - each processor performs all tasks.
+
+## Symmetric Multiprocessing Architecture
+
+![alt text](assets/diagram.6.png)
+
+## A Dual-Core Design
+
+- Multi-chip and **Multicore**
+- Systems containing all chips
+  - Chassis containing multiple separate systems
+
+![alt text](assets/diagram.7.png)
+
+## Clustered Systems
+
+- Like multiprocessor systems, but multiple systems working together
+  - Usually sharing storage via a **storage-area network (SAN)**
+  - Provides a **high-availability** service which survives failures
+    - **Asymmetric clustering** has one machine in hot-standby mode
+    - **Symmetric clustering** has multiple ndoes running applications, monitoring each other
+  - Some clusters are for **high-performance computing (HPC)**
+    - Applications must be written to use **parallelization**
+  - Some have **distributed lock manager (DLM)** to avoid conflicting operations
+
+![alt text](assets/diagram.8.png)
+
+## Operating System Structure
+
+- **Multiprogramming (Batch system)** needed for efficiency
+  - Single user cannot keep CPU and I/O devices busy at all times
+  - Multiprogramming organizes jobs (code and data) so CPU always has one to execute
+  - A subset of total jobs in system is kept in memory
+  - One job is selected and run via **job scheduling**
+  - When it has to wait (for I/O for example), OS switches to another job
+- **Timesharing (multitasking)** is logical extension in which CPU switches jobs so frequently that users can interact with each job while it is running, creating **interactive** computing.
+  - **Response time** should be <1 second
+  - Each user has at least one program executing in memory: **process**
+  - If several jobs are ready to run at the same time: **CPU scheduling**
+  - If processes don't fit in memory, **swapping** moves them in and out to run
+  - **Virtual memory** allows execution of processes not completely in memory
+
+## Operating-System Operations
+
+- **Interrupt drive** (hardware and software)
+  - Hardware interrupt by one of the devices
+  - Software interrupt (**exception** or **trap**):
+    - Software error (i.e. division by zero)
+    - Request for operating system service
+    - Other process problems include infinite loop, processes modifying each other or the operating system
+- **Dual-mode** operation allows OS to protect itself and other system components
+  - **User mode** and **kernel mode**
+  - **Mode bit** provided by hardware
+    - Provides ability to distinguish when system is running user code or kernel code
+    - Some instructions designated as **privileged**, only executable in kernel mode
+    - System call changes mode to kernel, return from call resets it to user
+- Increasingly CPUs support multi-mode operations
+  - I.e. **virtual machine manager (VMM)** mode for guest **VMs**
+
+## Transition from User to Kernel Mode
+
+- Timer to prevent infinite loop / process hogging resources
+  - Timer is set to interrupt the computer after some time period
+  - Keep a counter that is decremented by the physical clock.
+  - Operating system set the counter (privileged instruction)
+  - When counter zero generate an interrupt
+  - Set up before scheduling process to regain control or terminate program that exceeds allotted time
+
+![alt text](assets/diagram.9.png)
+
+## Process Management
+
+- A process is a program in execution. It is a unit of work within the system. Program is a **passive entity**, process is an **active entity*.
+- Process needs resources to accomplish its task
+  - CPU, memory, I/O, files
+  - Initialization data
+- Process termination requires reclaim of any reusable resources
+- Single-threaded process has one **program counter** specifying location of next instruction to execute
+  - Process executes instructions sequentially, one at a time, until completion.
+- Multi-threaded process has one program counter per thread
+- Typically system has many processes, some user, some operating system running concurrently on one or more CPUs
+  - Concurrently by multiplexing the CPUs among the processes / threads
+
+## Process Management Activities
+
+The operating system is responsible for the following activities in connection with process management:
+
+- Creating and deleting both user and system processes
+- Suspending and resuming processes
+- Providing mechanisms for process synchronization
+- Providing mechanisms for process communication
+- Providing mechanisms for deadlock handling
+
+## Memory Management
