@@ -259,3 +259,45 @@ The operating system is responsible for the following activities in connection w
 - Providing mechanisms for deadlock handling
 
 ## Memory Management
+
+- To execute a program all (or part) of the instructions must be in memory
+- All (or part) of the data that is needed by the program must be in memory
+- Memory management determines what is in memory and when
+  - Optimizing CPU utilization and computer response to users
+- Memory management activities
+  - Keeping track of which parts of memory are currently being used and by whom
+  - Deciding which processes (or parts thereof) and data to move into and out of memory
+  - Allocating and de-allocating memory space as needed
+
+## Storage Management
+
+- OS provides uniform logical view of information storage
+  - Abstracts physical properties to logical unit - **file**
+  - Each medium is controlled by device (i.e. disk drive, tape drive)
+    - Varying properties include access speed, capacity, data-transfer rate, access method (sequential or random)
+- File-System management
+  - Files usually organized into directories
+  - Access control on most systems to determine who can access what
+  - OS activities include
+    - Creating and deleting files and directories
+    - Primitives to manipulate files and directories
+    - Mapping files onto secondary storage
+    - Backup files into stable (non-volatile) storage media
+
+## Mass-Storage Management
+
+- Usually disks used to store data that does not fit in main memory or data that must be kept for a "long" period of time
+- Proper management is of central importance
+- Entire speed of computer operation hinges on disk subsystem and its algorithms
+- OS activities
+  - Free-space management
+  - Storage allocation
+  - Disk scheduling
+- Some storage does not need to be fast
+  - Tertiary storage includes optical storage, magnetic tape
+  - Still must be managed -- by OS or applications
+  - Varies between WORM (Write-once, read-many-times) and RW (read-write)
+
+## Performance of Various Levels of Storage
+
+![alt text](assets/diagram.10.png)
