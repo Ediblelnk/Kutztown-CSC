@@ -22,7 +22,7 @@ Essay response, explanation answers to every question. Not multiple choice.
 
 ## Chapter 2
 
-1. Chomsky;s Hierarchy of Languages
+1. Chomskey's Hierarchy of Languages
 1. Difference between Regular Language and Context-free Language
 1. How to recognize and determine Regular expression for a language
     1. Regex generates this Languages
